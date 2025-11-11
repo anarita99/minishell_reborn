@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 11:43:36 by adores & mi       #+#    #+#             */
+/*   Updated: 2025/11/10 16:32:03 by adores & mi      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static void	cd_error(char *path)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(path, 2);
+	write(2, ": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+}
+int	set_cd_path(char **args, t_shell *shell, char **path)
+{
+	if (!args[1])
+	{
+		*path = get_env_value(shell->env_list, "HOME");
+		if(*path == NULL)
+			return (ft_putendl_fd("minishell: cd: HOME not set", 2), 1);
+	}
+	else if (ft_strcmp(args[1], "-") == 0)
+	{
+		*path = get_env_value(shell->env_list, "OLDPWD");
+		if(*path == NULL)
+			return (ft_putendl_fd("minishell: cd: OLDPWD not set", 2), 1);
+		printf("%s\n", *path);
+	}
+	else
+		*path = args[1];
+	return (0);
+}
+
+int cd_builtin (t_shell *shell, char **args)
+{
+	char	*path;
+	char	*old_pwd;
+	char	*new_pwd;
+
+	if (args[1] && args[2])
+		return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
+	old_pwd = get_env_value(shell->env_list, "PWD");
+	if (set_cd_path(args, shell, &path) == 1)
+		return (1);
+	if (chdir(path) == -1)
+		return (cd_error(args[1]), 1);
+	new_pwd = getcwd(NULL, 0);
+	if(!new_pwd)
+	{
+		free_str_array(args);
+		malloc_error(shell->env_list);
+	}
+	set_env_var(&shell->env_list, "OLDPWD", old_pwd);
+	set_env_var(&shell->env_list, "PWD", new_pwd);
+	free(new_pwd);
+	return (0);
+}
