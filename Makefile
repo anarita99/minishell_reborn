@@ -6,7 +6,7 @@
 #    By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/27 15:37:54 by miduarte &        #+#    #+#              #
-#    Updated: 2025/11/11 10:38:45 by adores & mi      ###   ########.fr        #
+#    Updated: 2025/11/11 11:58:01 by adores & mi      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS = \
 	execution/builtins/exit.c\
 	execution/builtins/pwd.c\
 	execution/builtins/unset.c\
+	execution/builtins/export.c\
 
 OBJS = $(SRCS:.c=.o)
 

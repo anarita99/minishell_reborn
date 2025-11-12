@@ -6,7 +6,7 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:49:18 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/11 10:36:18 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/11 11:58:37 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ int main(void)
 		 	unset_builtin(args, &shell);
 			free_arr(args);
 		}
-		/* else if (!ft_strncmp(args[0], "export", 7))
+		else if (!ft_strncmp(args[0], "export", 7))
 		{
-		 	export_cmd(args, &env_list);
+		 	export_builtin(args, &shell);
 			free_arr(args);
-		} */
+		}
 		else if (!ft_strncmp(args[0], "pwd", 4))
 		{
 			pwd_builtin(&shell);

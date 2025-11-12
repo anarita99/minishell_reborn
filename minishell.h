@@ -6,7 +6,7 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 15:23:51 by miduarte &        #+#    #+#             */
-/*   Updated: 2025/11/10 16:31:47 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/11 11:57:37 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void	malloc_error(t_env *env_list);
 int		env_builtin(t_shell *shell);
 //void	print_sorted_env(t_shell *shell);
 int		unset_builtin(char **args, t_shell *shell);
-//int		export_builtin(char **args, t_shell *shell);
+int		export_builtin(char **args, t_shell *shell);
 int		is_builtin(char **args);
 //char	*get_target_path(char **args, t_shell *shell);
 
