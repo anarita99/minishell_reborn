@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:56:31 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/10 17:26:16 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:37:49 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 //fazer funçao do shell level
 //pwd, shell level quando env -i

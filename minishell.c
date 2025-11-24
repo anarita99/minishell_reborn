@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:49:18 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/11 11:58:37 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:39:08 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 static void	free_arr(char **arr)
 {

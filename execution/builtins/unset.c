@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:58:22 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/10 16:28:49 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:38:24 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 static void	remove_env_var(t_shell *shell, char *key)
 {

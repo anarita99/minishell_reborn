@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:53:15 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/10 16:28:18 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:38:17 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 int	pwd_builtin(t_shell *shell)
 {

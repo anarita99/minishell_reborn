@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:54:56 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/10 16:14:03 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:38:06 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 void	malloc_error(t_env *env_list)
 {

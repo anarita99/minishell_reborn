@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:43:36 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/10 16:32:03 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:37:32 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 static void	cd_error(char *path)
 {

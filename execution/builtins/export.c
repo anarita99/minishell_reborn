@@ -6,11 +6,11 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:41:59 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/12 13:03:26 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/11/24 12:38:13 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 static void	bubble_sort_array(t_env **node_array)
 {
