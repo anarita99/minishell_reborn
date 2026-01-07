@@ -6,7 +6,7 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 11:43:36 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/24 12:37:32 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/12/08 15:24:04 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int cd_builtin (t_shell *shell, char **args)
 	if(!new_pwd)
 	{
 		free_str_array(args);
-		malloc_error(shell->env_list);
+		malloc_error(shell, shell->env_list);
 	}
 	set_env_var(&shell->env_list, "OLDPWD", old_pwd);
 	set_env_var(&shell->env_list, "PWD", new_pwd);

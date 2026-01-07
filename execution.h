@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 15:23:51 by miduarte &        #+#    #+#             */
-/*   Updated: 2025/11/24 12:36:49 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/12/08 16:06:01 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,35 @@ typedef struct s_env
 	struct s_env	*next;
 } t_env;
 
+typedef enum e_token
+{
+	REDIN, // <
+	REDOUT, // >
+	HDOC, // <<
+	APPEND, // >>
+}	t_token;
+
+typedef struct s_file
+{
+	char	*filename;
+	t_token	mode;
+	bool	quoted;
+} t_file;
+
+typedef struct s_input
+{
+	char	**argv;
+	t_file	*infiles;
+	t_file	*outfiles;
+} t_input;
 
 //shell struct
 typedef struct s_shell
 {
 	int		last_exit_status;
 	t_env	*env_list;
+	t_list	*input_list;
+	char	*cmd_line;
 }	t_shell;
 
 
@@ -88,26 +111,6 @@ int		unset_builtin(char **args, t_shell *shell);
 int		export_builtin(char **args, t_shell *shell);
 int		is_builtin(char **args);
 
-typedef enum e_token
-{
-	REDIN, // <
-	REDOUT, // >
-	HDOC, // <<
-	APPEND, // >>
-}	t_token;
 
-typedef struct s_file
-{
-	char	*filename;
-	t_token	mode;
-	bool	quoted;
-} t_file;
-
-typedef struct s_input
-{
-	char	**argv;
-	t_file	*infiles;
-	t_file	*outfiles;
-} t_input;
 
 #endif

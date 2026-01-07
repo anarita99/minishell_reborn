@@ -6,17 +6,17 @@
 /*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:54:56 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/24 12:38:06 by adores & mi      ###   ########.fr       */
+/*   Updated: 2025/12/08 15:23:46 by adores & mi      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	malloc_error(t_env *env_list)
+void	malloc_error(t_shell *shell, t_env *env_list)
 {
 	free_env_list(env_list);
 	ft_putendl_fd("minishell: allocation error", 2);
-	exit(1);
+	exitclean(shell, 1);
 }
 
 static int	is_numeric(const char *s)
@@ -70,7 +70,7 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 
 int	exitclean(t_shell *shell, unsigned char exit_code)
 {
-	free_env_list(shell->env_list);
+	free_env_list(shell->env_list);  //vai ter de limpar mais coisas
 	exit(exit_code);
 }
 
