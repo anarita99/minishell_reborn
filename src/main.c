@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 10:59:22 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/23 11:04:54 by miduarte         ###   ########.fr       */
+/*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
+/*   Updated: 2026/01/08 15:08:30 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+int	main(void)
 {
-	t_list	*temp;
+	char		*prompt;
 
-	if (!lst || !del)
-		return ;
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		del(*lst);
-		*lst = temp;
-	}
-	free(*lst);
-	*lst = NULL;
+	prompt = readline(NULL);
+	printf("Prompt = %s\n", prompt);
+	lexer(prompt);
+	free(prompt);
+	return (0);
 }

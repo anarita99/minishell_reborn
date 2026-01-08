@@ -3,72 +3,61 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+         #
+#    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/27 15:37:54 by miduarte &        #+#    #+#              #
-#    Updated: 2025/11/11 11:58:01 by adores & mi      ###   ########.fr        #
+#    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
+#    Updated: 2026/01/07 15:11:56 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Project structure
 NAME = minishell
+SRCS_DIR = src
+INCS_DIR = includes
+
+# Libft structure
+LIBFT_DIR = libft
+LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
+LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
+
+# Readline structure
+READLINE_DIR = readline
+
+# Compiler and flags
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror -I. -Ilibft
+CFLAGS = -Wall -Wextra -Werror -I$(INCS_DIR) -I$(LIBFT_INCS_DIR) -l$(READLINE_DIR)
+AR = ar rcs
+RM = rm -f
 
-#SRCS = \
-	srcs/main.c \
-	srcs/utils.c \
-	srcs/lexer/lexer_utils.c \
-	srcs/lexer/lexer.c \
-	srcs/execute.c \
-	srcs/execute_pipeline.c \
-	srcs/launch.c \
-	srcs/signals.c \
-	srcs/parser/history.c \
-	srcs/cmd_utils.c \
-	srcs/parser/parser.c \
-	srcs/heredoc.c \
-	srcs/expansion.c \
-	execution/builtin/builtin.c \
-	execution/builtin/cd.c\
-	execution/builtin/echo.c\
-	execution/builtin/env.c\
-	execution/builtin/exit.c\
-	execution/builtin/pwd.c\
-	execution/builtin/unset.c\#
+# Files
+FILES = main
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-SRCS = \
-	minishell.c \
-	execution/builtins/cd.c\
-	execution/builtins/echo.c\
-	execution/builtins/env_functions.c\
-	execution/builtins/env.c\
-	execution/builtins/exit.c\
-	execution/builtins/pwd.c\
-	execution/builtins/unset.c\
-	execution/builtins/export.c\
-
+SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS = $(SRCS:.c=.o)
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
+# Rules
+all: ${NAME}
 
+$(LIBFT_LIB):
+	@make -C $(LIBFT_DIR)
 
-all: $(LIBFT) $(NAME)
+${NAME}: ${OBJS} $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $^ -o $(NAME)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	@make -C $(LIBFT_DIR) clean
+	$(RM) $(OBJS)
+	$(RM) $(NAME)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	@make -C $(LIBFT_DIR) fclean
+	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# Phony targets
+.PHONY: all bonus clean fclean re
