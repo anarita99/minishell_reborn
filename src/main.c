@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/08 15:08:30 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/09 13:56:52 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	main(void)
 {
 	char		*prompt;
+	t_token		*token;
 
 	prompt = readline(NULL);
-	printf("Prompt = %s\n", prompt);
-	lexer(prompt);
+	printf("Prompt = '%s'\n", prompt);
+	token = lexer(prompt);
 	free(prompt);
+	print_tokens(token);
 	return (0);
 }
