@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2026/01/09 14:54:51 by leramos-         ###   ########.fr        #
+#    Updated: 2026/01/12 16:01:57 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,22 +19,21 @@ INCS_DIR = includes
 LIBFT_DIR = libft
 LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
 LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # Readline structure
 READLINE_DIR = readline
 
-# Compiler and flags
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -I$(INCS_DIR) -I$(LIBFT_INCS_DIR) -l$(READLINE_DIR)
-AR = ar rcs
-RM = rm -f
-
 # Files
 FILES = main lexer/lexer lexer/token lexer/types
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
-
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS = $(SRCS:.c=.o)
+
+# Compiler and flags
+CC = cc
+INCLUDES = -I$(INCS_DIR) -I$(LIBFT_INCS_DIR) -l$(READLINE_DIR)
+CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
+RM = rm -f
 
 # Rules
 all: ${NAME}

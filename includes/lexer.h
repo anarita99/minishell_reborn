@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/09 15:09:11 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/12 13:28:49 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef LEXER_H
+# define LEXER_H
 
 # include "minishell.h"
 
@@ -27,6 +27,5 @@ void	print_tokens(t_token *head);
 int	find_token_type(char *input, int idx);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
-
 
 #endif

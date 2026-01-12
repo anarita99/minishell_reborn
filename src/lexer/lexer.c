@@ -6,12 +6,12 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/09 15:10:20 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/12 14:03:24 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "parsing.h"
+#include "lexer.h"
 
 t_token	*lexer(char *input)
 {
@@ -32,48 +32,81 @@ t_token	*lexer(char *input)
 	i = 0;
 	while (input[i])
 	{
+		// Skip spaces
 		if (input[i] == ' ')
+		{
 			i++;
+			continue ;
+		}
 
 		token_type = find_token_type(input, i);
 		// printf("Token type = %i\n", token_type);
 	
-		
+		// Handle operators
+		tmp = NULL;
 		if (token_type == T_PIPE)
+		{
 			tmp = create_operator(T_PIPE, "|");
-		if (token_type == T_REDIR_IN)
+			i++;
+		}
+		else if (token_type == T_REDIR_IN)
+		{
 			tmp = create_operator(T_REDIR_IN, "<");
-		if (token_type == T_REDIT_OUT)
+			i++;
+		}
+		else if (token_type == T_REDIT_OUT)
+		{
 			tmp = create_operator(T_REDIT_OUT, ">");
-		if (token_type == T_HEREDOC)
+			i++;
+		}
+		else if (token_type == T_HEREDOC)
+		{
 			tmp = create_operator(T_HEREDOC, "<<");
-		if (token_type == T_APPEND)
+			i += 2;
+		}
+		else if (token_type == T_APPEND)
+		{
 			tmp = create_operator(T_APPEND, ">>");
-		
-		
-		if (token_type == T_WORD && found_word == 0)
-		{
-			found_word = 1;
-			start_idx = i;
-		}
-		if (found_word && find_token_type(input, i + 1) != T_WORD)
-		{
-			end_idx = i;
-			found_word = 0;
-			tmp = create_word(input, start_idx, end_idx);
+			i += 2;
 		}
 
-
-		if (list_created == 0)
+		// Handle words
+		else if (token_type == T_WORD)
 		{
-			head = tmp;
-			tail = tmp;
-			list_created = 1;
+			if (found_word == 0)
+			{
+				found_word = 1;
+				start_idx = i;
+			}
+			// Check if word continues
+			if (find_token_type(input, i + 1) != T_WORD)
+			{
+				end_idx = i;
+				found_word = 0;
+				tmp = create_word(input, start_idx, end_idx);
+			}
+			i++;
 		}
+
+		// Unknown token type
 		else
-			add_token_to_list(&head, &tail, tmp);
+		{
+			i++;
+			continue;
+		}
 
-		i++;
+		// Add token to the list if we created one
+		if (tmp)
+		{
+			if (list_created == 0)
+			{
+				head = tmp;
+				tail = tmp;
+				list_created = 1;
+			}
+			else
+				add_token_to_list(&head, &tail, tmp);
+		}
 	}
 	return (head);
 }

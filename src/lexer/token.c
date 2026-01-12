@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:27:03 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/08 15:42:03 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/12 13:39:54 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	add_token_to_list(t_token **head, t_token **tail, t_token *token)
 	{
 		*head = token;
 		*tail = token;
+		return ;
 	}
 	(*tail)->next = token;
 	token->prev = *tail;
