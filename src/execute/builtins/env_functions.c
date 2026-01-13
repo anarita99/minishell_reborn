@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 14:26:55 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/24 12:37:44 by adores & mi      ###   ########.fr       */
+/*   Updated: 2026/01/07 14:40:45 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_str_array(char **str)
 		free(str[--i]);
 	free(str);
 }
-
 
 int	env_lstsize(t_env *lst)
 {

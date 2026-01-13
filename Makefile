@@ -3,49 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+         #
+#    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/27 15:37:54 by miduarte &        #+#    #+#              #
-#    Updated: 2025/11/11 11:58:01 by adores & mi      ###   ########.fr        #
+#    Updated: 2026/01/13 15:00:49 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror -I. -Ilibft
-
-#SRCS = \
-	srcs/main.c \
-	srcs/utils.c \
-	srcs/lexer/lexer_utils.c \
-	srcs/lexer/lexer.c \
-	srcs/execute.c \
-	srcs/execute_pipeline.c \
-	srcs/launch.c \
-	srcs/signals.c \
-	srcs/parser/history.c \
-	srcs/cmd_utils.c \
-	srcs/parser/parser.c \
-	srcs/heredoc.c \
-	srcs/expansion.c \
-	execution/builtin/builtin.c \
-	execution/builtin/cd.c\
-	execution/builtin/echo.c\
-	execution/builtin/env.c\
-	execution/builtin/exit.c\
-	execution/builtin/pwd.c\
-	execution/builtin/unset.c\#
+CFLAGS = -g -Wall -Wextra -Werror -I. -Ilibft -Iinclude
 
 SRCS = \
 	minishell.c \
-	execution/builtins/cd.c\
-	execution/builtins/echo.c\
-	execution/builtins/env_functions.c\
-	execution/builtins/env.c\
-	execution/builtins/exit.c\
-	execution/builtins/pwd.c\
-	execution/builtins/unset.c\
-	execution/builtins/export.c\
+	src/execute/builtins/cd.c\
+	src/execute/builtins/echo.c\
+	src/execute/builtins/env_functions.c\
+	src/execute/builtins/env.c\
+	src/execute/builtins/exit.c\
+	src/execute/builtins/pwd.c\
+	src/execute/builtins/unset.c\
+	src/execute/builtins/export.c\
 
 OBJS = $(SRCS:.c=.o)
 
