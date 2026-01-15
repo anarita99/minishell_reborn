@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 15:34:34 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:22:05 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,13 +234,11 @@ static void	test_heredoc(void)
 	// Expected Tokens
 	head_expected = NULL;
 	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
+	tmp = create_token(T_WORD, ft_strdup("cat"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("hello"));
+	tmp = create_token(T_HEREDOC, ft_strdup("<<"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIT_OUT, ft_strdup(">"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("output.txt"));
+	tmp = create_token(T_WORD, ft_strdup("EOF"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
 	compare_lst(token_count, head_actual, head_expected);
@@ -388,13 +386,13 @@ static void	test_multiple_redirections(void)
 	tail_expected = NULL;
 	tmp = create_token(T_WORD, ft_strdup("cat"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("<"));
+	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 	tmp = create_token(T_WORD, ft_strdup("input.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup(">"));
+	tmp = create_token(T_REDIT_OUT, ft_strdup(">"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("output.txt"));
+	tmp = create_token(T_WORD, ft_strdup("output.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
 	compare_lst(token_count, head_actual, head_expected);

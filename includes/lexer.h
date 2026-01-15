@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 13:28:49 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:35:20 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_tokens(t_token *head);
 
 // Types
 
+int	is_quote(char c);
 int	find_token_type(char *input, int idx);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);

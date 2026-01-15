@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 14:03:24 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:49:25 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_token	*lexer(char *input)
 {
 	int		i;
 	int		found_word;
+	int		found_quote;
 	int		start_idx;
 	int		end_idx;
 	t_token	*head;
@@ -28,15 +29,30 @@ t_token	*lexer(char *input)
 	if (!input || !input[0])
 		return (NULL);
 	found_word = 0;
+	found_quote = 0;
 	list_created = 0;
 	i = 0;
 	while (input[i])
 	{
 		// Skip spaces
-		if (input[i] == ' ')
+		if (input[i] == ' ' && found_quote == 0)
 		{
 			i++;
 			continue ;
+		}
+
+		if (is_quote(input[i]) && found_quote == 0)
+		{
+			found_quote = 1;
+			i++;
+			continue;
+		}
+
+		if (is_quote(input[i]) && found_quote == 1)
+		{
+			found_quote = 0;
+			i++;
+			continue;
 		}
 
 		token_type = find_token_type(input, i);

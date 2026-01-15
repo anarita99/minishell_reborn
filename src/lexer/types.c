@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:54:04 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 13:29:02 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:41:59 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,26 @@
 
 static int	is_word(char c)
 {
-	return (ft_isalnum(c) || c == '\"');
+	if (ft_isalnum(c))
+		return (1);
+	if (c == '_' || c == '-')
+		return (1);
+	if (c == '/')
+		return (1);
+	if (c == '.')
+		return (1);
+	if (c == '~' || c == '?')
+		return (1);
+	if (c == '[' || c == ']')
+		return (1);
+	if (c == ':' || c == '@' || c == '=')
+		return (1);
+	return (0);
+}
+
+int	is_quote(char c)
+{
+	return (c == '\"' || c == '\'');
 }
 
 int	find_token_type(char *input, int idx)
