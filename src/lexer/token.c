@@ -6,11 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:27:03 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 13:39:54 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:43:25 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
 
 t_token	*create_token(t_token_type type, char *value)
 {

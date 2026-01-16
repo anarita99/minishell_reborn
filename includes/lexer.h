@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/15 15:35:20 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/16 16:06:08 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,51 @@
 # define LEXER_H
 
 # include "minishell.h"
+
+typedef enum e_token_type
+{
+	T_WORD,
+	T_PIPE,
+	T_REDIR_IN,
+	T_REDIT_OUT,
+	T_HEREDOC,
+	T_APPEND
+}	t_token_type;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+typedef enum e_lexer_state
+{
+	STATE_NORMAL,
+	STATE_IN_SQUOTE,
+	STATE_IN_DQUOTE
+}	t_lexer_state;
+
+typedef enum e_char_type
+{
+	T_SPACE,
+	T_ALNUM,
+	T_QUOTE,
+	T_OPERATOR
+}	t_char_type;
+
+typedef struct s_buffer
+{
+	char	*data;
+	size_t	size;	// size allocated
+	size_t	len;	// current valid length
+} 			t_buffer;
+
+// Buffer
+t_buffer	*create_buffer(char *input);
+void		free_buffer(void);
+void 		add_char_to_buffer(t_buffer *buffer, char c);
 
 // Token
 

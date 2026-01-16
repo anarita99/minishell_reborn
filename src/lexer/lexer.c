@@ -6,11 +6,10 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/15 15:49:25 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:43:58 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 
 t_token	*lexer(char *input)

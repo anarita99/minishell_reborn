@@ -6,11 +6,10 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:54:04 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/15 15:41:59 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:43:31 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 
 static int	is_word(char c)
