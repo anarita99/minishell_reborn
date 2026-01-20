@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/16 17:10:48 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 15:26:41 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/14 12:36:28 by adores            #+#    #+#             */
+/*   Updated: 2025/04/17 16:56:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_target(const char *set, char c)
+static int	is_in_set(const char *set, char c)
 {
 	int	i;
 
@@ -36,10 +36,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || ! set)
 		return (NULL);
 	start = 0;
-	while (s1[start] && is_target(set, s1[start]))
+	while (s1[start] && is_in_set(set, s1[start]))
 		start++;
 	end = ft_strlen(s1);
-	while (end > start && is_target(set, s1[end - 1]))
+	while (end > start && is_in_set(set, s1[end - 1]))
 		end--;
 	newstr = malloc(sizeof(char) * (end - start + 1));
 	if (!newstr)
@@ -53,3 +53,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	newstr[i] = '\0';
 	return (newstr);
 }
+/* #include <stdio.h>
+int main(void)
+{
+	char const str[50] = "aaaaaaaaaaaabxxxxxHallxobbbbbbaaaaa";
+	char const set[] = "abx";
+	printf("%s\n", ft_strtrim(str, set));
+} */

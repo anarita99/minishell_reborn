@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 11:40:50 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/27 16:44:26 by adores & mi      ###   ########.fr       */
+/*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
+/*   Updated: 2026/01/15 15:12:41 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 //#include "execution.h"
 #include <fcntl.h>

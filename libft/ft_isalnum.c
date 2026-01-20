@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 11:21:29 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 12:47:33 by miduarte         ###   ########.fr       */
+/*   Created: 2025/03/13 14:45:18 by adores            #+#    #+#             */
+/*   Updated: 2025/03/13 14:45:18 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum(int arg)
+int	ft_isalnum(int c)
 {
-	if ((arg >= 'A' && arg <= 'Z')
-		|| (arg >= 'a' && arg <= 'z')
-		|| (arg >= '0' && arg <= '9'))
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
 		return (1);
-	else
-		return (0);
+	return (0);
 }

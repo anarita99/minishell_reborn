@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 13:56:14 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 15:14:01 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/15 11:28:35 by adores            #+#    #+#             */
+/*   Updated: 2025/04/17 17:03:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,43 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		slen;
-	int		i;
-	char	*str;
+	unsigned int	i;
+	char			*newstr;
 
 	if (!s || !f)
 		return (NULL);
-	slen = ft_strlen(s);
-	i = 0;
-	str = (char *)malloc(sizeof(char) * slen + 1);
-	if (!str)
+	newstr = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!newstr)
 		return (NULL);
-	while (i < slen)
+	i = 0;
+	while (s[i])
 	{
-		str[i] = f(i, s[i]);
+		newstr[i] = f(i, s[i]);
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	newstr[i] = '\0';
+	return (newstr);
 }
+/* #include <stdio.h>
+char to_upper(unsigned int i, char c)
+{
+	(void)i;
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return c;
+}
+int main(void)
+{
+    char const *original = "ana rita";
+    char *modificada;
+
+    modificada = ft_strmapi(original, &to_upper);
+    if (modificada)
+    {
+        printf("Original: %s\n", original);
+        printf("Modificada: %s\n", modificada);
+        free(modificada);
+    }
+
+    return 0;
+} */

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/22 10:48:54 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/11/24 12:37:36 by adores & mi      ###   ########.fr       */
+/*   Created: 2026/01/15 15:13:37 by adores            #+#    #+#             */
+/*   Updated: 2026/01/15 15:13:38 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "execution.h"
 

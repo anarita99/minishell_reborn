@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 12:36:57 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:58 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/14 09:46:47 by adores            #+#    #+#             */
+/*   Updated: 2025/04/14 13:21:01 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,32 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*sub;
-	size_t	str_len;
+	size_t	slen;
 	size_t	i;
+	char	*substr;
 
 	if (!s)
 		return (NULL);
-	str_len = ft_strlen(s);
-	if (start >= str_len)
-		len = 0;
-	else if (start + len > str_len)
-		len = str_len - start;
-	sub = malloc(len + 1);
-	if (!sub)
+	slen = ft_strlen((char *)s);
+	if (start >= slen)
+		return (ft_strdup(""));
+	if (len > slen - start)
+		len = slen - start;
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
 		return (NULL);
 	i = 0;
-	while (i < len && s[start + i])
+	while (i < len)
 	{
-		sub[i] = s[start + i];
+		substr[i] = s[start + i];
 		i++;
 	}
-	sub[i] = '\0';
-	return (sub);
+	substr[i] = '\0';
+	return (substr);
 }
+/* #include <stdio.h>
+int main (void)
+{
+	char	str[] = "HELLO WORLD";
+	printf("%s\n", ft_substr(str, 3, 5));
+} */

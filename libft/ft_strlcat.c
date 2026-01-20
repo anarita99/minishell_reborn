@@ -3,35 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 14:52:12 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/23 11:08:20 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/13 17:29:51 by adores            #+#    #+#             */
+/*   Updated: 2025/04/14 10:04:50 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	destlen;
-	size_t	srclen;
+	size_t	dest_len;
+	size_t	src_len;
 	size_t	i;
 
+	dest_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (dest_len >= dstsize)
+		return (dstsize + src_len);
 	i = 0;
-	srclen = ft_strlen(src);
-	if (dstsize == 0)
-		return (srclen);
-	destlen = ft_strlen(dest);
-	if (destlen > dstsize)
-		return (dstsize + srclen);
-	if (dstsize < 1)
-		return (dstsize + srclen);
-	while (src[i] && (i + destlen) < (dstsize - 1))
+	while (i < dstsize - dest_len - 1 && src[i])
 	{
-		dest[destlen + i] = src[i];
+		dst[dest_len + i] = src[i];
 		i++;
 	}
-	dest[destlen + i] = '\0';
-	return (destlen + srclen);
+	dst[dest_len + i] = '\0';
+	return (dest_len + src_len);
 }
+/* #include <stdio.h>
+
+int main(void)
+{
+	char dest[5] = "abc";
+	char src[] = "defg";
+	size_t size = 5;
+
+	printf("Tamanho final: %zu\n", ft_strlcat(dest, src, size));
+	printf("Resultado: %s\n", dest);
+} */

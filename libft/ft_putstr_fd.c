@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 14:45:07 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 14:20:57 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/14 13:05:35 by adores            #+#    #+#             */
+/*   Updated: 2025/04/22 13:54:38 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
+	if (!s || fd < 0)
+		return ;
 	i = 0;
 	while (s[i] != '\0')
 	{
@@ -23,3 +25,8 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+/* int	main(void)
+{
+	char *str = "HELLO";
+	ft_putstr_fd(str, 1);
+} */

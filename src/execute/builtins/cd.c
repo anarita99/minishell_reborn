@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 11:43:36 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/12/08 15:24:04 by adores & mi      ###   ########.fr       */
+/*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
+/*   Updated: 2026/01/15 15:15:07 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int cd_builtin (t_shell *shell, char **args)
 	if(!new_pwd)
 	{
 		free_str_array(args);
-		malloc_error(shell, shell->env_list);
+		malloc_error(shell->env_list);
 	}
 	set_env_var(&shell->env_list, "OLDPWD", old_pwd);
 	set_env_var(&shell->env_list, "PWD", new_pwd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 14:19:31 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 14:19:48 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/14 12:58:55 by adores            #+#    #+#             */
+/*   Updated: 2025/04/22 13:51:25 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	if (fd >= 0)
+		write(fd, &c, 1);
 }
+/*0 - entrada padrao (nao escreve nada), 1 - saida padrao, 2 - erro padrao */

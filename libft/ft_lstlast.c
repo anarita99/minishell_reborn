@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/21 10:43:27 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/23 11:05:46 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/17 11:03:13 by adores            #+#    #+#             */
+/*   Updated: 2025/04/17 16:50:56 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	t_list	*temp;
-
-	temp = lst;
 	if (!lst)
 		return (NULL);
-	while (temp->next)
-		temp = temp->next;
-	return (temp);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
+/* #include <stdio.h>
+int main(void)
+{
+	t_list *head = NULL;
+	t_list *node1 = ft_lstnew("ANA");
+	t_list *node2 = ft_lstnew("RITA");
+	
+	ft_lstadd_front(&head, node1);
+	ft_lstadd_front(&head, node2);
+	
+	t_list *last = ft_lstlast(head);
+	printf("ULTIMO = %s\n", (char *)last->content);
+	return(0);
+} */

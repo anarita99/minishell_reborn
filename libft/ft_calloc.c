@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/11 13:15:28 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 12:45:56 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/11 12:24:35 by adores            #+#    #+#             */
+/*   Updated: 2025/04/14 09:54:04 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t nitems, size_t size)
 {
-	void	*ptr;
 	size_t	mult;
+	void	*ptr;
 
-	if (count == 0 || size == 0)
+	if (nitems == 0 || size == 0)
 		return (malloc(0));
-	mult = count * size;
-	if (count > INT_MAX / size)
+	mult = nitems * size;
+	if (nitems > INT_MAX / size)
 		return (NULL);
 	ptr = malloc(mult);
 	if (!ptr)
@@ -28,3 +28,17 @@ void	*ft_calloc(size_t count, size_t size)
 	ft_bzero(ptr, mult);
 	return (ptr);
 }
+/* #include <stdio.h>
+
+int main(void)
+{
+	char *ptr;
+
+	ptr = "Hello";
+	printf("%s\n", ptr);
+	
+	ptr = (char*)ft_calloc(5,1);
+	if(ptr)
+		printf("PAssou\n");
+	printf("%s", ptr);
+} */

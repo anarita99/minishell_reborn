@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 18:52:30 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/22 14:42:51 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/11 10:09:41 by adores            #+#    #+#             */
+/*   Updated: 2025/04/14 13:16:58 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t num)
 	i = 0;
 	while ((str1[i] || str2[i]) && i < num)
 	{
-		if (((unsigned char)str1[i] - (unsigned char)str2[i]) != 0)
+		if (str1[i] != str2[i])
 		{
 			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 		}

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores & miduarte <adores & miduarte@st    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 16:15:33 by adores & mi       #+#    #+#             */
-/*   Updated: 2025/12/04 16:30:34 by adores & mi      ###   ########.fr       */
+/*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
+/*   Updated: 2026/01/20 14:02:22 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "execution.h"
 
 /*criar um ficheiro */
 //open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -53,7 +53,6 @@ char *parse_infiles(t_input *input)
 	}
 	return (name);
 }
-
 
 char	*create_temp_file(void)
 {

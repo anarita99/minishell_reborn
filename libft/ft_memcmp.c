@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miduarte <miduarte@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 10:25:08 by miduarte          #+#    #+#             */
-/*   Updated: 2025/04/21 15:59:31 by miduarte         ###   ########.fr       */
+/*   Created: 2025/04/13 15:43:38 by adores            #+#    #+#             */
+/*   Updated: 2025/04/14 10:01:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,12 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
+/* #include <stdio.h>
+#include <string.h>
+int main(void)
+{
+	char *string1 = "HELLO";
+	char *string2 = "HOLLO";
+	printf("%d\n", ft_memcmp(string1, string2, 3));
+	printf("%d\n", memcmp(string1, string2, 3));
+} */
