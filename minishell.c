@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:49:18 by adores & mi       #+#    #+#             */
-/*   Updated: 2026/01/15 15:15:42 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:09:54 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,36 @@ int main(void)
 		args = ft_split(input, ' ');
 		if (!ft_strncmp(args[0], "exit", 5))
 		{
-			exit_builtin(args, &shell);
+			exit_builtin(args);
 		}
 		else if (!ft_strncmp(args[0], "env", 4))
 		{
-			env_builtin(&shell);
+			env_builtin();
 			free_arr(args);
 		}
 		else if (!ft_strncmp(args[0], "echo", 5))
 		{
-		 	echo_builtin(args, &shell);
+		 	echo_builtin(args);
 			free_arr(args);
 		}
 		else if (!ft_strncmp(args[0], "unset", 6))
 		{
-		 	unset_builtin(args, &shell);
+		 	unset_builtin(args);
 			free_arr(args);
 		}
 		else if (!ft_strncmp(args[0], "export", 7))
 		{
-		 	export_builtin(args, &shell);
+		 	export_builtin(args);
 			free_arr(args);
 		}
 		else if (!ft_strncmp(args[0], "pwd", 4))
 		{
-			pwd_builtin(&shell);
+			pwd_builtin();
 			free_arr(args);
 		}
 		else if (!ft_strncmp(args[0], "cd", 3))
 		{
-			cd_builtin(&shell, args);
+			cd_builtin(args);
 			free_arr(args);
 		}
 		else

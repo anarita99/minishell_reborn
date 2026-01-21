@@ -6,14 +6,14 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/15 15:13:48 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:54:08 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "execution.h"
 
-//fazer funçao do shell level
+
 //pwd, shell level quando env -i
 
 static void	set_shell_level(t_env **env_list)
@@ -32,7 +32,7 @@ static void	set_shell_level(t_env **env_list)
 			malloc_error(*env_list);
 		return ;
 	}
-	set_env_var(env_list, "SHLVL", "1");
+	set_env_var("SHLVL", "1");
 }
 
 int 	add_env_var(t_env **head, char *env)
@@ -69,22 +69,22 @@ t_env	*init_env(void)
 			malloc_error(env_list);
 		i++;
 	}
-	set_env_var(&env_list, "PWD", getcwd(buf, PATH_MAX));
+	set_env_var("PWD", getcwd(buf, PATH_MAX));
 	set_shell_level(&env_list);
 	return (env_list);
 }
 
-int	env_builtin(t_shell *shell)
+int	env_builtin()
 {
 	t_env	*current;
 
-	current = shell->env_list;
+	current = call_sh_struct()->env_list;
 	while (current)
 	{
 		if (current->value)
 			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
-	shell->last_exit_status = 0;
+	call_sh_struct()->last_exit_status = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/01/15 15:15:07 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:08:42 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,18 @@ static void	cd_error(char *path)
 	write(2, ": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 }
-int	set_cd_path(char **args, t_shell *shell, char **path)
+
+int	set_cd_path(char **args, char **path)
 {
 	if (!args[1])
 	{
-		*path = get_env_value(shell->env_list, "HOME");
+		*path = get_env_value(call_sh_struct()->env_list, "HOME");
 		if(*path == NULL)
 			return (ft_putendl_fd("minishell: cd: HOME not set", 2), 1);
 	}
 	else if (ft_strcmp(args[1], "-") == 0)
 	{
-		*path = get_env_value(shell->env_list, "OLDPWD");
+		*path = get_env_value(call_sh_struct()->env_list, "OLDPWD");
 		if(*path == NULL)
 			return (ft_putendl_fd("minishell: cd: OLDPWD not set", 2), 1);
 		printf("%s\n", *path);
@@ -39,7 +40,7 @@ int	set_cd_path(char **args, t_shell *shell, char **path)
 	return (0);
 }
 
-int cd_builtin (t_shell *shell, char **args)
+int cd_builtin (char **args)
 {
 	char	*path;
 	char	*old_pwd;
@@ -47,8 +48,8 @@ int cd_builtin (t_shell *shell, char **args)
 
 	if (args[1] && args[2])
 		return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
-	old_pwd = get_env_value(shell->env_list, "PWD");
-	if (set_cd_path(args, shell, &path) == 1)
+	old_pwd = get_env_value(call_sh_struct()->env_list, "PWD");
+	if (set_cd_path(args, &path) == 1)
 		return (1);
 	if (chdir(path) == -1)
 		return (cd_error(args[1]), 1);
@@ -56,10 +57,12 @@ int cd_builtin (t_shell *shell, char **args)
 	if(!new_pwd)
 	{
 		free_str_array(args);
-		malloc_error(shell->env_list);
+		malloc_error();
 	}
-	set_env_var(&shell->env_list, "OLDPWD", old_pwd);
-	set_env_var(&shell->env_list, "PWD", new_pwd);
+	set_env_var("OLDPWD", old_pwd);
+	set_env_var("PWD", new_pwd);
 	free(new_pwd);
 	return (0);
 }
+
+//verificar erros

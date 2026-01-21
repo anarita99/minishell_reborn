@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:37 by adores            #+#    #+#             */
-/*   Updated: 2026/01/15 15:13:38 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:49:58 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_n_option(char *arg)
 	return (1);
 }
 
-int	echo_builtin(char **args, t_shell *shell)
+int	echo_builtin(char **args)
 {
 	int	i;
 	int	newline;
@@ -49,6 +49,6 @@ int	echo_builtin(char **args, t_shell *shell)
 	}
 	if(newline == 1)
 		ft_putstr_fd("\n", 1);
-	shell->last_exit_status = 0;
+	call_sh_struct()->last_exit_status = 0;
 	return (0);
 }

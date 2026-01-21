@@ -6,17 +6,19 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/01/15 15:18:23 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:54:49 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	malloc_error(t_shell *shell, t_env *env_list)
+void	exitclean(unsigned char exit_code);
+
+void	malloc_error()
 {
-	free_env_list(env_list);
+	free_env_list(call_sh_struct()->env_list);
 	ft_putendl_fd("minishell: allocation error", 2);
-	exitclean(shell, 1);
+	exitclean('1');
 }
 
 static int	is_numeric(const char *s)
@@ -68,13 +70,13 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 	return (true);
 }
 
-int	exitclean(t_shell *shell, unsigned char exit_code)
+void	exitclean(unsigned char exit_code)
 {
-	free_env_list(shell->env_list);  //vai ter de limpar mais coisas
+	free_env_list(call_sh_struct()->env_list);  //vai ter de limpar mais coisas
 	exit(exit_code);
 }
 
-int	exit_builtin(char **args, t_shell *shell)
+int	exit_builtin(char **args)
 {
 	long long	exit_code;
 
@@ -82,7 +84,7 @@ int	exit_builtin(char **args, t_shell *shell)
 	if(!args[1])
 	{
 		free_str_array(args);
-		exitclean(shell, (unsigned char)shell->last_exit_status);
+		exitclean((unsigned char)call_sh_struct()->last_exit_status);
 	}	
 	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
 	{
@@ -90,16 +92,16 @@ int	exit_builtin(char **args, t_shell *shell)
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		free_str_array(args);
-		exitclean(shell, 2);
+		exitclean('2');
 	}
 	if(args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		shell->last_exit_status = 1;
+		call_sh_struct()->last_exit_status = 1;
 		return (1);
 	}
 	free_str_array(args);
-	exitclean(shell, (unsigned char)exit_code);
+	exitclean((unsigned char)exit_code);
 	return (0);
 }
 

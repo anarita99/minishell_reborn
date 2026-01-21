@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/01/15 15:15:34 by adores           ###   ########.fr        #
+#    Updated: 2026/01/21 15:04:04 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -g -Wall -Wextra -Werror -I. -Ilibft -Iinclude
 
 SRCS = \
 	minishell.c \
+	data.c \
 	src/execute/builtins/cd.c\
 	src/execute/builtins/echo.c\
 	src/execute/builtins/env_functions.c\

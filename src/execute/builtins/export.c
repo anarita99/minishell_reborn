@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/01/15 15:18:15 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:58:30 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static t_env	**list_to_array(t_env	*env_list)
 	return (node_array);
 }
 
-void	print_sorted_env(t_shell *shell)
+void	print_sorted_env()
 {
 	t_env	**node_array;
 	int		i;
 
-	node_array = list_to_array (shell->env_list);
+	node_array = list_to_array (call_sh_struct()->env_list);
 	if (!node_array)
 		return;
 	bubble_sort_array(node_array);
@@ -101,45 +101,44 @@ static void	export_error(char *arg, int *exit_code)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
-static void	export_append(char *equal, char *plus, char *arg, t_shell *shell)
+static void	export_append(char *equal, char *plus, char *arg)
 {
 	t_env	*node;
 	char	*value;
 
 	*plus = '\0';
-	node = get_env_node(shell->env_list, arg);
+	node = get_env_node(call_sh_struct()->env_list, arg);
 	if (node)
 	{
 		if (node->value)
 		{
 			value = ft_strjoin(node->value, equal + 1);
 			if(!value)
-				malloc_error(shell->env_list);
+				malloc_error();
 			free(node->value);
 			node->value = value;
 		}
 		else
-			set_env_var(&shell->env_list, node->key, equal + 1);
+			set_env_var(node->key, equal + 1);
 	}
 	else
-		set_env_var(&shell->env_list, arg, equal + 1);
+		set_env_var(arg, equal + 1);
 	*plus = '+';
 }
 
-static void export_non_null_var(char *equal, char *plus, char *arg, t_shell *shell)
+static void export_non_null_var(char *equal, char *plus, char *arg)
 {
-	
 	if(equal && !plus)
 	{
 		*equal = '\0';
-		set_env_var(&shell->env_list, arg, equal + 1);
+		set_env_var(arg, equal + 1);
 		*equal = '=';
 	}
 	else if(plus)
-		export_append(equal, plus, arg, shell);
+		export_append(equal, plus, arg);
 }
 
-int	export_builtin(char **args, t_shell *shell)
+int	export_builtin(char **args)
 {
 	int		exit_code;
 	int		i;
@@ -148,7 +147,7 @@ int	export_builtin(char **args, t_shell *shell)
 
 	exit_code = 0;
 	if (!args[1])
-		return (print_sorted_env(shell), exit_code);
+		return (print_sorted_env(), exit_code);
 	i = 0;
 	while(args[i])
 	{
@@ -157,9 +156,9 @@ int	export_builtin(char **args, t_shell *shell)
 		if(is_valid_identifier(args[i]) == false)
 			export_error(args[i], &exit_code);
 		else if(equal)
-			export_non_null_var(equal, plus, args[i], shell);
-		else if(!get_env_node(shell->env_list, args[i]))
-				set_env_var(&shell->env_list, args[i], NULL);
+			export_non_null_var(equal, plus, args[i]);
+		else if(!get_env_node(call_sh_struct()->env_list, args[i]))
+				set_env_var(args[i], NULL);
 		i++;
 	}
 	return (exit_code);

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/20 14:02:22 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/20 15:28:59 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char *parse_outfiles(t_input *input)
 		name = input->outfiles[i].filename;
 		if(access(name, F_OK) == -1 || access(name, W_OK) == 0)
 		{
-			if(input->outfiles->mode == REDOUT)
+			if(input->outfiles[i].mode == REDOUT)
 				open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else if(input->outfiles->mode == APPEND)
+			else if(input->outfiles[i].mode == APPEND)
 				open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		}
 		else
@@ -99,6 +99,7 @@ void heredoc_func(t_file *heredoc)
 			free(line);
 			break;
 		}
+		//chamar funçao de expansao
 		ft_putendl_fd(line, fd);
 		free(line);
 	}

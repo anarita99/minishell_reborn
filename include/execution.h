@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/01/13 14:57:33 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:02:10 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_shell
 */
 int		add_env_var(t_env **head, char *env);
 t_env	*init_env(void);
-int		env_builtin(t_shell *shell);
+int		env_builtin();
 
 /*
 ** srcs/env/env_functions.c
@@ -87,7 +87,7 @@ t_env	*get_env_node(t_env *env_list, char *key);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);
 void	free_str_array(char **str);
-void	set_env_var(t_env **env_list, char *key, char *value);
+void	set_env_var(char *key, char *value);
 
 
 /*
@@ -102,16 +102,17 @@ int		exe_builtin(char **args, t_shell *shell);*/
 /*
 ** execution/builtins/.c
 */
-int		echo_builtin(char **args, t_shell *shell);
-int 	cd_builtin (t_shell *shell, char **args);
-int		pwd_builtin(t_shell *shell);
-int		exit_builtin(char **args, t_shell *shell);
-void	malloc_error(t_env *env_list);
-int		env_builtin(t_shell *shell);
-int		unset_builtin(char **args, t_shell *shell);
-int		export_builtin(char **args, t_shell *shell);
+int		echo_builtin(char **args);
+int 	cd_builtin (char **args);
+int		pwd_builtin();
+int		exit_builtin(char **args);
+void	malloc_error();
+int		env_builtin();
+int		unset_builtin(char **args);
+int		export_builtin(char **args);
 int		is_builtin(char **args);
 
 
+t_shell	*call_sh_struct(void);
 
 #endif
