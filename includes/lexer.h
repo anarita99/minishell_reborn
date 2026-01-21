@@ -21,7 +21,7 @@ typedef enum e_token_type
 	T_WORD,
 	T_PIPE,
 	T_REDIR_IN,
-	T_REDIT_OUT,
+	T_REDIR_OUT,
 	T_HEREDOC,
 	T_APPEND
 }	t_token_type;

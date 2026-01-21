@@ -69,7 +69,7 @@
 // 				add_char_to_buffer(buffer, c_next);
 // 				return (T_APPEND);
 // 			}
-// 			return (T_REDIT_OUT);
+// 			return (T_REDIR_OUT);
 // 		}
 // 	}
 
@@ -136,7 +136,7 @@ int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed
 					return (T_APPEND);
 				}
 				else
-					return (T_REDIT_OUT);
+					return (T_REDIR_OUT);
 			}
 		}
 	}

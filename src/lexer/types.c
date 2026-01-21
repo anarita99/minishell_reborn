@@ -64,7 +64,7 @@ int	is_quote(char c)
 // 		if (input[idx + 1] == '>')
 // 			return (T_APPEND);
 // 		else
-// 			return (T_REDIT_OUT);
+// 			return (T_REDIR_OUT);
 // 	}
 // 	if (input[idx] == '<')
 // 	{
@@ -87,7 +87,7 @@ int	is_quote(char c)
 // 		if (input[idx + 1] == '>')
 // 			return (T_APPEND);
 // 		else
-// 			return (T_REDIT_OUT);
+// 			return (T_REDIR_OUT);
 // 	}
 // 	if (input[idx] == '<')
 // 	{
