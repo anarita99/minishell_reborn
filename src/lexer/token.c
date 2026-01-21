@@ -12,11 +12,6 @@
 
 #include "lexer.h"
 
-// char	*get_token_value(t_token *buffer)
-// {
-
-// }
-
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;

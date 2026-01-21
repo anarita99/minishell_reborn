@@ -22,7 +22,7 @@ static int	compare_token(t_token expected, t_token actual, int index)
 			index, expected.type, actual.type);
 		return (0);
 	}
-	if (ft_strncmp(expected.value, actual.value, ft_strlen(expected.value)) != 0)
+	if (strcmp(expected.value, actual.value) != 0)
 	{
 		printf("Token %d value mismatch: expected '%s', got '%s'\n",
 			index, expected.value, actual.value);
@@ -743,7 +743,7 @@ static void	test_complex_pipe_redirections(void)
 /*
 ** Test 20: Quotes in the middle of word
 ** Input: "hello'world'"
-** Expected: [T_WORD:"hello'world'"]
+** Expected: [T_WORD:"helloworld"]
 ** Quotes should merge with surrounding text
 */
 static void	test_quotes_in_middle_of_word(void)
@@ -765,7 +765,7 @@ static void	test_quotes_in_middle_of_word(void)
 	// Expected Tokens
 	head_expected = NULL;
 	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("hello'world'"));
+	tmp = create_token(T_WORD, ft_strdup("helloworld"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
 	compare_lst(token_count, head_actual, head_expected);

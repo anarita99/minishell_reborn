@@ -19,7 +19,7 @@ int	main(void)
 	t_token		*token;
 
 	// prompt = readline(NULL);
-	prompt = ft_strdup("");
+	prompt = ft_strdup("hello'world'");
 	printf("Prompt = '%s'\n", prompt);
 	token = lexer(prompt);
 	free(prompt);

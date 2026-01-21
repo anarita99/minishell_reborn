@@ -57,9 +57,9 @@ t_token	*lexer(char *input)
 		if (state == STATE_NORMAL)
 			token_type = state_normal(&state, c, c_type, buffer, &consumed, input[i + 1]);
 		else if (state == STATE_IN_SQUOTE)
-			token_type = state_squote(&state, c, c_type, buffer);
+			token_type = state_quote(&state, c, c_type, buffer);
 		else if (state == STATE_IN_DQUOTE)
-			token_type = state_dquote(&state, c, c_type, buffer);
+			token_type = state_quote(&state, c, c_type, buffer);
 
 		// Create token if ready
 		if (token_type != T_NONE)

@@ -18,7 +18,7 @@ static int	ft_isword(char c)
 		return (1);
 	if (c == '_' || c == '-')
 		return (1);
-	if (c == '/')
+	if (c == '/' || c == '$')
 		return (1);
 	if (c == '.')
 		return (1);

@@ -80,8 +80,7 @@ t_token	*create_operator(t_token_type type, char *str);
 
 // States
 int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char c_next);
-int state_squote(int *state, char c, int c_type, t_buffer *buffer);
-int state_dquote(int *state, char c, int c_type, t_buffer *buffer);
+int	state_quote(int *state, char c, int c_type, t_buffer *buffer);
 
 
 
