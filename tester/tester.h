@@ -25,5 +25,6 @@ void	run_executor_tests(void);
 void	print_test_info(int n, char *name, char *input);
 void	print_passed(void);
 void	print_failed(void);
+void	print_passed_count(int count, int max);
 
 #endif

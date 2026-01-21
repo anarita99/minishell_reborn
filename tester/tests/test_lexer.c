@@ -31,7 +31,7 @@ static int	compare_token(t_token expected, t_token actual, int index)
 	return (1);
 }
 
-static void	compare_lst(int token_count, t_token *head_actual, t_token *head_expected)
+static int	compare_lst(int token_count, t_token *head_actual, t_token *head_expected)
 {
 	t_token	*current_actual;
 	t_token	*current_expected;
@@ -65,6 +65,7 @@ static void	compare_lst(int token_count, t_token *head_actual, t_token *head_exp
 	else
 		print_failed();
 	printf("\n");
+	return (success);
 }
 
 /*
@@ -72,7 +73,7 @@ static void	compare_lst(int token_count, t_token *head_actual, t_token *head_exp
 ** Input: "echo hello"
 ** Expected: [T_WORD:"echo"] [T_WORD:"hello"]
 */
-static void	test_simple_command(void)
+static int	test_simple_command(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -87,6 +88,7 @@ static void	test_simple_command(void)
 	
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -96,8 +98,8 @@ static void	test_simple_command(void)
 	tmp = create_token(T_WORD, ft_strdup("hello"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 	
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -105,7 +107,7 @@ static void	test_simple_command(void)
 ** Input: "ls | grep test"
 ** Expected: [T_WORD:"ls"] [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"]
 */
-static void	test_pipe(void)
+static int	test_pipe(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -120,6 +122,7 @@ static void	test_pipe(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -133,8 +136,8 @@ static void	test_pipe(void)
 	tmp = create_token(T_WORD, ft_strdup("test"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -142,7 +145,7 @@ static void	test_pipe(void)
 ** Input: "cat < input.txt"
 ** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
 */
-static void	test_input_redirection(void)
+static int	test_input_redirection(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -157,6 +160,7 @@ static void	test_input_redirection(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -168,8 +172,8 @@ static void	test_input_redirection(void)
 	tmp = create_token(T_WORD, ft_strdup("input.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -177,7 +181,7 @@ static void	test_input_redirection(void)
 ** Input: "echo hello > output.txt"
 ** Expected: [T_WORD:"echo"] [T_WORD:"hello"] [T_REDIR_OUT:">"] [T_WORD:"output.txt"]
 */
-static void	test_output_redirection(void)
+static int	test_output_redirection(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -192,6 +196,7 @@ static void	test_output_redirection(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -205,8 +210,8 @@ static void	test_output_redirection(void)
 	tmp = create_token(T_WORD, ft_strdup("output.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -214,7 +219,7 @@ static void	test_output_redirection(void)
 ** Input: "cat << EOF"
 ** Expected: [T_WORD:"cat"] [T_HEREDOC:"<<"] [T_WORD:"EOF"]
 */
-static void	test_heredoc(void)
+static int	test_heredoc(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -229,6 +234,7 @@ static void	test_heredoc(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -240,8 +246,8 @@ static void	test_heredoc(void)
 	tmp = create_token(T_WORD, ft_strdup("EOF"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -249,7 +255,7 @@ static void	test_heredoc(void)
 ** Input: "echo hello >> output.txt"
 ** Expected: [T_WORD:"echo"] [T_WORD:"hello"] [T_APPEND:">>"] [T_WORD:"output.txt"]
 */
-static void	test_append(void)
+static int	test_append(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -264,6 +270,7 @@ static void	test_append(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -277,8 +284,8 @@ static void	test_append(void)
 	tmp = create_token(T_WORD, ft_strdup("output.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -286,7 +293,7 @@ static void	test_append(void)
 ** Input: "echo \"hello world\""
 ** Expected: [T_WORD:"echo"] [T_WORD:""hello world""]
 */
-static void	test_quoted_strings(void)
+static int	test_quoted_strings(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -301,6 +308,7 @@ static void	test_quoted_strings(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -310,8 +318,8 @@ static void	test_quoted_strings(void)
 	tmp = create_token(T_WORD, ft_strdup("\"hello world\""));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -320,7 +328,7 @@ static void	test_quoted_strings(void)
 ** Expected: [T_WORD:"ls"] [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"] 
 **           [T_PIPE:"|"] [T_WORD:"wc"] [T_WORD:"-l"]
 */
-static void	test_multiple_pipes(void)
+static int	test_multiple_pipes(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -335,6 +343,7 @@ static void	test_multiple_pipes(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -354,8 +363,8 @@ static void	test_multiple_pipes(void)
 	tmp = create_token(T_WORD, ft_strdup("-l"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -364,7 +373,7 @@ static void	test_multiple_pipes(void)
 ** Expected: 	[T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
 ** 				[T_REDIR_OUT:">"] [T_WORD:"output.txt"]
 */
-static void	test_multiple_redirections(void)
+static int	test_multiple_redirections(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -379,6 +388,7 @@ static void	test_multiple_redirections(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -394,8 +404,8 @@ static void	test_multiple_redirections(void)
 	tmp = create_token(T_WORD, ft_strdup("output.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -403,7 +413,7 @@ static void	test_multiple_redirections(void)
 ** Input: ""
 ** Expected: NULL or empty token array
 */
-static void	test_empty_input(void)
+static int	test_empty_input(void)
 {
 	t_token	*head_actual;
 	char	*input;
@@ -416,7 +426,7 @@ static void	test_empty_input(void)
 	// Actual Tokens
 	head_actual = lexer(input);
 
-	compare_lst(token_count, head_actual, NULL);
+	return (compare_lst(token_count, head_actual, NULL));
 }
 
 /*
@@ -425,7 +435,7 @@ static void	test_empty_input(void)
 ** Expected: [T_WORD:"echo"] [T_WORD:"'hello|world'"]
 ** Single quotes should prevent pipe interpretation
 */
-static void	test_single_quotes_special_chars(void)
+static int	test_single_quotes_special_chars(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -440,6 +450,7 @@ static void	test_single_quotes_special_chars(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -449,8 +460,8 @@ static void	test_single_quotes_special_chars(void)
 	tmp = create_token(T_WORD, ft_strdup("'hello|world'"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -459,7 +470,7 @@ static void	test_single_quotes_special_chars(void)
 ** Expected: [T_WORD:"cat"] [T_WORD:"'file<>name.txt'"]
 ** Single quotes should prevent redirection operators interpretation
 */
-static void	test_single_quotes_with_operators(void)
+static int	test_single_quotes_with_operators(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -474,6 +485,7 @@ static void	test_single_quotes_with_operators(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -483,8 +495,8 @@ static void	test_single_quotes_with_operators(void)
 	tmp = create_token(T_WORD, ft_strdup("'file<>name.txt'"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -493,7 +505,7 @@ static void	test_single_quotes_with_operators(void)
 ** Expected: [T_WORD:"echo"] [T_WORD:""$HOME""]
 ** Dollar sign should be preserved in double quotes for expansion
 */
-static void	test_double_quotes_with_variable(void)
+static int	test_double_quotes_with_variable(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -508,6 +520,7 @@ static void	test_double_quotes_with_variable(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -517,8 +530,8 @@ static void	test_double_quotes_with_variable(void)
 	tmp = create_token(T_WORD, ft_strdup("\"$HOME\""));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -527,7 +540,7 @@ static void	test_double_quotes_with_variable(void)
 ** Expected: [T_WORD:"echo"] [T_WORD:"'$HOME'"]
 ** Dollar sign should NOT be expanded in single quotes
 */
-static void	test_single_quotes_no_expansion(void)
+static int	test_single_quotes_no_expansion(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -542,6 +555,7 @@ static void	test_single_quotes_no_expansion(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -551,8 +565,8 @@ static void	test_single_quotes_no_expansion(void)
 	tmp = create_token(T_WORD, ft_strdup("'$HOME'"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -561,7 +575,7 @@ static void	test_single_quotes_no_expansion(void)
 ** Expected: [T_WORD:"echo"] [T_WORD:"$HOME"]
 ** Lexer should preserve $VAR for later expansion
 */
-static void	test_env_variable_unquoted(void)
+static int	test_env_variable_unquoted(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -576,6 +590,7 @@ static void	test_env_variable_unquoted(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -585,8 +600,8 @@ static void	test_env_variable_unquoted(void)
 	tmp = create_token(T_WORD, ft_strdup("$HOME"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -595,7 +610,7 @@ static void	test_env_variable_unquoted(void)
 ** Expected: [T_WORD:"echo"] [T_WORD:"$?"]
 ** Should preserve $? for expansion
 */
-static void	test_exit_status_variable(void)
+static int	test_exit_status_variable(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -610,6 +625,7 @@ static void	test_exit_status_variable(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -619,8 +635,8 @@ static void	test_exit_status_variable(void)
 	tmp = create_token(T_WORD, ft_strdup("$?"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -628,7 +644,7 @@ static void	test_exit_status_variable(void)
 ** Input: "echo 'hello' \"world\""
 ** Expected: [T_WORD:"echo"] [T_WORD:"'hello'"] [T_WORD:""world""]
 */
-static void	test_mixed_quotes(void)
+static int	test_mixed_quotes(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -643,6 +659,7 @@ static void	test_mixed_quotes(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -654,8 +671,8 @@ static void	test_mixed_quotes(void)
 	tmp = create_token(T_WORD, ft_strdup("\"world\""));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -663,7 +680,7 @@ static void	test_mixed_quotes(void)
 ** Input: "cat << 'EOF'"
 ** Expected: [T_WORD:"cat"] [T_HEREDOC:"<<"] [T_WORD:"'EOF'"]
 */
-static void	test_heredoc_quoted_delimiter(void)
+static int	test_heredoc_quoted_delimiter(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -678,6 +695,7 @@ static void	test_heredoc_quoted_delimiter(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -689,8 +707,8 @@ static void	test_heredoc_quoted_delimiter(void)
 	tmp = create_token(T_WORD, ft_strdup("'EOF'"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -700,7 +718,7 @@ static void	test_heredoc_quoted_delimiter(void)
 **           [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"]
 **           [T_REDIR_OUT:">"] [T_WORD:"out.txt"]
 */
-static void	test_complex_pipe_redirections(void)
+static int	test_complex_pipe_redirections(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -715,6 +733,7 @@ static void	test_complex_pipe_redirections(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -736,8 +755,8 @@ static void	test_complex_pipe_redirections(void)
 	tmp = create_token(T_WORD, ft_strdup("out.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -746,7 +765,7 @@ static void	test_complex_pipe_redirections(void)
 ** Expected: [T_WORD:"helloworld"]
 ** Quotes should merge with surrounding text
 */
-static void	test_quotes_in_middle_of_word(void)
+static int	test_quotes_in_middle_of_word(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -761,6 +780,7 @@ static void	test_quotes_in_middle_of_word(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -768,8 +788,8 @@ static void	test_quotes_in_middle_of_word(void)
 	tmp = create_token(T_WORD, ft_strdup("helloworld"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -777,7 +797,7 @@ static void	test_quotes_in_middle_of_word(void)
 ** Input: "echo $USER_NAME_123"
 ** Expected: [T_WORD:"echo"] [T_WORD:"$USER_NAME_123"]
 */
-static void	test_variable_with_underscore_and_numbers(void)
+static int	test_variable_with_underscore_and_numbers(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -792,6 +812,7 @@ static void	test_variable_with_underscore_and_numbers(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -801,8 +822,8 @@ static void	test_variable_with_underscore_and_numbers(void)
 	tmp = create_token(T_WORD, ft_strdup("$USER_NAME_123"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -811,7 +832,7 @@ static void	test_variable_with_underscore_and_numbers(void)
 ** Expected: [T_WORD:"cat"] [T_APPEND:">>"] [T_WORD:"file1"]
 **           [T_APPEND:">>"] [T_WORD:"file2"]
 */
-static void	test_consecutive_append(void)
+static int	test_consecutive_append(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -826,6 +847,7 @@ static void	test_consecutive_append(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -841,8 +863,8 @@ static void	test_consecutive_append(void)
 	tmp = create_token(T_WORD, ft_strdup("file2"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -850,7 +872,7 @@ static void	test_consecutive_append(void)
 ** Input: "echo \"hello\" | cat"
 ** Expected: [T_WORD:"echo"] [T_WORD:""hello""] [T_PIPE:"|"] [T_WORD:"cat"]
 */
-static void	test_pipe_after_quoted_string(void)
+static int	test_pipe_after_quoted_string(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -865,6 +887,7 @@ static void	test_pipe_after_quoted_string(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -878,8 +901,8 @@ static void	test_pipe_after_quoted_string(void)
 	tmp = create_token(T_WORD, ft_strdup("cat"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -887,7 +910,7 @@ static void	test_pipe_after_quoted_string(void)
 ** Input: "echo \"$HOME/$USER\""
 ** Expected: [T_WORD:"echo"] [T_WORD:""$HOME/$USER""]
 */
-static void	test_multiple_variables_in_quotes(void)
+static int	test_multiple_variables_in_quotes(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -902,6 +925,7 @@ static void	test_multiple_variables_in_quotes(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -911,8 +935,8 @@ static void	test_multiple_variables_in_quotes(void)
 	tmp = create_token(T_WORD, ft_strdup("\"$HOME/$USER\""));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -920,7 +944,7 @@ static void	test_multiple_variables_in_quotes(void)
 ** Input: "cat<input.txt"
 ** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
 */
-static void	test_redirection_no_spaces(void)
+static int	test_redirection_no_spaces(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -935,6 +959,7 @@ static void	test_redirection_no_spaces(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -946,8 +971,8 @@ static void	test_redirection_no_spaces(void)
 	tmp = create_token(T_WORD, ft_strdup("input.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
+	
 }
 
 /*
@@ -955,7 +980,7 @@ static void	test_redirection_no_spaces(void)
 ** Input: "cat<input.txt|cat>>output.txt"
 ** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"] [T_PIPE:"|"] [T_WORD:"cat"] [T_APPEND:">>"] [T_WORD:"output.txt"]
 */
-static void	test_redirection_no_spaces_alt(void)
+static int	test_redirection_no_spaces_alt(void)
 {
 	t_token	*head_actual;
 	t_token	*head_expected;
@@ -970,6 +995,7 @@ static void	test_redirection_no_spaces_alt(void)
 
 	// Actual Tokens
 	head_actual = lexer(input);
+	free(input);
 
 	// Expected Tokens
 	head_expected = NULL;
@@ -989,8 +1015,7 @@ static void	test_redirection_no_spaces_alt(void)
 	tmp = create_token(T_WORD, ft_strdup("output.txt"));
 	add_token_to_list(&head_expected, &tail_expected, tmp);
 
-	compare_lst(token_count, head_actual, head_expected);
-	free(input);
+	return (compare_lst(token_count, head_actual, head_expected));
 }
 
 void	run_lexer_tests(void)
@@ -998,30 +1023,32 @@ void	run_lexer_tests(void)
 	printf("════════════════════ LEXER TESTS ════════════════════\n");
 	printf("\n");
 	
-	test_simple_command();
-	test_pipe();
-	test_input_redirection();
-	test_output_redirection();
-	test_heredoc();
-	test_append();
-	test_quoted_strings();
-	test_multiple_pipes();
-	test_multiple_redirections();
-	test_empty_input();
-	test_single_quotes_special_chars();
-	test_single_quotes_with_operators();
-	test_double_quotes_with_variable();
-	test_single_quotes_no_expansion();
-	test_env_variable_unquoted();
-	test_exit_status_variable();
-	test_mixed_quotes();
-	test_heredoc_quoted_delimiter();
-	test_complex_pipe_redirections();
-	test_quotes_in_middle_of_word();
-	test_variable_with_underscore_and_numbers();
-	test_consecutive_append();
-	test_pipe_after_quoted_string();
-	test_multiple_variables_in_quotes();
-	test_redirection_no_spaces();
-	test_redirection_no_spaces_alt();
+	int	count = 0;
+	count += test_simple_command();
+	count += test_pipe();
+	count += test_input_redirection();
+	count += test_output_redirection();
+	count += test_heredoc();
+	count += test_append();
+	count += test_quoted_strings();
+	count += test_multiple_pipes();
+	count += test_multiple_redirections();
+	count += test_empty_input();
+	count += test_single_quotes_special_chars();
+	count += test_single_quotes_with_operators();
+	count += test_double_quotes_with_variable();
+	count += test_single_quotes_no_expansion();
+	count += test_env_variable_unquoted();
+	count += test_exit_status_variable();
+	count += test_mixed_quotes();
+	count += test_heredoc_quoted_delimiter();
+	count += test_complex_pipe_redirections();
+	count += test_quotes_in_middle_of_word();
+	count += test_variable_with_underscore_and_numbers();
+	count += test_consecutive_append();
+	count += test_pipe_after_quoted_string();
+	count += test_multiple_variables_in_quotes();
+	count += test_redirection_no_spaces();
+	count += test_redirection_no_spaces_alt();
+	print_passed_count(count, 26);
 }

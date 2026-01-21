@@ -18,12 +18,21 @@ void	print_test_info(int n, char *name, char *input)
 	printf("- Input: \"%s\"\n", input);
 }
 
-void	print_passed(void)
+void	print_passed()
 {
 	printf("✅ PASSED\n");
 }
 
-void	print_failed(void)
+void	print_failed()
 {
 	printf("❌ FAILED\n");
+}
+
+void	print_passed_count(int count, int max)
+{
+	if (count == max)
+		printf("✅");
+	else
+		printf("❌");
+	printf(" PASSED %i/%i\n", count, max);
 }
