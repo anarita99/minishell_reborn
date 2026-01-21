@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/20 15:28:59 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:19:09 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void heredoc_func(t_file *heredoc)
 	heredoc->filename = filename;
 	close(fd);
 }
-
+/*
 int main(void)
 {
 	t_input input;
@@ -122,4 +122,4 @@ int main(void)
 	else
 		printf("null\n");
 	return(0);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 14:54:08 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:58:06 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	set_shell_level(t_env **env_list)
 		num += 1;
 		node->value = ft_itoa(num);
 		if (!node->value)
-			malloc_error(*env_list);
+			malloc_error();
 		return ;
 	}
 	set_env_var("SHLVL", "1");
@@ -58,20 +58,20 @@ t_env	*init_env(void)
 {
 	extern char **environ;
 	int			i;
-	t_env		*env_list;
 	char		buf[PATH_MAX];
 
 	i = 0;
-	env_list = NULL;
+	
 	while (environ[i])
 	{
-		if (add_env_var(&env_list, environ[i]) == 1)
-			malloc_error(env_list);
+		printf("%s\n", environ[i]);
+		if (add_env_var(&call_sh_struct()->env_list, environ[i]) == 1)
+			malloc_error();
 		i++;
 	}
 	set_env_var("PWD", getcwd(buf, PATH_MAX));
-	set_shell_level(&env_list);
-	return (env_list);
+	set_shell_level(&call_sh_struct()->env_list);
+	return (call_sh_struct()->env_list);
 }
 
 int	env_builtin()

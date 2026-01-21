@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:33 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:03:34 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/21 16:03:06 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,8 @@ void free_env_list(t_env *head)
 void	set_env_var(char *key, char *value)
 {
 	t_env	*current_node;
-	t_env **env_list;
 
-	env_list = &call_sh_struct()->env_list;
-	current_node = get_env_node(*env_list, key);
+	current_node = get_env_node(call_sh_struct()->env_list, key);
 	if (current_node)
 	{
 		free(current_node->value);
@@ -140,6 +138,6 @@ void	set_env_var(char *key, char *value)
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || !current_node->value)
 		return (free_node(current_node));
-	env_add_back(env_list, current_node);
+	env_add_back(&call_sh_struct()->env_list, current_node);
 }
 
