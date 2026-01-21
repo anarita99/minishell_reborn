@@ -60,7 +60,7 @@ typedef struct s_buffer
 
 // Buffer
 t_buffer	*create_buffer(char *input);
-void		free_buffer(void);
+void		free_buffer(t_buffer *buffer);
 void 		add_char_to_buffer(t_buffer *buffer, char c);
 void		reset_buffer(t_buffer *buffer);
 
@@ -75,7 +75,6 @@ void	print_tokens(t_token *head);
 
 int	get_c_type(char c);
 int	is_quote(char c);
-// int	find_token_type(char *input, int idx);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
 

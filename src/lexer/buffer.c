@@ -28,10 +28,10 @@ t_buffer	*create_buffer(char *input)
 	return (buffer);
 }
 
-// TODO
-void	free_buffer(void)
+void	free_buffer(t_buffer *buffer)
 {
-	;
+	free(buffer->data);
+	free(buffer);
 }
 
 void add_char_to_buffer(t_buffer *buffer, char c)

@@ -85,7 +85,6 @@ t_token	*lexer(char *input)
 			add_token_to_list(&head, &tail, new_token);
 	}
 
-	free(buffer->data);
-	free(buffer);
+	free_buffer(buffer);
 	return (head);
 }

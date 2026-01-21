@@ -19,10 +19,14 @@ int	main(void)
 	t_token		*token;
 
 	// prompt = readline(NULL);
-	prompt = ft_strdup("alas");
+	prompt = ft_strdup("");
 	printf("Prompt = '%s'\n", prompt);
 	token = lexer(prompt);
 	free(prompt);
-	print_tokens(token);
+	if (token)
+	{
+		print_tokens(token);
+		free_tokens(token);
+	}
 	return (0);
 }

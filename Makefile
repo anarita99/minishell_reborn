@@ -58,5 +58,8 @@ fclean: clean
 
 re: fclean all
 
+valgrind: ${NAME}
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck --keep-debuginfo=yes ./$(NAME)
+
 # Phony targets
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re valgrind
