@@ -43,15 +43,14 @@ static void	compare_lst(int token_count, t_token *head_actual, t_token *head_exp
 	current_expected = head_expected;
 	while (current_actual && current_expected)
 	{
-		if (!compare_token(*current_expected, *current_actual, i))
-			success = 0;
+		success = compare_token(*current_expected, *current_actual, i);
 		current_actual = current_actual->next;
 		current_expected = current_expected->next;
 		i++;
 	}
 	
 	// Check if both lists have the same length
-	if (current_actual != NULL || current_expected != NULL || i != token_count)
+	if (i != token_count)
 	{
 		printf("Token count mismatch: expected %d, got %d\n", token_count, i);
 		success = 0;

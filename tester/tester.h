@@ -14,7 +14,7 @@
 # define TESTER_H
 
 # include <stdio.h>
-# include "../includes/minishell.h"
+# include "../includes/lexer.h"
 
 // Tests
 void	run_lexer_tests(void);

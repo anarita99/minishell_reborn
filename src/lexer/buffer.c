@@ -42,3 +42,9 @@ void add_char_to_buffer(t_buffer *buffer, char c)
 	buffer->len++;
 	buffer->data[buffer->len] = '\0';
 }
+
+void	reset_buffer(t_buffer *buffer)
+{
+	buffer->len = 0;
+	buffer->data[0] = '\0';
+}

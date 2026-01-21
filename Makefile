@@ -25,7 +25,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 READLINE_DIR = readline
 
 # Files
-FILES = main lexer/lexer lexer/token lexer/types
+FILES = main lexer/lexer lexer/token lexer/types lexer/buffer lexer/states
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS = $(SRCS:.c=.o)
 

@@ -13,10 +13,11 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "minishell.h"
+# include "libft.h"
 
 typedef enum e_token_type
 {
+	T_NONE,
 	T_WORD,
 	T_PIPE,
 	T_REDIR_IN,
@@ -37,15 +38,17 @@ typedef enum e_lexer_state
 {
 	STATE_NORMAL,
 	STATE_IN_SQUOTE,
-	STATE_IN_DQUOTE
+	STATE_IN_DQUOTE,
+	STATE_IN_OP
 }	t_lexer_state;
 
 typedef enum e_char_type
 {
-	T_SPACE,
-	T_ALNUM,
-	T_QUOTE,
-	T_OPERATOR
+	C_DELIMITER,
+	C_WORD,
+	C_SQUOTE,
+	C_DQUOTE,
+	C_OPERATOR
 }	t_char_type;
 
 typedef struct s_buffer
@@ -59,6 +62,7 @@ typedef struct s_buffer
 t_buffer	*create_buffer(char *input);
 void		free_buffer(void);
 void 		add_char_to_buffer(t_buffer *buffer, char c);
+void		reset_buffer(t_buffer *buffer);
 
 // Token
 
@@ -69,9 +73,19 @@ void	print_tokens(t_token *head);
 
 // Types
 
+int	get_c_type(char c);
 int	is_quote(char c);
-int	find_token_type(char *input, int idx);
+// int	find_token_type(char *input, int idx);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
+
+// States
+int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char *input, int *i);
+int state_squote(int *state, char c, int c_type, t_buffer *buffer);
+int state_dquote(int *state, char c, int c_type, t_buffer *buffer);
+
+
+
+t_token	*lexer(char *input);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-static int	is_word(char c)
+static int	ft_isword(char c)
 {
 	if (ft_isalnum(c))
 		return (1);
@@ -31,33 +31,73 @@ static int	is_word(char c)
 	return (0);
 }
 
+int	get_c_type(char c)
+{
+	if (c == ' ')
+		return (C_DELIMITER);
+	if (ft_isword(c))
+		return (C_WORD);
+	if (c == '\'')
+		return (C_SQUOTE);
+	if (c == '\"')
+		return (C_DQUOTE);
+	if (c == '|' || c == '<' || c == '>')
+		return (C_OPERATOR);
+	return (-1);
+}
+
 int	is_quote(char c)
 {
 	return (c == '\"' || c == '\'');
 }
 
-int	find_token_type(char *input, int idx)
-{
-	if (is_word(input[idx]))
-		return (T_WORD);
-	if (input[idx] == '|')
-		return (T_PIPE);
-	if (input[idx] == '>')
-	{
-		if (input[idx + 1] == '>')
-			return (T_APPEND);
-		else
-			return (T_REDIT_OUT);
-	}
-	if (input[idx] == '<')
-	{
-		if (input[idx + 1] == '<')
-			return (T_HEREDOC);
-		else
-			return (T_REDIR_IN);
-	}
-	return (-1);
-}
+// if ' or " or alnum -> word
+//
+// int	find_token_type(char c)
+// {
+// 	if (is_word(c) || is_quote(c))
+// 		return (T_WORD);
+// 	if (input[idx] == '|')
+// 		return (T_PIPE);
+// 	if (input[idx] == '>')
+// 	{
+// 		if (input[idx + 1] == '>')
+// 			return (T_APPEND);
+// 		else
+// 			return (T_REDIT_OUT);
+// 	}
+// 	if (input[idx] == '<')
+// 	{
+// 		if (input[idx + 1] == '<')
+// 			return (T_HEREDOC);
+// 		else
+// 			return (T_REDIR_IN);
+// 	}
+// 	return (-1);
+// }
+
+// int	find_token_type(char *input, int idx)
+// {
+// 	if (is_word(input[idx]))
+// 		return (T_WORD);
+// 	if (input[idx] == '|')
+// 		return (T_PIPE);
+// 	if (input[idx] == '>')
+// 	{
+// 		if (input[idx + 1] == '>')
+// 			return (T_APPEND);
+// 		else
+// 			return (T_REDIT_OUT);
+// 	}
+// 	if (input[idx] == '<')
+// 	{
+// 		if (input[idx + 1] == '<')
+// 			return (T_HEREDOC);
+// 		else
+// 			return (T_REDIR_IN);
+// 	}
+// 	return (-1);
+// }
 
 t_token	*create_word(char *input, int start_idx, int end_idx)
 {

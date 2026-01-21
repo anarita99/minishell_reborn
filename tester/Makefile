@@ -27,7 +27,9 @@ MINISHELL_INCS_DIR	= $(MINISHELL_DIR)/includes
 # Files
 MINISHELL_SRCS		= $(MINISHELL_SRCS_DIR)/lexer/lexer.c \
 					  $(MINISHELL_SRCS_DIR)/lexer/token.c \
-					  $(MINISHELL_SRCS_DIR)/lexer/types.c
+					  $(MINISHELL_SRCS_DIR)/lexer/types.c \
+					  $(MINISHELL_SRCS_DIR)/lexer/buffer.c \
+					  $(MINISHELL_SRCS_DIR)/lexer/states.c
 
 SRCS				= tester.c \
 					  utils.c \

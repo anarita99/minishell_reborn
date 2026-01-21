@@ -58,4 +58,6 @@
 // tgetstr, tgoto, tputs
 # include <termios.h>
 
+t_token	*lexer(char *input);
+
 #endif

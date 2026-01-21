@@ -1,127 +1,91 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer copy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/16 14:43:58 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:55:56 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
+// Examples of inputs:
+// 	"hello"
+// 	"ls | grep test | wc -l"
+//	"cat < 'input.txt' > output.txt"
 t_token	*lexer(char *input)
 {
 	int		i;
-	int		found_word;
-	int		found_quote;
-	int		start_idx;
-	int		end_idx;
+	int		state;
+	char	c;
+	int		c_type;
 	t_token	*head;
 	t_token	*tail;
-	t_token	*tmp;
-	int		list_created;
+	t_token	*new_token;
 	int		token_type;
+	char	*token_value;
+	t_buffer	*buffer;
+	int		consumed;
 
 	if (!input || !input[0])
 		return (NULL);
-	found_word = 0;
-	found_quote = 0;
-	list_created = 0;
+
+	head = NULL;
+	tail = NULL;
+	buffer = create_buffer(input);
+	state = STATE_NORMAL;
 	i = 0;
+	
 	while (input[i])
 	{
-		// Skip spaces
-		if (input[i] == ' ' && found_quote == 0)
-		{
-			i++;
-			continue ;
-		}
-
-		if (is_quote(input[i]) && found_quote == 0)
-		{
-			found_quote = 1;
-			i++;
-			continue;
-		}
-
-		if (is_quote(input[i]) && found_quote == 1)
-		{
-			found_quote = 0;
-			i++;
-			continue;
-		}
-
-		token_type = find_token_type(input, i);
-		// printf("Token type = %i\n", token_type);
-	
-		// Handle operators
-		tmp = NULL;
-		if (token_type == T_PIPE)
-		{
-			tmp = create_operator(T_PIPE, "|");
-			i++;
-		}
-		else if (token_type == T_REDIR_IN)
-		{
-			tmp = create_operator(T_REDIR_IN, "<");
-			i++;
-		}
-		else if (token_type == T_REDIT_OUT)
-		{
-			tmp = create_operator(T_REDIT_OUT, ">");
-			i++;
-		}
-		else if (token_type == T_HEREDOC)
-		{
-			tmp = create_operator(T_HEREDOC, "<<");
-			i += 2;
-		}
-		else if (token_type == T_APPEND)
-		{
-			tmp = create_operator(T_APPEND, ">>");
-			i += 2;
-		}
-
-		// Handle words
-		else if (token_type == T_WORD)
-		{
-			if (found_word == 0)
-			{
-				found_word = 1;
-				start_idx = i;
-			}
-			// Check if word continues
-			if (find_token_type(input, i + 1) != T_WORD)
-			{
-				end_idx = i;
-				found_word = 0;
-				tmp = create_word(input, start_idx, end_idx);
-			}
-			i++;
-		}
-
-		// Unknown token type
-		else
+		c = input[i];
+		c_type = get_c_type(c);
+		
+		if (c_type == -1)
 		{
 			i++;
 			continue;
 		}
 
-		// Add token to the list if we created one
-		if (tmp)
+		consumed = 1;  // By default, we consume the character
+		token_type = T_NONE;
+
+		// State machine
+		if (state == STATE_NORMAL)
+			token_type = state_normal(&state, c, c_type, buffer, &consumed, input, &i);
+		else if (state == STATE_IN_SQUOTE)
+			token_type = state_squote(&state, c, c_type, buffer);
+		else if (state == STATE_IN_DQUOTE)
+			token_type = state_dquote(&state, c, c_type, buffer);
+
+		// Create token if ready
+		if (token_type != T_NONE)
 		{
-			if (list_created == 0)
-			{
-				head = tmp;
-				tail = tmp;
-				list_created = 1;
-			}
-			else
-				add_token_to_list(&head, &tail, tmp);
+			token_value = ft_strdup(buffer->data);
+			new_token = create_token(token_type, token_value);
+			if (new_token)
+				add_token_to_list(&head, &tail, new_token);
+			reset_buffer(buffer);
 		}
+
+		// Advance only if character was consumed
+		if (consumed)
+			i++;
 	}
+	
+	// Emit remaining buffer content as word
+	if (buffer->len > 0)
+	{
+		token_value = ft_strdup(buffer->data);
+		new_token = create_token(T_WORD, token_value);
+		if (new_token)
+			add_token_to_list(&head, &tail, new_token);
+	}
+
+	free(buffer->data);
+	free(buffer);
 	return (head);
 }

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexer.h"
 #include "minishell.h"
 
 int	main(void)
@@ -17,7 +18,8 @@ int	main(void)
 	char		*prompt;
 	t_token		*token;
 
-	prompt = readline(NULL);
+	// prompt = readline(NULL);
+	prompt = ft_strdup("alas");
 	printf("Prompt = '%s'\n", prompt);
 	token = lexer(prompt);
 	free(prompt);
