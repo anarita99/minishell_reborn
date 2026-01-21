@@ -55,7 +55,7 @@ t_token	*lexer(char *input)
 
 		// State machine
 		if (state == STATE_NORMAL)
-			token_type = state_normal(&state, c, c_type, buffer, &consumed, input, &i);
+			token_type = state_normal(&state, c, c_type, buffer, &consumed, input[i + 1]);
 		else if (state == STATE_IN_SQUOTE)
 			token_type = state_squote(&state, c, c_type, buffer);
 		else if (state == STATE_IN_DQUOTE)
@@ -73,7 +73,7 @@ t_token	*lexer(char *input)
 
 		// Advance only if character was consumed
 		if (consumed)
-			i++;
+			i += consumed;
 	}
 	
 	// Emit remaining buffer content as word

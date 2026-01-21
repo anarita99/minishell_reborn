@@ -89,7 +89,7 @@
 // 	return (T_NONE);
 // }
 
-int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char (*input), int *i)
+int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char c_next)
 {
 	if (c_type == C_DELIMITER)
 	{
@@ -118,10 +118,10 @@ int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed
 				return (T_PIPE);
 			else if (c == '<')
 			{
-				if (input[*i + 1] == '<')
+				if (c_next == '<')
 				{
 					add_char_to_buffer(buffer, '<');
-					(*i)++;  // Consume second '<'
+					*consumed = 2;	// Consume second '<'
 					return (T_HEREDOC);
 				}
 				else
@@ -129,10 +129,10 @@ int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed
 			}
 			else if (c == '>')
 			{
-				if (input[*i + 1] == '>')
+				if (c_next == '>')
 				{
 					add_char_to_buffer(buffer, '>');
-					(*i)++;  // Consume second '>'
+					*consumed = 2;  // Consume second '>'
 					return (T_APPEND);
 				}
 				else
