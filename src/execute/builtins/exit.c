@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:43:16 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:15:56 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	exitclean(unsigned char exit_code);
 
 void	malloc_error()
 {
-	free_env_list(call_sh_struct()->env_list);
 	ft_putendl_fd("minishell: allocation error", 2);
 	exitclean('1');
 }

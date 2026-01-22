@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:08:42 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:57:30 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ int cd_builtin (char **args)
 	new_pwd = getcwd(NULL, 0);
 	if(!new_pwd)
 	{
-		free_str_array(args);
-		malloc_error();
+		new_pwd = ft_strjoin(old_pwd, "/..");
+		//check if allocation fails,
+		//cleanup everything and exit if yes
+		//print error according to bash
+		ft_putstr_fd("Hello I am an error, please replace me\n", 2);
 	}
 	set_env_var("OLDPWD", old_pwd);
 	set_env_var("PWD", new_pwd);
@@ -65,4 +68,4 @@ int cd_builtin (char **args)
 	return (0);
 }
 
-//verificar erros
+
