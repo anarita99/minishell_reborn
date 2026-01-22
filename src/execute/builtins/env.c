@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:58:06 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:42:01 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_env	*init_env(void)
 	
 	while (environ[i])
 	{
-		printf("%s\n", environ[i]);
 		if (add_env_var(&call_sh_struct()->env_list, environ[i]) == 1)
 			malloc_error();
 		i++;
