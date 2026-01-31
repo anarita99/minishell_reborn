@@ -56,17 +56,50 @@ static int	compare_lst(int token_count, t_token *head_actual, t_token *head_expe
 		success = 0;
 	}
 	
-	// Free tokens
 	free_tokens(head_actual);
 	free_tokens(head_expected);
-
-	if (success)
-		print_passed();
-	else
-		print_failed();
-	printf("\n");
 	return (success);
 }
+
+static t_token	*build_expected_tokens(t_token_type types[], char *values[], int count)
+{
+	t_token	*head;
+	t_token	*tail;
+	t_token	*token;
+	int		i;
+
+	head = NULL;
+	tail = NULL;
+	i = 0;
+	while (i < count)
+	{
+		token = create_token(types[i], ft_strdup(values[i]));
+		add_token_to_list(&head, &tail, token);
+		i++;
+	}
+	return (head);
+}
+
+static int	run_single_test(int test_num, char *name, char *input, 
+	t_token_type types[], char *values[], int token_count)
+{
+	t_token	*head_actual;
+	t_token	*head_expected;
+
+	print_test_info(test_num, name, input);
+
+	// Actual
+	head_actual = lexer(input);
+
+	// Expected
+	if (token_count == 0)
+		head_expected = NULL;
+	else
+		head_expected = build_expected_tokens(types, values, token_count);
+
+	return (compare_lst(token_count, head_actual, head_expected));
+}
+
 
 /*
 ** Test 1: Simple command
@@ -75,31 +108,12 @@ static int	compare_lst(int token_count, t_token *head_actual, t_token *head_expe
 */
 static int	test_simple_command(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "hello"};
+	int				token_count = 2;
 	
-	input = strdup("echo hello");
-	token_count = 2;
-	print_test_info(1, "Simple command", input);
-	
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("hello"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(1, "Simple command", "echo hello", 
+		types, values, token_count));
 }
 
 /*
@@ -109,35 +123,12 @@ static int	test_simple_command(void)
 */
 static int	test_pipe(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_PIPE, T_WORD, T_WORD};
+	char			*values[] = {"ls", "|", "grep", "test"};
+	int				token_count = 4;
 	
-	input = strdup("ls | grep test");
-	token_count = 4;
-	print_test_info(2, "Command with pipe", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("ls"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("grep"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("test"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(2, "Command with pipe", "ls | grep test",
+		types, values, token_count));
 }
 
 /*
@@ -147,33 +138,12 @@ static int	test_pipe(void)
 */
 static int	test_input_redirection(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_REDIR_IN, T_WORD};
+	char			*values[] = {"cat", "<", "input.txt"};
+	int				token_count = 3;
 	
-	input = strdup("cat < input.txt");
-	token_count = 3;
-	print_test_info(3, "Input redirection", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("input.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(3, "Input redirection", "cat < input.txt",
+		types, values, token_count));
 }
 
 /*
@@ -183,35 +153,12 @@ static int	test_input_redirection(void)
 */
 static int	test_output_redirection(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD, T_REDIR_OUT, T_WORD};
+	char			*values[] = {"echo", "hello", ">", "output.txt"};
+	int				token_count = 4;
 	
-	input = strdup("echo hello > output.txt");
-	token_count = 4;
-	print_test_info(4, "Output redirection", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("hello"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_OUT, ft_strdup(">"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("output.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(4, "Output redirection", "echo hello > output.txt",
+		types, values, token_count));
 }
 
 /*
@@ -221,33 +168,12 @@ static int	test_output_redirection(void)
 */
 static int	test_heredoc(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_HEREDOC, T_WORD};
+	char			*values[] = {"cat", "<<", "EOF"};
+	int				token_count = 3;
 	
-	input = strdup("cat << EOF");
-	token_count = 3;
-	print_test_info(5, "Heredoc", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_HEREDOC, ft_strdup("<<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("EOF"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(5, "Heredoc", "cat << EOF",
+		types, values, token_count));
 }
 
 /*
@@ -257,35 +183,12 @@ static int	test_heredoc(void)
 */
 static int	test_append(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD, T_APPEND, T_WORD};
+	char			*values[] = {"echo", "hello", ">>", "output.txt"};
+	int				token_count = 4;
 	
-	input = strdup("echo hello >> output.txt");
-	token_count = 4;
-	print_test_info(6, "Append redirection", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("hello"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_APPEND, ft_strdup(">>"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("output.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(6, "Append redirection", "echo hello >> output.txt",
+		types, values, token_count));
 }
 
 /*
@@ -295,31 +198,12 @@ static int	test_append(void)
 */
 static int	test_quoted_strings(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "\"hello world\""};
+	int				token_count = 2;
 	
-	input = strdup("echo \"hello world\"");
-	token_count = 2;
-	print_test_info(7, "Quoted strings", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("\"hello world\""));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(7, "Quoted strings", "echo \"hello world\"",
+		types, values, token_count));
 }
 
 /*
@@ -330,41 +214,12 @@ static int	test_quoted_strings(void)
 */
 static int	test_multiple_pipes(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_PIPE, T_WORD, T_WORD, T_PIPE, T_WORD, T_WORD};
+	char			*values[] = {"ls", "|", "grep", "test", "|", "wc", "-l"};
+	int				token_count = 7;
 	
-	input = strdup("ls | grep test | wc -l");
-	token_count = 7;
-	print_test_info(8, "Multiple pipes", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("ls"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("grep"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("test"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("wc"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("-l"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(8, "Multiple pipes", "ls | grep test | wc -l",
+		types, values, token_count));
 }
 
 /*
@@ -375,37 +230,12 @@ static int	test_multiple_pipes(void)
 */
 static int	test_multiple_redirections(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_REDIR_IN, T_WORD, T_REDIR_OUT, T_WORD};
+	char			*values[] = {"cat", "<", "input.txt", ">", "output.txt"};
+	int				token_count = 5;
 	
-	input = strdup("cat < input.txt > output.txt");
-	token_count = 5;
-	print_test_info(9, "Multiple redirections", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("input.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_OUT, ft_strdup(">"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("output.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(9, "Multiple redirections", "cat < input.txt > output.txt",
+		types, values, token_count));
 }
 
 /*
@@ -415,18 +245,7 @@ static int	test_multiple_redirections(void)
 */
 static int	test_empty_input(void)
 {
-	t_token	*head_actual;
-	char	*input;
-	int		token_count;
-	
-	input = "";
-	token_count = 0;
-	print_test_info(10, "Empty input", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-
-	return (compare_lst(token_count, head_actual, NULL));
+	return (run_single_test(10, "Empty input", "", NULL, NULL, 0));
 }
 
 /*
@@ -437,31 +256,12 @@ static int	test_empty_input(void)
 */
 static int	test_single_quotes_special_chars(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "'hello|world'"};
+	int				token_count = 2;
 	
-	input = strdup("echo 'hello|world'");
-	token_count = 2;
-	print_test_info(11, "Single quotes with special chars", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("'hello|world'"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(11, "Single quotes with special chars", "echo 'hello|world'",
+		types, values, token_count));
 }
 
 /*
@@ -472,31 +272,12 @@ static int	test_single_quotes_special_chars(void)
 */
 static int	test_single_quotes_with_operators(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"cat", "'file<>name.txt'"};
+	int				token_count = 2;
 	
-	input = strdup("cat 'file<>name.txt'");
-	token_count = 2;
-	print_test_info(12, "Single quotes with operators", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("'file<>name.txt'"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(12, "Single quotes with operators", "cat 'file<>name.txt'",
+		types, values, token_count));
 }
 
 /*
@@ -507,31 +288,12 @@ static int	test_single_quotes_with_operators(void)
 */
 static int	test_double_quotes_with_variable(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "\"$HOME\""};
+	int				token_count = 2;
 	
-	input = strdup("echo \"$HOME\"");
-	token_count = 2;
-	print_test_info(13, "Double quotes with variable", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("\"$HOME\""));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(13, "Double quotes with variable", "echo \"$HOME\"",
+		types, values, token_count));
 }
 
 /*
@@ -542,31 +304,12 @@ static int	test_double_quotes_with_variable(void)
 */
 static int	test_single_quotes_no_expansion(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "'$HOME'"};
+	int				token_count = 2;
 	
-	input = strdup("echo '$HOME'");
-	token_count = 2;
-	print_test_info(14, "Single quotes no expansion", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("'$HOME'"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(14, "Single quotes no expansion", "echo '$HOME'",
+		types, values, token_count));
 }
 
 /*
@@ -577,31 +320,12 @@ static int	test_single_quotes_no_expansion(void)
 */
 static int	test_env_variable_unquoted(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "$HOME"};
+	int				token_count = 2;
 	
-	input = strdup("echo $HOME");
-	token_count = 2;
-	print_test_info(15, "Environment variable unquoted", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("$HOME"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(15, "Environment variable unquoted", "echo $HOME",
+		types, values, token_count));
 }
 
 /*
@@ -612,31 +336,12 @@ static int	test_env_variable_unquoted(void)
 */
 static int	test_exit_status_variable(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "$?"};
+	int				token_count = 2;
 	
-	input = strdup("echo $?");
-	token_count = 2;
-	print_test_info(16, "Exit status variable", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("$?"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(16, "Exit status variable", "echo $?",
+		types, values, token_count));
 }
 
 /*
@@ -646,33 +351,12 @@ static int	test_exit_status_variable(void)
 */
 static int	test_mixed_quotes(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD, T_WORD};
+	char			*values[] = {"echo", "'hello'", "\"world\""};
+	int				token_count = 3;
 	
-	input = strdup("echo 'hello' \"world\"");
-	token_count = 3;
-	print_test_info(17, "Mixed quotes", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("'hello'"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("\"world\""));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(17, "Mixed quotes", "echo 'hello' \"world\"",
+		types, values, token_count));
 }
 
 /*
@@ -682,33 +366,12 @@ static int	test_mixed_quotes(void)
 */
 static int	test_heredoc_quoted_delimiter(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_HEREDOC, T_WORD};
+	char			*values[] = {"cat", "<<", "'EOF'"};
+	int				token_count = 3;
 	
-	input = strdup("cat << 'EOF'");
-	token_count = 3;
-	print_test_info(18, "Heredoc with quoted delimiter", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_HEREDOC, ft_strdup("<<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("'EOF'"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(18, "Heredoc with quoted delimiter", "cat << 'EOF'",
+		types, values, token_count));
 }
 
 /*
@@ -720,43 +383,12 @@ static int	test_heredoc_quoted_delimiter(void)
 */
 static int	test_complex_pipe_redirections(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_REDIR_IN, T_WORD, T_PIPE, T_WORD, T_WORD, T_REDIR_OUT, T_WORD};
+	char			*values[] = {"cat", "<", "in.txt", "|", "grep", "test", ">", "out.txt"};
+	int				token_count = 8;
 	
-	input = strdup("cat < in.txt | grep test > out.txt");
-	token_count = 8;
-	print_test_info(19, "Complex pipe with redirections", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("in.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("grep"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("test"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_OUT, ft_strdup(">"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("out.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(19, "Complex pipe with redirections", "cat < in.txt | grep test > out.txt",
+		types, values, token_count));
 }
 
 /*
@@ -767,29 +399,12 @@ static int	test_complex_pipe_redirections(void)
 */
 static int	test_quotes_in_middle_of_word(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD};
+	char			*values[] = {"helloworld"};
+	int				token_count = 1;
 	
-	input = strdup("hello'world'");
-	token_count = 1;
-	print_test_info(20, "Quotes in middle of word", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("helloworld"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(20, "Quotes in middle of word", "hello'world'",
+		types, values, token_count));
 }
 
 /*
@@ -799,31 +414,12 @@ static int	test_quotes_in_middle_of_word(void)
 */
 static int	test_variable_with_underscore_and_numbers(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "$USER_NAME_123"};
+	int				token_count = 2;
 	
-	input = strdup("echo $USER_NAME_123");
-	token_count = 2;
-	print_test_info(21, "Variable with underscore and numbers", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("$USER_NAME_123"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(21, "Variable with underscore and numbers", "echo $USER_NAME_123",
+		types, values, token_count));
 }
 
 /*
@@ -834,37 +430,12 @@ static int	test_variable_with_underscore_and_numbers(void)
 */
 static int	test_consecutive_append(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_APPEND, T_WORD, T_APPEND, T_WORD};
+	char			*values[] = {"cat", ">>", "file1", ">>", "file2"};
+	int				token_count = 5;
 	
-	input = strdup("cat >> file1 >> file2");
-	token_count = 5;
-	print_test_info(22, "Consecutive append redirections", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_APPEND, ft_strdup(">>"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("file1"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_APPEND, ft_strdup(">>"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("file2"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(22, "Consecutive append redirections", "cat >> file1 >> file2",
+		types, values, token_count));
 }
 
 /*
@@ -874,35 +445,12 @@ static int	test_consecutive_append(void)
 */
 static int	test_pipe_after_quoted_string(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD, T_PIPE, T_WORD};
+	char			*values[] = {"echo", "\"hello\"", "|", "cat"};
+	int				token_count = 4;
 	
-	input = strdup("echo \"hello\" | cat");
-	token_count = 4;
-	print_test_info(23, "Pipe after quoted string", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("\"hello\""));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(23, "Pipe after quoted string", "echo \"hello\" | cat",
+		types, values, token_count));
 }
 
 /*
@@ -912,31 +460,12 @@ static int	test_pipe_after_quoted_string(void)
 */
 static int	test_multiple_variables_in_quotes(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "\"$HOME/$USER\""};
+	int				token_count = 2;
 	
-	input = strdup("echo \"$HOME/$USER\"");
-	token_count = 2;
-	print_test_info(24, "Multiple variables in double quotes", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("echo"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("\"$HOME/$USER\""));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(24, "Multiple variables in double quotes", "echo \"$HOME/$USER\"",
+		types, values, token_count));
 }
 
 /*
@@ -946,33 +475,12 @@ static int	test_multiple_variables_in_quotes(void)
 */
 static int	test_redirection_no_spaces(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_REDIR_IN, T_WORD};
+	char			*values[] = {"cat", "<", "input.txt"};
+	int				token_count = 3;
 	
-	input = strdup("cat<input.txt");
-	token_count = 3;
-	print_test_info(25, "Redirection with no spaces", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("input.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-	
+	return (run_single_test(25, "Redirection with no spaces", "cat<input.txt",
+		types, values, token_count));
 }
 
 /*
@@ -982,73 +490,65 @@ static int	test_redirection_no_spaces(void)
 */
 static int	test_redirection_no_spaces_alt(void)
 {
-	t_token	*head_actual;
-	t_token	*head_expected;
-	t_token	*tail_expected;
-	t_token *tmp;
-	char	*input;
-	int		token_count;
+	t_token_type	types[] = {T_WORD, T_REDIR_IN, T_WORD, T_PIPE, T_WORD, T_APPEND, T_WORD};
+	char			*values[] = {"cat", "<", "input.txt", "|", "cat", ">>", "output.txt"};
+	int				token_count = 7;
 	
-	input = strdup("cat<input.txt|cat>>output.txt");
-	token_count = 7;
-	print_test_info(26, "Redirection with no spaces", input);
-
-	// Actual Tokens
-	head_actual = lexer(input);
-	free(input);
-
-	// Expected Tokens
-	head_expected = NULL;
-	tail_expected = NULL;
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_REDIR_IN, ft_strdup("<"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("input.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_PIPE, ft_strdup("|"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("cat"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_APPEND, ft_strdup(">>"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-	tmp = create_token(T_WORD, ft_strdup("output.txt"));
-	add_token_to_list(&head_expected, &tail_expected, tmp);
-
-	return (compare_lst(token_count, head_actual, head_expected));
+	return (run_single_test(26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt",
+		types, values, token_count));
 }
 
 void	run_lexer_tests(void)
 {
+	int	num_tests;
+	int	success_count;
+	int	i;
+	int	(*tests[])(void) = {
+		test_simple_command,
+		test_pipe,
+		test_input_redirection,
+		test_output_redirection,
+		test_heredoc,
+		test_append,
+		test_quoted_strings,
+		test_multiple_pipes,
+		test_multiple_redirections,
+		test_empty_input,
+		test_single_quotes_special_chars,
+		test_single_quotes_with_operators,
+		test_double_quotes_with_variable,
+		test_single_quotes_no_expansion,
+		test_env_variable_unquoted,
+		test_exit_status_variable,
+		test_mixed_quotes,
+		test_heredoc_quoted_delimiter,
+		test_complex_pipe_redirections,
+		test_quotes_in_middle_of_word,
+		test_variable_with_underscore_and_numbers,
+		test_consecutive_append,
+		test_pipe_after_quoted_string,
+		test_multiple_variables_in_quotes,
+		test_redirection_no_spaces,
+		test_redirection_no_spaces_alt
+	};
+
 	printf("════════════════════ LEXER TESTS ════════════════════\n");
 	printf("\n");
 	
-	int	count = 0;
-	count += test_simple_command();
-	count += test_pipe();
-	count += test_input_redirection();
-	count += test_output_redirection();
-	count += test_heredoc();
-	count += test_append();
-	count += test_quoted_strings();
-	count += test_multiple_pipes();
-	count += test_multiple_redirections();
-	count += test_empty_input();
-	count += test_single_quotes_special_chars();
-	count += test_single_quotes_with_operators();
-	count += test_double_quotes_with_variable();
-	count += test_single_quotes_no_expansion();
-	count += test_env_variable_unquoted();
-	count += test_exit_status_variable();
-	count += test_mixed_quotes();
-	count += test_heredoc_quoted_delimiter();
-	count += test_complex_pipe_redirections();
-	count += test_quotes_in_middle_of_word();
-	count += test_variable_with_underscore_and_numbers();
-	count += test_consecutive_append();
-	count += test_pipe_after_quoted_string();
-	count += test_multiple_variables_in_quotes();
-	count += test_redirection_no_spaces();
-	count += test_redirection_no_spaces_alt();
-	print_passed_count(count, 26);
+	num_tests = sizeof(tests) / sizeof(tests[0]);
+	success_count = 0;
+	i = 0;
+	while (i < num_tests)
+	{
+		if (tests[i]() == 1)
+		{
+			success_count++;
+			print_passed();
+		}
+		else
+			print_failed();
+		printf("\n");
+		i++;
+	}
+	print_passed_count(success_count, num_tests);
 }

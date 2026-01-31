@@ -19,7 +19,6 @@
 // Tests
 void	run_lexer_tests(void);
 void	run_parser_tests(void);
-void	run_executor_tests(void);
 
 // Utils
 void	print_test_info(int n, char *name, char *input);

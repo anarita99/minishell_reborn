@@ -82,8 +82,6 @@ t_token	*create_operator(t_token_type type, char *str);
 int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char c_next);
 int	state_quote(int *state, char c, int c_type, t_buffer *buffer);
 
-
-
 t_token	*lexer(char *input);
 
 #endif

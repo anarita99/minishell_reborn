@@ -21,7 +21,6 @@ int	main(int argc, char **argv)
 	{
 		run_lexer_tests();
 		run_parser_tests();
-		run_executor_tests();
 		return (0);
 	}
 	else if (argc == 2)
@@ -30,10 +29,8 @@ int	main(int argc, char **argv)
 			run_lexer_tests();
 		else if (ft_strncmp(argv[1], "parser", 7) == 0)
 			run_parser_tests();
-		else if (ft_strncmp(argv[1], "executor", 9) == 0)
-			run_executor_tests();
 		return (0);
 	}
-	printf("Usage: %s [lexer|parser|executor]\n", argv[0]);
+	printf("Usage: %s [lexer|parser]\n", argv[0]);
 	return (1);
 }

@@ -29,13 +29,13 @@ MINISHELL_SRCS		= $(MINISHELL_SRCS_DIR)/lexer/lexer.c \
 					  $(MINISHELL_SRCS_DIR)/lexer/token.c \
 					  $(MINISHELL_SRCS_DIR)/lexer/types.c \
 					  $(MINISHELL_SRCS_DIR)/lexer/buffer.c \
-					  $(MINISHELL_SRCS_DIR)/lexer/states.c
+					  $(MINISHELL_SRCS_DIR)/lexer/states.c \
+					  $(MINISHELL_SRCS_DIR)/parser/parser.c
 
 SRCS				= tester.c \
 					  utils.c \
 					  tests/test_lexer.c \
-					  tests/test_parser.c \
-					  tests/test_executor.c
+					  tests/test_parser.c
 
 MINISHELL_OBJS		= $(MINISHELL_SRCS:.c=.o)
 OBJS				= $(SRCS:.c=.o)
@@ -71,13 +71,10 @@ re: fclean all
 test: all
 	@./$(NAME)
 
-test_lexer: all
+lexer: all
 	@./$(NAME) lexer
 
-test_parser: all
+parser: all
 	@./$(NAME) parser
 
-test_executor: all
-	@./$(NAME) executor
-
-.PHONY: all clean fclean re test test_lexer test_parser test_executor
+.PHONY: all clean fclean re test test_lexer test_parser
