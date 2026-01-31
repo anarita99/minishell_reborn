@@ -22,6 +22,11 @@ static int	compare_token(t_token expected, t_token actual, int index)
 			index, expected.type, actual.type);
 		return (0);
 	}
+	if (!expected.value || !actual.value)
+	{
+		printf("Token %d value is NULL\n", index);
+		return (0);
+	}
 	if (strcmp(expected.value, actual.value) != 0)
 	{
 		printf("Token %d value mismatch: expected '%s', got '%s'\n",
@@ -37,20 +42,21 @@ static int	compare_lst(int token_count, t_token *head_actual, t_token *head_expe
 	t_token	*current_expected;
 	
 	// Compare
-	int i = 0;
-	int success = 1;
 	current_actual = head_actual;
 	current_expected = head_expected;
+	int success = 1;
+	int i = 0;
 	while (current_actual && current_expected)
 	{
-		success = compare_token(*current_expected, *current_actual, i);
+		if (!compare_token(*current_expected, *current_actual, i))
+			success = 0;
 		current_actual = current_actual->next;
 		current_expected = current_expected->next;
 		i++;
 	}
 	
 	// Check if both lists have the same length
-	if (i != token_count)
+	if (current_actual || current_expected)
 	{
 		printf("Token count mismatch: expected %d, got %d\n", token_count, i);
 		success = 0;
@@ -393,7 +399,7 @@ static int	test_complex_pipe_redirections(void)
 
 /*
 ** Test 20: Quotes in the middle of word
-** Input: "hello'world'"
+** Input: "he"l"lo'world'"
 ** Expected: [T_WORD:"helloworld"]
 ** Quotes should merge with surrounding text
 */
@@ -403,7 +409,7 @@ static int	test_quotes_in_middle_of_word(void)
 	char			*values[] = {"helloworld"};
 	int				token_count = 1;
 	
-	return (run_single_test(20, "Quotes in middle of word", "hello'world'",
+	return (run_single_test(20, "Quotes in middle of word", "he\"l\"lo'world'",
 		types, values, token_count));
 }
 
@@ -500,9 +506,6 @@ static int	test_redirection_no_spaces_alt(void)
 
 void	run_lexer_tests(void)
 {
-	int	num_tests;
-	int	success_count;
-	int	i;
 	int	(*tests[])(void) = {
 		test_simple_command,
 		test_pipe,
@@ -535,9 +538,9 @@ void	run_lexer_tests(void)
 	printf("════════════════════ LEXER TESTS ════════════════════\n");
 	printf("\n");
 	
-	num_tests = sizeof(tests) / sizeof(tests[0]);
-	success_count = 0;
-	i = 0;
+	int	num_tests = sizeof(tests) / sizeof(tests[0]);
+	int	success_count = 0;
+	int	i = 0;
 	while (i < num_tests)
 	{
 		if (tests[i]() == 1)
