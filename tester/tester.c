@@ -12,25 +12,12 @@
 
 #include "tester.h"
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	printf("\n");
 	printf("Minishell Tester\n");
 	printf("\n");
-	if (argc == 1)
-	{
-		run_lexer_tests();
-		run_parser_tests();
-		return (0);
-	}
-	else if (argc == 2)
-	{
-		if (ft_strncmp(argv[1], "lexer", 6) == 0)
-			run_lexer_tests();
-		else if (ft_strncmp(argv[1], "parser", 7) == 0)
-			run_parser_tests();
-		return (0);
-	}
-	printf("Usage: %s [lexer|parser]\n", argv[0]);
-	return (1);
+	run_tests("LEXER", get_lexer_tests());
+	run_tests("PARSER", get_parser_tests());
+	return (0);
 }

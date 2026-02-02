@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_lexer.c                                       :+:      :+:    :+:   */
+/*   lexer_tests.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,101 +11,6 @@
 /* ************************************************************************** */
 
 #include "tester.h"
-#include "../../includes/minishell.h"
-#include "../../includes/lexer.h"
-
-static int	compare_token(t_token expected, t_token actual, int index)
-{
-	if (expected.type != actual.type)
-	{
-		printf("Token %d type mismatch: expected %d, got %d\n",
-			index, expected.type, actual.type);
-		return (0);
-	}
-	if (!expected.value || !actual.value)
-	{
-		printf("Token %d value is NULL\n", index);
-		return (0);
-	}
-	if (strcmp(expected.value, actual.value) != 0)
-	{
-		printf("Token %d value mismatch: expected '%s', got '%s'\n",
-			index, expected.value, actual.value);
-		return (0);
-	}
-	return (1);
-}
-
-static int	compare_lst(int token_count, t_token *head_actual, t_token *head_expected)
-{
-	t_token	*current_actual;
-	t_token	*current_expected;
-	
-	// Compare
-	current_actual = head_actual;
-	current_expected = head_expected;
-	int success = 1;
-	int i = 0;
-	while (current_actual && current_expected)
-	{
-		if (!compare_token(*current_expected, *current_actual, i))
-			success = 0;
-		current_actual = current_actual->next;
-		current_expected = current_expected->next;
-		i++;
-	}
-	
-	// Check if both lists have the same length
-	if (current_actual || current_expected)
-	{
-		printf("Token count mismatch: expected %d, got %d\n", token_count, i);
-		success = 0;
-	}
-	
-	free_tokens(head_actual);
-	free_tokens(head_expected);
-	return (success);
-}
-
-static t_token	*build_expected_tokens(t_token_type types[], char *values[], int count)
-{
-	t_token	*head;
-	t_token	*tail;
-	t_token	*token;
-	int		i;
-
-	head = NULL;
-	tail = NULL;
-	i = 0;
-	while (i < count)
-	{
-		token = create_token(types[i], ft_strdup(values[i]));
-		add_token_to_list(&head, &tail, token);
-		i++;
-	}
-	return (head);
-}
-
-static int	run_single_test(int test_num, char *name, char *input, 
-	t_token_type types[], char *values[], int token_count)
-{
-	t_token	*head_actual;
-	t_token	*head_expected;
-
-	print_test_info(test_num, name, input);
-
-	// Actual
-	head_actual = lexer(input);
-
-	// Expected
-	if (token_count == 0)
-		head_expected = NULL;
-	else
-		head_expected = build_expected_tokens(types, values, token_count);
-
-	return (compare_lst(token_count, head_actual, head_expected));
-}
-
 
 /*
 ** Test 1: Simple command
@@ -118,7 +23,7 @@ static int	test_simple_command(void)
 	char			*values[] = {"echo", "hello"};
 	int				token_count = 2;
 	
-	return (run_single_test(1, "Simple command", "echo hello", 
+	return (run_lexer_test(1, "Simple command", "echo hello", 
 		types, values, token_count));
 }
 
@@ -133,7 +38,7 @@ static int	test_pipe(void)
 	char			*values[] = {"ls", "|", "grep", "test"};
 	int				token_count = 4;
 	
-	return (run_single_test(2, "Command with pipe", "ls | grep test",
+	return (run_lexer_test(2, "Command with pipe", "ls | grep test",
 		types, values, token_count));
 }
 
@@ -148,7 +53,7 @@ static int	test_input_redirection(void)
 	char			*values[] = {"cat", "<", "input.txt"};
 	int				token_count = 3;
 	
-	return (run_single_test(3, "Input redirection", "cat < input.txt",
+	return (run_lexer_test(3, "Input redirection", "cat < input.txt",
 		types, values, token_count));
 }
 
@@ -163,7 +68,7 @@ static int	test_output_redirection(void)
 	char			*values[] = {"echo", "hello", ">", "output.txt"};
 	int				token_count = 4;
 	
-	return (run_single_test(4, "Output redirection", "echo hello > output.txt",
+	return (run_lexer_test(4, "Output redirection", "echo hello > output.txt",
 		types, values, token_count));
 }
 
@@ -178,7 +83,7 @@ static int	test_heredoc(void)
 	char			*values[] = {"cat", "<<", "EOF"};
 	int				token_count = 3;
 	
-	return (run_single_test(5, "Heredoc", "cat << EOF",
+	return (run_lexer_test(5, "Heredoc", "cat << EOF",
 		types, values, token_count));
 }
 
@@ -193,7 +98,7 @@ static int	test_append(void)
 	char			*values[] = {"echo", "hello", ">>", "output.txt"};
 	int				token_count = 4;
 	
-	return (run_single_test(6, "Append redirection", "echo hello >> output.txt",
+	return (run_lexer_test(6, "Append redirection", "echo hello >> output.txt",
 		types, values, token_count));
 }
 
@@ -208,7 +113,7 @@ static int	test_quoted_strings(void)
 	char			*values[] = {"echo", "\"hello world\""};
 	int				token_count = 2;
 	
-	return (run_single_test(7, "Quoted strings", "echo \"hello world\"",
+	return (run_lexer_test(7, "Quoted strings", "echo \"hello world\"",
 		types, values, token_count));
 }
 
@@ -224,7 +129,7 @@ static int	test_multiple_pipes(void)
 	char			*values[] = {"ls", "|", "grep", "test", "|", "wc", "-l"};
 	int				token_count = 7;
 	
-	return (run_single_test(8, "Multiple pipes", "ls | grep test | wc -l",
+	return (run_lexer_test(8, "Multiple pipes", "ls | grep test | wc -l",
 		types, values, token_count));
 }
 
@@ -240,7 +145,7 @@ static int	test_multiple_redirections(void)
 	char			*values[] = {"cat", "<", "input.txt", ">", "output.txt"};
 	int				token_count = 5;
 	
-	return (run_single_test(9, "Multiple redirections", "cat < input.txt > output.txt",
+	return (run_lexer_test(9, "Multiple redirections", "cat < input.txt > output.txt",
 		types, values, token_count));
 }
 
@@ -251,7 +156,7 @@ static int	test_multiple_redirections(void)
 */
 static int	test_empty_input(void)
 {
-	return (run_single_test(10, "Empty input", "", NULL, NULL, 0));
+	return (run_lexer_test(10, "Empty input", "", NULL, NULL, 0));
 }
 
 /*
@@ -266,7 +171,7 @@ static int	test_single_quotes_special_chars(void)
 	char			*values[] = {"echo", "'hello|world'"};
 	int				token_count = 2;
 	
-	return (run_single_test(11, "Single quotes with special chars", "echo 'hello|world'",
+	return (run_lexer_test(11, "Single quotes with special chars", "echo 'hello|world'",
 		types, values, token_count));
 }
 
@@ -282,7 +187,7 @@ static int	test_single_quotes_with_operators(void)
 	char			*values[] = {"cat", "'file<>name.txt'"};
 	int				token_count = 2;
 	
-	return (run_single_test(12, "Single quotes with operators", "cat 'file<>name.txt'",
+	return (run_lexer_test(12, "Single quotes with operators", "cat 'file<>name.txt'",
 		types, values, token_count));
 }
 
@@ -298,7 +203,7 @@ static int	test_double_quotes_with_variable(void)
 	char			*values[] = {"echo", "\"$HOME\""};
 	int				token_count = 2;
 	
-	return (run_single_test(13, "Double quotes with variable", "echo \"$HOME\"",
+	return (run_lexer_test(13, "Double quotes with variable", "echo \"$HOME\"",
 		types, values, token_count));
 }
 
@@ -314,7 +219,7 @@ static int	test_single_quotes_no_expansion(void)
 	char			*values[] = {"echo", "'$HOME'"};
 	int				token_count = 2;
 	
-	return (run_single_test(14, "Single quotes no expansion", "echo '$HOME'",
+	return (run_lexer_test(14, "Single quotes no expansion", "echo '$HOME'",
 		types, values, token_count));
 }
 
@@ -330,7 +235,7 @@ static int	test_env_variable_unquoted(void)
 	char			*values[] = {"echo", "$HOME"};
 	int				token_count = 2;
 	
-	return (run_single_test(15, "Environment variable unquoted", "echo $HOME",
+	return (run_lexer_test(15, "Environment variable unquoted", "echo $HOME",
 		types, values, token_count));
 }
 
@@ -346,7 +251,7 @@ static int	test_exit_status_variable(void)
 	char			*values[] = {"echo", "$?"};
 	int				token_count = 2;
 	
-	return (run_single_test(16, "Exit status variable", "echo $?",
+	return (run_lexer_test(16, "Exit status variable", "echo $?",
 		types, values, token_count));
 }
 
@@ -361,7 +266,7 @@ static int	test_mixed_quotes(void)
 	char			*values[] = {"echo", "'hello'", "\"world\""};
 	int				token_count = 3;
 	
-	return (run_single_test(17, "Mixed quotes", "echo 'hello' \"world\"",
+	return (run_lexer_test(17, "Mixed quotes", "echo 'hello' \"world\"",
 		types, values, token_count));
 }
 
@@ -376,7 +281,7 @@ static int	test_heredoc_quoted_delimiter(void)
 	char			*values[] = {"cat", "<<", "'EOF'"};
 	int				token_count = 3;
 	
-	return (run_single_test(18, "Heredoc with quoted delimiter", "cat << 'EOF'",
+	return (run_lexer_test(18, "Heredoc with quoted delimiter", "cat << 'EOF'",
 		types, values, token_count));
 }
 
@@ -393,7 +298,7 @@ static int	test_complex_pipe_redirections(void)
 	char			*values[] = {"cat", "<", "in.txt", "|", "grep", "test", ">", "out.txt"};
 	int				token_count = 8;
 	
-	return (run_single_test(19, "Complex pipe with redirections", "cat < in.txt | grep test > out.txt",
+	return (run_lexer_test(19, "Complex pipe with redirections", "cat < in.txt | grep test > out.txt",
 		types, values, token_count));
 }
 
@@ -409,7 +314,7 @@ static int	test_quotes_in_middle_of_word(void)
 	char			*values[] = {"helloworld"};
 	int				token_count = 1;
 	
-	return (run_single_test(20, "Quotes in middle of word", "he\"l\"lo'world'",
+	return (run_lexer_test(20, "Quotes in middle of word", "he\"l\"lo'world'",
 		types, values, token_count));
 }
 
@@ -424,7 +329,7 @@ static int	test_variable_with_underscore_and_numbers(void)
 	char			*values[] = {"echo", "$USER_NAME_123"};
 	int				token_count = 2;
 	
-	return (run_single_test(21, "Variable with underscore and numbers", "echo $USER_NAME_123",
+	return (run_lexer_test(21, "Variable with underscore and numbers", "echo $USER_NAME_123",
 		types, values, token_count));
 }
 
@@ -440,7 +345,7 @@ static int	test_consecutive_append(void)
 	char			*values[] = {"cat", ">>", "file1", ">>", "file2"};
 	int				token_count = 5;
 	
-	return (run_single_test(22, "Consecutive append redirections", "cat >> file1 >> file2",
+	return (run_lexer_test(22, "Consecutive append redirections", "cat >> file1 >> file2",
 		types, values, token_count));
 }
 
@@ -455,7 +360,7 @@ static int	test_pipe_after_quoted_string(void)
 	char			*values[] = {"echo", "\"hello\"", "|", "cat"};
 	int				token_count = 4;
 	
-	return (run_single_test(23, "Pipe after quoted string", "echo \"hello\" | cat",
+	return (run_lexer_test(23, "Pipe after quoted string", "echo \"hello\" | cat",
 		types, values, token_count));
 }
 
@@ -470,7 +375,7 @@ static int	test_multiple_variables_in_quotes(void)
 	char			*values[] = {"echo", "\"$HOME/$USER\""};
 	int				token_count = 2;
 	
-	return (run_single_test(24, "Multiple variables in double quotes", "echo \"$HOME/$USER\"",
+	return (run_lexer_test(24, "Multiple variables in double quotes", "echo \"$HOME/$USER\"",
 		types, values, token_count));
 }
 
@@ -485,7 +390,7 @@ static int	test_redirection_no_spaces(void)
 	char			*values[] = {"cat", "<", "input.txt"};
 	int				token_count = 3;
 	
-	return (run_single_test(25, "Redirection with no spaces", "cat<input.txt",
+	return (run_lexer_test(25, "Redirection with no spaces", "cat<input.txt",
 		types, values, token_count));
 }
 
@@ -500,13 +405,13 @@ static int	test_redirection_no_spaces_alt(void)
 	char			*values[] = {"cat", "<", "input.txt", "|", "cat", ">>", "output.txt"};
 	int				token_count = 7;
 	
-	return (run_single_test(26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt",
+	return (run_lexer_test(26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt",
 		types, values, token_count));
 }
 
-void	run_lexer_tests(void)
+int	(**get_lexer_tests(void))(void)
 {
-	int	(*tests[])(void) = {
+	static int	(*tests[])(void) = {
 		test_simple_command,
 		test_pipe,
 		test_input_redirection,
@@ -532,26 +437,8 @@ void	run_lexer_tests(void)
 		test_pipe_after_quoted_string,
 		test_multiple_variables_in_quotes,
 		test_redirection_no_spaces,
-		test_redirection_no_spaces_alt
+		test_redirection_no_spaces_alt,
+		NULL
 	};
-
-	printf("════════════════════ LEXER TESTS ════════════════════\n");
-	printf("\n");
-	
-	int	num_tests = sizeof(tests) / sizeof(tests[0]);
-	int	success_count = 0;
-	int	i = 0;
-	while (i < num_tests)
-	{
-		if (tests[i]() == 1)
-		{
-			success_count++;
-			print_passed();
-		}
-		else
-			print_failed();
-		printf("\n");
-		i++;
-	}
-	print_passed_count(success_count, num_tests);
+	return (tests);
 }

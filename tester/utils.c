@@ -18,21 +18,59 @@ void	print_test_info(int n, char *name, char *input)
 	printf("- Input: \"%s\"\n", input);
 }
 
-void	print_passed()
+static void	print_passed()
 {
-	printf("✅ PASSED\n");
+	printf("- Result: PASSED ✅\n");
 }
 
-void	print_failed()
+static void	print_failed()
 {
-	printf("❌ FAILED\n");
+	printf("- Result: KO ❌\n");
 }
 
-void	print_passed_count(int count, int max)
+static void	print_passed_count(int count, int max)
 {
 	if (count == max)
-		printf("✅");
+		printf("✅ PASSED ");
 	else
-		printf("❌");
-	printf(" PASSED %i/%i\n", count, max);
+		printf("❌ KO ");
+	printf("%i/%i\n", count, max);
+}
+
+static int	get_test_count(int (**tests)(void))
+{
+	int	count;
+
+	count = 0;
+	while (tests[count] != NULL)
+		count++;
+	return (count);
+}
+
+void	run_tests(char *module_name, int (**tests)(void))
+{
+	int	test_count;
+	int success_count;
+	int	i;
+
+	printf("════════════════════ %s TESTS ════════════════════\n", module_name);
+	printf("\n");
+	
+	test_count = get_test_count(tests);
+	success_count = 0;
+	i = 0;
+	while (i < test_count)
+	{
+		if (tests[i]() == 1)
+		{
+			success_count++;
+			print_passed();
+		}
+		else
+			print_failed();
+		printf("\n");
+		i++;
+	}
+	print_passed_count(success_count, test_count);
+	printf("\n");
 }

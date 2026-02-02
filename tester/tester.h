@@ -14,16 +14,24 @@
 # define TESTER_H
 
 # include <stdio.h>
+# include <string.h>
+# include "../includes/minishell.h"
 # include "../includes/lexer.h"
 
+// Lexer Only
+int	    run_lexer_test(int test_num, char *name, char *input, 
+	    t_token_type types[], char *values[], int token_count);
+
+// Parser Only
+int	    run_parser_test(int test_num, char *name, char *input, 
+	    char *expected_argv[], int argc);
+
 // Tests
-void	run_lexer_tests(void);
-void	run_parser_tests(void);
+int	    (**get_lexer_tests(void))(void);
+int     (**get_parser_tests(void))(void);
 
 // Utils
+void	run_tests(char *module_name, int (**tests)(void));
 void	print_test_info(int n, char *name, char *input);
-void	print_passed(void);
-void	print_failed(void);
-void	print_passed_count(int count, int max);
 
 #endif

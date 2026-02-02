@@ -34,8 +34,8 @@ MINISHELL_SRCS		= $(MINISHELL_SRCS_DIR)/lexer/lexer.c \
 
 SRCS				= tester.c \
 					  utils.c \
-					  tests/test_lexer.c \
-					  tests/test_parser.c
+					  lexer/lexer_tests.c lexer/lexer_utils.c \
+					  parser/parser_tests.c parser/parser_utils.c
 
 MINISHELL_OBJS		= $(MINISHELL_SRCS:.c=.o)
 OBJS				= $(SRCS:.c=.o)
@@ -77,4 +77,4 @@ lexer: all
 parser: all
 	@./$(NAME) parser
 
-.PHONY: all clean fclean re test test_lexer test_parser
+.PHONY: all clean fclean re test lexer parser
