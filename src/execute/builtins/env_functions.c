@@ -6,24 +6,12 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:33 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 16:03:06 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/26 12:17:25 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "execution.h"
-
-void	free_str_array(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	while (i > 0)
-		free(str[--i]);
-	free(str);
-}
 
 int	env_lstsize(t_env *lst)
 {
@@ -98,46 +86,3 @@ t_env	*get_env_node(t_env *env_list, char *key)
 	}
 	return (NULL);
 }
-
-void	free_node(t_env *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node);
-}
-
-void free_env_list(t_env *head)
-{
-	t_env	*next;
-
-	while (head)
-	{
-		next = head->next;
-		free_node(head);
-		head = next;
-	}
-}
-
-void	set_env_var(char *key, char *value)
-{
-	t_env	*current_node;
-
-	current_node = get_env_node(call_sh_struct()->env_list, key);
-	if (current_node)
-	{
-		free(current_node->value);
-		current_node->value = ft_strdup(value);
-		if(!current_node->value)
-			malloc_error();     //malloc exit
-		return ;
-	}
-	current_node = env_new_node(NULL, NULL);
-	if(!current_node)
-		malloc_error();      //malloc exit
-	current_node->key = ft_strdup(key);
-	current_node->value = ft_strdup(value);
-	if (!current_node->key || !current_node->value)
-		return (free_node(current_node));
-	env_add_back(&call_sh_struct()->env_list, current_node);
-}
-

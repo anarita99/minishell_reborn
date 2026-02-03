@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/01/21 15:04:04 by adores           ###   ########.fr        #
+#    Updated: 2026/02/03 17:33:10 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CFLAGS = -g -Wall -Wextra -Werror -I. -Ilibft -Iinclude
 
 SRCS = \
 	minishell.c \
-	data.c \
+	src/execute/data.c \
+	src/execute/utils.c \
+	src/execute/execute.c \
 	src/execute/builtins/cd.c\
 	src/execute/builtins/echo.c\
 	src/execute/builtins/env_functions.c\
@@ -36,6 +38,7 @@ all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) bonus
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline

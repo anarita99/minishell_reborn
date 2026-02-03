@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/01/22 16:15:56 by adores           ###   ########.fr       */
+/*   Updated: 2026/01/26 12:03:37 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	exitclean(unsigned char exit_code);
 
-void	malloc_error()
-{
-	ft_putendl_fd("minishell: allocation error", 2);
-	exitclean('1');
-}
+
 
 static int	is_numeric(const char *s)
 {
@@ -69,11 +65,7 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 	return (true);
 }
 
-void	exitclean(unsigned char exit_code)
-{
-	free_env_list(call_sh_struct()->env_list);  //vai ter de limpar mais coisas
-	exit(exit_code);
-}
+
 
 int	exit_builtin(char **args)
 {

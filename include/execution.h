@@ -6,13 +6,13 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:02:10 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/03 18:12:12 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef EXECUTION_H
+#  define EXECUTION_H
 
-#ifndef MINISHELL_H
-#  define MINISHELL_H
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <string.h>
 # include <sys/wait.h>
+#include <sys/stat.h>
 # include <sysexits.h>
 # include <fcntl.h>
 # include <time.h>
@@ -28,7 +29,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <linux/limits.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_env
 {
@@ -45,20 +46,6 @@ typedef enum e_token
 	APPEND, // >>
 }	t_token;
 
-typedef struct s_file
-{
-	char	*filename;
-	t_token	mode;
-	bool	quoted;
-} t_file;
-
-typedef struct s_input
-{
-	char	**argv;
-	t_file	*infiles;
-	t_file	*outfiles;
-} t_input;
-
 //shell struct
 typedef struct s_shell
 {
@@ -68,28 +55,37 @@ typedef struct s_shell
 	char	*cmd_line;
 }	t_shell;
 
+typedef struct		s_redir
+{
+	int				type;      // REDIR_IN, REDIR_OUT, APPEND, HEREDOC
+    char			*filename; // "output.txt"
+    bool			quoted;
+}					t_redir;
 
-/*
-** srcs/env/env.c
-*/
+typedef struct		s_cmd
+{
+	char			**argv;    // ["ls", "-l"]
+	t_redir			*redirs;
+}					t_cmd;
+
+
+// srcs/execute/builtins/env.c
+void	set_env_var(char *key, char *value);
 int		add_env_var(t_env **head, char *env);
 t_env	*init_env(void);
 int		env_builtin();
 
-/*
-** srcs/env/env_functions.c
-*/
+
+// src/execute/builtins/env_functions.c
+
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);
 t_env	*env_new_node(char *key, char *value);
 char	*get_env_value(t_env *env_list, char *key);
 t_env	*get_env_node(t_env *env_list, char *key);
-void	free_node(t_env *node);
-void	free_env_list(t_env *head);
-void	free_str_array(char **str);
-void	set_env_var(char *key, char *value);
 
 
+char	*is_executable(char *cmd);
 /*
 ** srcs/exec/exec.c
 
@@ -99,19 +95,25 @@ void	execute_command(char **args, char *envp[]);
 int		execute_single_builtin(t_cmd *cmd, t_shell *shell);
 int		exe_builtin(char **args, t_shell *shell);*/
 
-/*
-** execution/builtins/.c
-*/
+
+// src/execute/builtins/.c
+
 int		echo_builtin(char **args);
 int 	cd_builtin (char **args);
 int		pwd_builtin();
 int		exit_builtin(char **args);
-void	malloc_error();
 int		env_builtin();
 int		unset_builtin(char **args);
 int		export_builtin(char **args);
 int		is_builtin(char **args);
 
+//src/execute/utils.c
+void	print_err(char *context, char *detail, bool err);
+void	exitclean(unsigned char exit_code);
+void	malloc_error();
+void	free_node(t_env *node);
+void	free_env_list(t_env *head);
+void	free_str_array(char **str);
 
 t_shell	*call_sh_struct(void);
 
