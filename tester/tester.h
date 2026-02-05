@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <string.h>
 # include "../includes/minishell.h"
-# include "../includes/lexer.h"
 
 // Lexer Only
 int	    run_lexer_test(int test_num, char *name, char *input, 

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "tester.h"
-#include "../../includes/parser.h"
 
 static int	compare_argv(char **expected, char **actual, int argc)
 {
@@ -60,6 +59,5 @@ int	run_parser_test(int test_num, char *name, char *input, char *expected_argv[]
 		if (!compare_argv(expected_argv, cmd->argv, argc))
 			success = 0;
 	}
-	
 	return (success);
 }
