@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/02/03 17:33:10 by adores           ###   ########.fr        #
+#    Updated: 2026/02/05 17:38:37 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,13 @@ SRCS = \
 	src/execute/builtins/cd.c\
 	src/execute/builtins/echo.c\
 	src/execute/builtins/env_functions.c\
+	src/execute/builtins/env_functions2.c\
 	src/execute/builtins/env.c\
 	src/execute/builtins/exit.c\
 	src/execute/builtins/pwd.c\
 	src/execute/builtins/unset.c\
 	src/execute/builtins/export.c\
+	src/execute/ext_execute.c
 
 OBJS = $(SRCS:.c=.o)
 

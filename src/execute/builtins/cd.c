@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/01/23 16:28:39 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:58:15 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	set_cd_path(char **args, char **path)
 {
 	if (!args[1])
 	{
-		*path = get_env_value(call_sh_struct()->env_list, "HOME");
+		*path = get_env_value(sh_s()->env_list, "HOME");
 		if(*path == NULL)
 			return (ft_putendl_fd("minishell: cd: HOME not set", 2), 1);
 	}
 	else if (ft_strcmp(args[1], "-") == 0)
 	{
-		*path = get_env_value(call_sh_struct()->env_list, "OLDPWD");
+		*path = get_env_value(sh_s()->env_list, "OLDPWD");
 		if(*path == NULL)
 			return (ft_putendl_fd("minishell: cd: OLDPWD not set", 2), 1);
 		printf("%s\n", *path);
@@ -48,7 +48,7 @@ int cd_builtin (char **args)
 
 	if (args[1] && args[2])
 		return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
-	old_pwd = get_env_value(call_sh_struct()->env_list, "PWD");
+	old_pwd = get_env_value(sh_s()->env_list, "PWD");
 	if (set_cd_path(args, &path) == 1)
 		return (1);
 	if (chdir(path) == -1)

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/03 18:12:12 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 17:35:17 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef enum e_token
 //shell struct
 typedef struct s_shell
 {
-	int		last_exit_status;
+	int		exit_status;
 	t_env	*env_list;
 	t_list	*input_list;
 	char	*cmd_line;
@@ -84,9 +84,12 @@ t_env	*env_new_node(char *key, char *value);
 char	*get_env_value(t_env *env_list, char *key);
 t_env	*get_env_node(t_env *env_list, char *key);
 
+char	**envlist_to_char(t_env *env_list);
 
-char	*is_executable(char *cmd);
+char	*path_to_execute(char *cmd);
+void	execute_ext(t_cmd	*cmd);
 /*
+
 ** srcs/exec/exec.c
 
 int		execute_pipeline(t_cmd *cmds, t_shell *shell);
@@ -111,10 +114,11 @@ int		is_builtin(char **args);
 void	print_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
 void	malloc_error();
+void	error_exit(char *context, char *detail, int exit_code, bool err);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);
-void	free_str_array(char **str);
+void	free_arr(char **str);
 
-t_shell	*call_sh_struct(void);
+t_shell	*sh_s(void);
 
 #endif

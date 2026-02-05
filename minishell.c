@@ -6,26 +6,12 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:49:18 by adores & mi       #+#    #+#             */
-/*   Updated: 2026/02/05 14:36:22 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 17:43:53 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static void	free_arr(char **arr)
-{
-	int i;
-
-	i = 0;
-	if (arr == NULL)
-		return ;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
 
 int main(void)
 {
@@ -34,11 +20,9 @@ int main(void)
 	char **args;
 	//t_list *list;
 	t_cmd	*cmd;
-	//pid_t pid;
-	//extern char **environ;
 
 	shell.env_list = init_env();
-	shell.last_exit_status = 0;
+	shell.exit_status = 0;
 	while (1)
 	{
 		input = readline("minishell > ");
@@ -86,23 +70,13 @@ int main(void)
 		}
 		else
 		{
-			t_list *list;
-			char *path;
 			cmd = malloc(sizeof(t_cmd));
 			if(!cmd)
 				return (1);
 			cmd->argv = args;
 			cmd->redirs = NULL;
-			list = ft_lstnew(cmd);
-			//is_executable(args[0]);
-			path = is_executable(cmd->argv[0]);
-			if(path != NULL)
-			{
-				printf("%s\n", path);
-				
-			}
+			execute_ext(cmd);
 			free(cmd);
-			free(list);
 			free_arr(args);
 		}
 			

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:54 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:01:35 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:59:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	remove_env_var(char *key)
 	t_env	*current;
 	t_env	*prev;
 
-	current = call_sh_struct()->env_list;
+	current = sh_s()->env_list;
 	prev = NULL;
 	while(current)
 	{
 		if(ft_strcmp(current->key, key) == 0)
 		{
 			if (prev == NULL)
-				call_sh_struct()->env_list = current->next;
+				sh_s()->env_list = current->next;
 			else
 				prev->next = current->next;
 			free_node(current);
@@ -39,11 +39,11 @@ int	unset_builtin(char **args)
 {
 	int	i;
 
-	call_sh_struct()->last_exit_status = 0;
+	sh_s()->exit_status = 0;
 	i = 1;
 	while (args[i])
 	{
-		if (get_env_value(call_sh_struct()->env_list, args[i]))
+		if (get_env_value(sh_s()->env_list, args[i]))
 			remove_env_var(args[i]);
 		i++;
 	}

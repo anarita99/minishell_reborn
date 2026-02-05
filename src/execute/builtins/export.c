@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 14:58:30 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:58:15 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	print_sorted_env()
 	t_env	**node_array;
 	int		i;
 
-	node_array = list_to_array (call_sh_struct()->env_list);
+	node_array = list_to_array (sh_s()->env_list);
 	if (!node_array)
 		return;
 	bubble_sort_array(node_array);
@@ -107,7 +107,7 @@ static void	export_append(char *equal, char *plus, char *arg)
 	char	*value;
 
 	*plus = '\0';
-	node = get_env_node(call_sh_struct()->env_list, arg);
+	node = get_env_node(sh_s()->env_list, arg);
 	if (node)
 	{
 		if (node->value)
@@ -157,7 +157,7 @@ int	export_builtin(char **args)
 			export_error(args[i], &exit_code);
 		else if(equal)
 			export_non_null_var(equal, plus, args[i]);
-		else if(!get_env_node(call_sh_struct()->env_list, args[i]))
+		else if(!get_env_node(sh_s()->env_list, args[i]))
 				set_env_var(args[i], NULL);
 		i++;
 	}

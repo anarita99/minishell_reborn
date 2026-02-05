@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/01/26 12:03:37 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:59:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,24 @@ int	exit_builtin(char **args)
 	ft_putstr_fd("exit\n", 2);
 	if(!args[1])
 	{
-		free_str_array(args);
-		exitclean((unsigned char)call_sh_struct()->last_exit_status);
+		free_arr(args);
+		exitclean((unsigned char)sh_s()->exit_status);
 	}	
 	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		free_str_array(args);
+		free_arr(args);
 		exitclean('2');
 	}
 	if(args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		call_sh_struct()->last_exit_status = 1;
+		sh_s()->exit_status = 1;
 		return (1);
 	}
-	free_str_array(args);
+	free_arr(args);
 	exitclean((unsigned char)exit_code);
 	return (0);
 }

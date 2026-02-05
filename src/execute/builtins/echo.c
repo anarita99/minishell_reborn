@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:37 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 14:49:58 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:59:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	echo_builtin(char **args)
 	}
 	if(newline == 1)
 		ft_putstr_fd("\n", 1);
-	call_sh_struct()->last_exit_status = 0;
+	sh_s()->exit_status = 0;
 	return (0);
 }

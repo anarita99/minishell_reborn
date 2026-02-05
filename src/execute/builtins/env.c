@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/26 12:17:03 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/05 16:59:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_env_var(char *key, char *value)
 {
 	t_env	*current_node;
 
-	current_node = get_env_node(call_sh_struct()->env_list, key);
+	current_node = get_env_node(sh_s()->env_list, key);
 	if (current_node)
 	{
 		free(current_node->value);
@@ -35,7 +35,7 @@ void	set_env_var(char *key, char *value)
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || !current_node->value)
 		return (free_node(current_node));
-	env_add_back(&call_sh_struct()->env_list, current_node);
+	env_add_back(&sh_s()->env_list, current_node);
 }
 
 static void	set_shell_level(t_env **env_list)
@@ -86,26 +86,26 @@ t_env	*init_env(void)
 	
 	while (environ[i])
 	{
-		if (add_env_var(&call_sh_struct()->env_list, environ[i]) == 1)
+		if (add_env_var(&sh_s()->env_list, environ[i]) == 1)
 			malloc_error();
 		i++;
 	}
 	set_env_var("PWD", getcwd(buf, PATH_MAX));
-	set_shell_level(&call_sh_struct()->env_list);
-	return (call_sh_struct()->env_list);
+	set_shell_level(&sh_s()->env_list);
+	return (sh_s()->env_list);
 }
 
 int	env_builtin()
 {
 	t_env	*current;
 
-	current = call_sh_struct()->env_list;
+	current = sh_s()->env_list;
 	while (current)
 	{
 		if (current->value)
 			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
-	call_sh_struct()->last_exit_status = 0;
+	sh_s()->exit_status = 0;
 	return (0);
 }
