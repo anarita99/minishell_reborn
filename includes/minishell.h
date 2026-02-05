@@ -58,6 +58,12 @@
 // tgetstr, tgoto, tputs
 # include <termios.h>
 
-t_token	*lexer(char *input);
+// Project Modules
+# include "lexer.h"
+# include "parser.h"
+
+// Print Functions (Debug purposes)
+void	print_tokens(t_token *head);
+void	print_cmdlst(t_list *cmd_lst);
 
 #endif

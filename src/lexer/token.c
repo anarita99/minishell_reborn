@@ -58,19 +58,8 @@ void	free_tokens(t_token *head)
 	}
 }
 
-void	print_tokens(t_token *head)
+int	is_token_operator(t_token *token)
 {
-	int	i;
-	t_token *current;
-
-	current = head;
-	i = 0;
-	while (current)
-	{
-		printf("Token %i:\n", i);
-		printf("- Type: %i\n", current->type);
-		printf("- Value: %s\n", current->value);
-		i++;
-		current = current->next;
-	}
+	return (token->type == T_REDIR_IN || token->type == T_REDIR_OUT ||
+			token->type == T_HEREDOC || token->type == T_APPEND);
 }

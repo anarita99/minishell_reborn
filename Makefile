@@ -25,7 +25,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 READLINE_DIR = readline
 
 # Files
-FILES = main lexer/lexer lexer/token lexer/types lexer/buffer lexer/states
+FILES = main print lexer/lexer lexer/token lexer/types lexer/buffer lexer/states parser/command parser/parser
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS = $(SRCS:.c=.o)
 
@@ -59,7 +59,7 @@ fclean: clean
 re: fclean all
 
 valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --tool=memcheck --keep-debuginfo=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
 
 # Phony targets
 .PHONY: all bonus clean fclean re valgrind
