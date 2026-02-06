@@ -31,36 +31,35 @@ static int	get_redir_count(t_token *current_token)
 
 static bool is_str_quoted(char *str)
 {
-    int str_len;
+	int str_len;
 
-    if (!str || !*str)
-        return (false);
-    str_len = ft_strlen(str);
-    if (str[0] == '"' && str[str_len - 1] == '"')
-            return (true);
-    if (str[0] == '\'' && str[str_len - 1] == '\'')
-            return (true);
-    return (false);
+	if (!str || !*str)
+		return (false);
+	str_len = ft_strlen(str);
+	if (str[0] == '"' && str[str_len - 1] == '"')
+			return (true);
+	if (str[0] == '\'' && str[str_len - 1] == '\'')
+			return (true);
+	return (false);
 }
 
 static t_redir  create_redir(t_token *current_token)
 {
-    t_redir redir;
+	t_redir redir;
 
-    redir.type = current_token->type;
-    redir.filename = ft_strdup(current_token->next->value);
-    redir.quoted = is_str_quoted(redir.filename);
-    return (redir);
-}
-
-static t_redir  create_redir_null()
-{
-    t_redir redir;
-
-    redir.type = T_NONE;
-    redir.filename = NULL;
-    redir.quoted = false;
-    return (redir);
+	if (!current_token)
+	{
+		redir.type = T_NONE;
+		redir.filename = NULL;
+		redir.quoted = false;
+	}
+	else
+	{
+		redir.type = current_token->type;
+		redir.filename = ft_strdup(current_token->next->value);
+		redir.quoted = is_str_quoted(redir.filename);
+	}
+	return (redir);
 }
 
 t_redir	*get_redirs(t_token **current_token)
@@ -83,6 +82,6 @@ t_redir	*get_redirs(t_token **current_token)
 		}
 		*current_token = (*current_token)->next->next;
 	}
-	redirs[i] = create_redir_null();
+	redirs[i] = create_redir(NULL);
 	return (redirs);
 }
