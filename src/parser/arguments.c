@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   arguments.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,49 +12,36 @@
 
 #include "parser.h"
 
-t_cmd	*get_next_cmd(t_token **current_token)
+static int		get_argc(t_token *current_token)
 {
-	t_cmd	*cmd;
+	int	argc;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->argv = get_argv(current_token);
-	cmd->redirs = get_redirs(current_token);
-	return (cmd);
+	argc = 0;
+	while (current_token && current_token->type == T_WORD)
+	{
+		argc++;
+		current_token = current_token->next;
+	}
+	return (argc);
 }
 
-void	del_cmd(void *cmd_ptr)
+char	**get_argv(t_token **current_token)
 {
-	t_cmd	*cmd;
+	char	**argv;
+    int     argc;
 	int		i;
 
-	cmd = (t_cmd *)cmd_ptr;
-	if (!cmd)
-		return ;
-
-	if (cmd->argv)
+    argc = get_argc(*current_token);
+	argv = malloc(sizeof(char *) * (argc + 1));
+	if (!argv)
+		return (NULL);
+	i = 0;
+	while (i < argc)
 	{
-		i = 0;
-		while (cmd->argv[i])
-		{
-			free(cmd->argv[i]);
-			i++;
-		}
-		free(cmd->argv);
+		argv[i] = ft_strdup((*current_token)->value);
+		*current_token = (*current_token)->next;
+		i++;
 	}
-
-	if (cmd->redirs)
-	{
-		i = 0;
-		while (cmd->redirs[i].type != T_NONE)
-		{
-			if (cmd->redirs[i].filename)
-				free(cmd->redirs[i].filename);
-			i++;
-		}
-		free(cmd->redirs);
-	}
-
-	free(cmd);
+	argv[i] = NULL;
+	return (argv);
 }

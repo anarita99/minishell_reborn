@@ -20,7 +20,7 @@ int	main(void)
 
 	// 1 - Prompt
 	// prompt = readline(NULL);
-	prompt = ft_strdup("ls -la | echo hello >> output.txt");
+	prompt = ft_strdup("ls -la | echo hello >> 'output.txt'");
 	printf("Prompt = '%s'\n", prompt);
 	printf("\n");
 
