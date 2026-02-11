@@ -21,9 +21,6 @@ LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
 LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-# Readline structure
-READLINE_DIR = readline
-
 # Files
 FILES = main print \
 		lexer/lexer lexer/token lexer/types lexer/buffer lexer/states \
@@ -33,8 +30,9 @@ OBJS = $(SRCS:.c=.o)
 
 # Compiler and flags
 CC = cc
-INCLUDES = -I$(INCS_DIR) -I$(LIBFT_INCS_DIR) -l$(READLINE_DIR)
+INCLUDES = -I$(INCS_DIR) -I$(LIBFT_INCS_DIR)
 CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
+RLFLAGS = -lreadline
 RM = rm -f
 
 # Rules
@@ -44,7 +42,7 @@ $(LIBFT_LIB):
 	@make -C $(LIBFT_DIR)
 
 ${NAME}: ${OBJS} $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $^ -o $(NAME)
+	$(CC) $(CFLAGS) $^ -o $(NAME) $(RLFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
