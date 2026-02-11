@@ -62,25 +62,26 @@ static t_redir  create_redir(t_token *current_token)
 	return (redir);
 }
 
-t_redir	*get_redirs(t_token **current_token)
+t_redir	*get_redirs(t_token *current_token)
 {
 	t_redir	*redirs;
 	int		redir_count;
 	int		i;
 
-	redir_count = get_redir_count(*current_token);
+	redir_count = get_redir_count(current_token);
 	redirs = malloc(sizeof(t_redir) * (redir_count + 1));
 	if (!redirs)
 		return (NULL);
 	i = 0;
 	while (i < redir_count)
 	{
-		if (is_token_operator(*current_token))
+		// skip redirect (= token OP + token WORD)
+		if (is_token_operator(current_token))
 		{
-			redirs[i] = create_redir(*current_token);
+			redirs[i] = create_redir(current_token);
 			i++;
 		}
-		*current_token = (*current_token)->next->next;
+		current_token = current_token->next;
 	}
 	redirs[i] = create_redir(NULL);
 	return (redirs);

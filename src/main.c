@@ -20,7 +20,8 @@ int	main(void)
 
 	// 1 - Prompt
 	// prompt = readline(NULL);
-	prompt = ft_strdup("ls -la | echo hello >> 'output.txt'");
+	// prompt = ft_strdup("ls -la | echo hello >> 'output.txt'");
+	prompt = ft_strdup("echo hi < input.txt bye bye");
 	printf("Prompt = '%s'\n", prompt);
 	printf("\n");
 
@@ -29,7 +30,7 @@ int	main(void)
 	free(prompt);
 	if (!token_head)
 		return (1);
-	print_tokens(token_head);
+	print_tokens(&token_head);
 	printf("\n");
 
 	// 3 - Parser

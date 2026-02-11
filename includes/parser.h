@@ -31,13 +31,13 @@ typedef struct s_cmd
 }					t_cmd;
 
 // Arguments
-char	**get_argv(t_token **current_token);
+char	**get_argv(t_token *current_token);
 
 // Redirects
-t_redir	*get_redirs(t_token **current_token);
+t_redir	*get_redirs(t_token *current_token);
 
 // Commands
-t_cmd	*get_next_cmd(t_token **current_token);
+t_cmd	*get_next_cmd(t_token *current_token);
 void	del_cmd(void *cmd_ptr);
 
 // Main parser function

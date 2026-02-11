@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-t_cmd	*get_next_cmd(t_token **current_token)
+t_cmd	*get_next_cmd(t_token *current_token)
 {
 	t_cmd	*cmd;
 
