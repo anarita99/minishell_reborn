@@ -30,8 +30,8 @@ MINISHELL_SRCS		= $(wildcard $(MINISHELL_SRCS_DIR)/lexer/*.c) \
 
 SRCS				= tester.c \
 					  utils.c \
-					  lexer/lexer_tests.c lexer/lexer_utils.c \
-					  parser/parser_tests.c parser/parser_utils.c
+					  lexer/lexer_tests.c lexer/lexer_build.c lexer/lexer_compare.c \
+					  parser/parser_tests.c parser/parser_build.c parser/parser_compare.c
 
 MINISHELL_OBJS		= $(MINISHELL_SRCS:.c=.o)
 OBJS				= $(SRCS:.c=.o)
@@ -73,4 +73,7 @@ lexer: all
 parser: all
 	@./$(NAME) parser
 
-.PHONY: all clean fclean re test lexer parser
+valgrind: ${NAME}
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
+
+.PHONY: all clean fclean re test lexer parser valgrind
