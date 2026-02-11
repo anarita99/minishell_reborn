@@ -30,12 +30,12 @@ int	main(void)
 	free(prompt);
 	if (!token_head)
 		return (1);
-	print_tokens(&token_head);
+	print_tokens(token_head);
 	printf("\n");
 
 	// 3 - Parser
 	cmd_list = parser(token_head);
-	free_tokens(token_head);
+	free_tokens(&token_head);
 	if (!cmd_list)
 		return (1);
 	print_cmdlst(cmd_list);
