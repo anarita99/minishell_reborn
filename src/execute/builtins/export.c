@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 16:58:15 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:35:16 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "include/execution.h"
 
 static void	bubble_sort_array(t_env **node_array)
 {
@@ -114,7 +114,7 @@ static void	export_append(char *equal, char *plus, char *arg)
 		{
 			value = ft_strjoin(node->value, equal + 1);
 			if(!value)
-				malloc_error();
+				error_exit("malloc", "allocation error", 1, false);
 			free(node->value);
 			node->value = value;
 		}

@@ -6,19 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 16:58:15 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:34:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-
-static void	cd_error(char *path)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	write(2, ": ", 2);
-	ft_putendl_fd(strerror(errno), 2);
-}
+#include "include/execution.h"
 
 int	set_cd_path(char **args, char **path)
 {
@@ -52,16 +44,13 @@ int cd_builtin (char **args)
 	if (set_cd_path(args, &path) == 1)
 		return (1);
 	if (chdir(path) == -1)
-		return (cd_error(args[1]), 1);
+		return (print_err("cd", path, true), 1);
 	new_pwd = getcwd(NULL, 0);
 	if(!new_pwd)
 	{
 		new_pwd = ft_strjoin(old_pwd, "/..");
 		if(!new_pwd)
-			malloc_error();
-		//check if allocation fails,
-		//cleanup everything and exit if yes
-		//print error according to bash
+			error_exit("malloc", "allocation error", 1, false);
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
 	}
 	set_env_var("OLDPWD", old_pwd);
@@ -69,5 +58,3 @@ int cd_builtin (char **args)
 	free(new_pwd);
 	return (0);
 }
-
-

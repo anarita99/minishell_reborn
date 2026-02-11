@@ -6,12 +6,12 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 16:59:27 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:34:57 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "execution.h"
+#include "include/execution.h"
 
 //pwd, shell level quando env -i
 
@@ -25,12 +25,12 @@ void	set_env_var(char *key, char *value)
 		free(current_node->value);
 		current_node->value = ft_strdup(value);
 		if(!current_node->value)
-			malloc_error();     //malloc exit
+			error_exit("malloc", "allocation error", 1, false);
 		return ;
 	}
 	current_node = env_new_node(NULL, NULL);
 	if(!current_node)
-		malloc_error();      //malloc exit
+		error_exit("malloc", "allocation error", 1, false);      //malloc exit
 	current_node->key = ft_strdup(key);
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || !current_node->value)
@@ -51,7 +51,7 @@ static void	set_shell_level(t_env **env_list)
 		num += 1;
 		node->value = ft_itoa(num);
 		if (!node->value)
-			malloc_error();
+			error_exit("malloc", "allocation error", 1, false);
 		return ;
 	}
 	set_env_var("SHLVL", "1");
@@ -87,7 +87,7 @@ t_env	*init_env(void)
 	while (environ[i])
 	{
 		if (add_env_var(&sh_s()->env_list, environ[i]) == 1)
-			malloc_error();
+			error_exit("malloc", "allocation error", 1, false);
 		i++;
 	}
 	set_env_var("PWD", getcwd(buf, PATH_MAX));

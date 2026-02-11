@@ -6,17 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 17:08:50 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:09:32 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
-
-void	malloc_error()
-{
-	ft_putendl_fd("minishell: allocation error", 2);
-	exitclean('1');
-}
+#include "../../include/execution.h"
 
 /// @brief For exiting and printing any kind of error.
 /// If context & detail are NULL & err is set to false, nothing is printed

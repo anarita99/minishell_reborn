@@ -6,12 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:33 by adores            #+#    #+#             */
-/*   Updated: 2026/01/26 12:17:25 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:34:46 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "execution.h"
+#include "include/execution.h"
 
 int	env_lstsize(t_env *lst)
 {

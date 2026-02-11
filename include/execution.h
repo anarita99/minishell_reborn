@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 17:35:17 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:09:37 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_shell
 typedef struct		s_redir
 {
 	int				type;      // REDIR_IN, REDIR_OUT, APPEND, HEREDOC
-    char			*filename; // "output.txt"
-    bool			quoted;
+	char			*filename; // "output.txt"
+	bool			quoted;
 }					t_redir;
 
 typedef struct		s_cmd
@@ -113,7 +113,6 @@ int		is_builtin(char **args);
 //src/execute/utils.c
 void	print_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
-void	malloc_error();
 void	error_exit(char *context, char *detail, int exit_code, bool err);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);

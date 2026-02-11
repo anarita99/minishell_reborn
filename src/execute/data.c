@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 15:58:38 by adores & mi       #+#    #+#             */
-/*   Updated: 2026/02/05 16:58:15 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 14:56:05 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../../include/execution.h"
 
 t_shell	*sh_s(void)
 {

@@ -6,53 +6,43 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/01/21 15:19:09 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:21:27 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../../include/execution.h"
 
 /*criar um ficheiro */
 //open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
-char *parse_outfiles(t_input *input)
-{
-	int i;
-	char *name;
+bool parse_redirects(t_cmd *cmd, char **infile, char **outfile);
 
-	i = 0;
-	while(input->outfiles[i].filename) //ultimo filename é null
+int	setup_fds(t_cmd *input, int *og_fd, bool save);
+/* {
+	int	new_fd[2];
+	int	err;
+
+	err = 0;
+	if (save)
+		save_og_fds(og_fd);
+	if (input->infiles->filename)
 	{
-		name = input->outfiles[i].filename;
-		if(access(name, F_OK) == -1 || access(name, W_OK) == 0)
-		{
-			if(input->outfiles[i].mode == REDOUT)
-				open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else if(input->outfiles[i].mode == APPEND)
-				open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		}
-		else
-			return (NULL); //mudar depois
-		i++;
+		parse_infiles(input, &err, &new_fd[0]);
+		if (err)
+			return (err);
+		dup2(new_fd[0], STDIN_FILENO);
+		close(new_fd[0]);
 	}
-	return (name);
-}
-
-char *parse_infiles(t_input *input)
-{
-	int i;
-	char *name;
-
-	i = 0;
-	while(input->infiles[i].filename) //ultimo filename é null
+	if (input->outfiles->filename)
 	{
-		name = input->infiles[i].filename;
-		if(access(name, R_OK) == -1)
-			return (NULL);     //pode ser necessario mudar
-		i++;
+		parse_outfiles(input, &new_fd[1], &err);
+		if (err)
+			return (err);
+		dup2(new_fd[1], STDOUT_FILENO);
+		close(new_fd[1]);
 	}
-	return (name);
-}
+	return (err);
+} */
 
 char	*create_temp_file(void)
 {
@@ -81,7 +71,7 @@ char	*create_temp_file(void)
 	return(name);
 }
 
-void heredoc_func(t_file *heredoc)
+void heredoc_func(t_redir *heredoc)
 {
 	char	*filename;
 	char	*line;
