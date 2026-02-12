@@ -16,13 +16,13 @@ INCS_DIR			= .
 
 # Libft structure
 LIBFT_DIR			= ../libft
-LIBFT_INCS_DIR		= $(LIBFT_DIR)/includes
+LIBFT_INCS_DIR		= $(LIBFT_DIR)/include
 LIBFT_LIB			= $(LIBFT_DIR)/libft.a
 
 # Minishell structure
 MINISHELL_DIR		= ../
 MINISHELL_SRCS_DIR	= $(MINISHELL_DIR)/src
-MINISHELL_INCS_DIR	= $(MINISHELL_DIR)/includes
+MINISHELL_INCS_DIR	= $(MINISHELL_DIR)/include
 
 # Files
 MINISHELL_SRCS		= $(wildcard $(MINISHELL_SRCS_DIR)/lexer/*.c) \

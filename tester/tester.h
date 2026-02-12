@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <string.h>
-# include "../includes/minishell.h"
+# include "../include/minishell.h"
 
 typedef struct s_test_info
 {

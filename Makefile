@@ -13,12 +13,12 @@
 # Project structure
 NAME = minishell
 SRCS_DIR = src
-INCS_DIR = includes
+INCS_DIR = include
 
 # Libft structure
 LIBFT_DIR = libft
 LIBFT_SRCS_DIR = $(LIBFT_DIR)/src
-LIBFT_INCS_DIR = $(LIBFT_DIR)/includes
+LIBFT_INCS_DIR = $(LIBFT_DIR)/include
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # Files
