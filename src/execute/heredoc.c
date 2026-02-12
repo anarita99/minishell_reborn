@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:21:27 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:54:12 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 /*criar um ficheiro */
 //open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);

@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 14:55:54 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:54:07 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 void	free_execve(char **envp, char *full_path, char *cmd)
 {

@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:09:32 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:54:26 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 /// @brief For exiting and printing any kind of error.
 /// If context & detail are NULL & err is set to false, nothing is printed

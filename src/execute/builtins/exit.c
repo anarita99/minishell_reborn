@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:35:06 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:51:50 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/execution.h"
+#include "../../../include/minishell.h"
 
 void	exitclean(unsigned char exit_code);
 

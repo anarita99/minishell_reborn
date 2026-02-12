@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:45 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 14:59:20 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:47:10 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 int	is_builtin(char **args)
 {

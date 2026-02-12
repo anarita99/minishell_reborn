@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/02/05 17:12:00 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:53:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "../../include/minishell.h"
 
 char	*get_cmd_path(char *paths, char *cmd)
 {

@@ -6,30 +6,15 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:09:37 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:45:32 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 #  define EXECUTION_H
 
-# include <unistd.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <errno.h>
-# include <string.h>
-# include <sys/wait.h>
-#include <sys/stat.h>
-# include <sysexits.h>
-# include <fcntl.h>
-# include <time.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <linux/limits.h>
-# include "../libft/libft.h"
+# include "shared.h"
+# include "parser.h"
 
 typedef struct s_env
 {
@@ -37,37 +22,6 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 } t_env;
-
-typedef enum e_token
-{
-	REDIN, // <
-	REDOUT, // >
-	HDOC, // <<
-	APPEND, // >>
-}	t_token;
-
-//shell struct
-typedef struct s_shell
-{
-	int		exit_status;
-	t_env	*env_list;
-	t_list	*input_list;
-	char	*cmd_line;
-}	t_shell;
-
-typedef struct		s_redir
-{
-	int				type;      // REDIR_IN, REDIR_OUT, APPEND, HEREDOC
-	char			*filename; // "output.txt"
-	bool			quoted;
-}					t_redir;
-
-typedef struct		s_cmd
-{
-	char			**argv;    // ["ls", "-l"]
-	t_redir			*redirs;
-}					t_cmd;
-
 
 // srcs/execute/builtins/env.c
 void	set_env_var(char *key, char *value);
@@ -118,6 +72,6 @@ void	free_node(t_env *node);
 void	free_env_list(t_env *head);
 void	free_arr(char **str);
 
-t_shell	*sh_s(void);
+
 
 #endif

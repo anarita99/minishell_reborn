@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:35:16 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:51:55 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/execution.h"
+#include "../../../include/minishell.h"
 
 static void	bubble_sort_array(t_env **node_array)
 {

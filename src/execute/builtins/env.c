@@ -6,12 +6,12 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/11 16:34:57 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/12 16:51:42 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "include/execution.h"
+#include "../../../include/minishell.h"
 
 //pwd, shell level quando env -i
 

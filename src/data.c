@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 15:58:38 by adores & mi       #+#    #+#             */
-/*   Updated: 2026/02/11 14:56:05 by adores           ###   ########.fr       */
+/*   Created: 2025/12/08 15:58:38 by adores            #+#    #+#             */
+/*   Updated: 2026/02/12 17:40:13 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/execution.h"
+#include "minishell.h"
 
 t_shell	*sh_s(void)
 {
