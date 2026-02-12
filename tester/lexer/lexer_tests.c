@@ -23,7 +23,7 @@ static int	test_simple_command(void)
 	char			*values[] = {"echo", "hello"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(1, "Simple command", "echo hello", 
+	return (run_lexer_test((t_test_info){1, "Simple command", "echo hello"},
 		types, values, token_count));
 }
 
@@ -38,7 +38,7 @@ static int	test_pipe(void)
 	char			*values[] = {"ls", "|", "grep", "test"};
 	int				token_count = 4;
 	
-	return (run_lexer_test(2, "Command with pipe", "ls | grep test",
+	return (run_lexer_test((t_test_info){2, "Command with pipe", "ls | grep test"},
 		types, values, token_count));
 }
 
@@ -53,7 +53,7 @@ static int	test_input_redirection(void)
 	char			*values[] = {"cat", "<", "input.txt"};
 	int				token_count = 3;
 	
-	return (run_lexer_test(3, "Input redirection", "cat < input.txt",
+	return (run_lexer_test((t_test_info){3, "Input redirection", "cat < input.txt"},
 		types, values, token_count));
 }
 
@@ -68,7 +68,7 @@ static int	test_output_redirection(void)
 	char			*values[] = {"echo", "hello", ">", "output.txt"};
 	int				token_count = 4;
 	
-	return (run_lexer_test(4, "Output redirection", "echo hello > output.txt",
+	return (run_lexer_test((t_test_info){4, "Output redirection", "echo hello > output.txt"},
 		types, values, token_count));
 }
 
@@ -83,7 +83,7 @@ static int	test_heredoc(void)
 	char			*values[] = {"cat", "<<", "EOF"};
 	int				token_count = 3;
 	
-	return (run_lexer_test(5, "Heredoc", "cat << EOF",
+	return (run_lexer_test((t_test_info){5, "Heredoc", "cat << EOF"},
 		types, values, token_count));
 }
 
@@ -98,7 +98,7 @@ static int	test_append(void)
 	char			*values[] = {"echo", "hello", ">>", "output.txt"};
 	int				token_count = 4;
 	
-	return (run_lexer_test(6, "Append redirection", "echo hello >> output.txt",
+	return (run_lexer_test((t_test_info){6, "Append redirection", "echo hello >> output.txt"},
 		types, values, token_count));
 }
 
@@ -113,7 +113,7 @@ static int	test_quoted_strings(void)
 	char			*values[] = {"echo", "\"hello world\""};
 	int				token_count = 2;
 	
-	return (run_lexer_test(7, "Quoted strings", "echo \"hello world\"",
+	return (run_lexer_test((t_test_info){7, "Quoted strings", "echo \"hello world\""},
 		types, values, token_count));
 }
 
@@ -129,7 +129,7 @@ static int	test_multiple_pipes(void)
 	char			*values[] = {"ls", "|", "grep", "test", "|", "wc", "-l"};
 	int				token_count = 7;
 	
-	return (run_lexer_test(8, "Multiple pipes", "ls | grep test | wc -l",
+	return (run_lexer_test((t_test_info){8, "Multiple pipes", "ls | grep test | wc -l"},
 		types, values, token_count));
 }
 
@@ -145,7 +145,7 @@ static int	test_multiple_redirections(void)
 	char			*values[] = {"cat", "<", "input.txt", ">", "output.txt"};
 	int				token_count = 5;
 	
-	return (run_lexer_test(9, "Multiple redirections", "cat < input.txt > output.txt",
+	return (run_lexer_test((t_test_info){9, "Multiple redirections", "cat < input.txt > output.txt"},
 		types, values, token_count));
 }
 
@@ -156,7 +156,7 @@ static int	test_multiple_redirections(void)
 */
 static int	test_empty_input(void)
 {
-	return (run_lexer_test(10, "Empty input", "", NULL, NULL, 0));
+	return (run_lexer_test((t_test_info){10, "Empty input", ""}, NULL, NULL, 0));
 }
 
 /*
@@ -171,7 +171,7 @@ static int	test_single_quotes_special_chars(void)
 	char			*values[] = {"echo", "'hello|world'"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(11, "Single quotes with special chars", "echo 'hello|world'",
+	return (run_lexer_test((t_test_info){11, "Single quotes with special chars", "echo 'hello|world'"},
 		types, values, token_count));
 }
 
@@ -187,7 +187,7 @@ static int	test_single_quotes_with_operators(void)
 	char			*values[] = {"cat", "'file<>name.txt'"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(12, "Single quotes with operators", "cat 'file<>name.txt'",
+	return (run_lexer_test((t_test_info){12, "Single quotes with operators", "cat 'file<>name.txt'"},
 		types, values, token_count));
 }
 
@@ -203,7 +203,7 @@ static int	test_double_quotes_with_variable(void)
 	char			*values[] = {"echo", "\"$HOME\""};
 	int				token_count = 2;
 	
-	return (run_lexer_test(13, "Double quotes with variable", "echo \"$HOME\"",
+	return (run_lexer_test((t_test_info){13, "Double quotes with variable", "echo \"$HOME\""},
 		types, values, token_count));
 }
 
@@ -219,7 +219,7 @@ static int	test_single_quotes_no_expansion(void)
 	char			*values[] = {"echo", "'$HOME'"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(14, "Single quotes no expansion", "echo '$HOME'",
+	return (run_lexer_test((t_test_info){14, "Single quotes no expansion", "echo '$HOME'"},
 		types, values, token_count));
 }
 
@@ -235,7 +235,7 @@ static int	test_env_variable_unquoted(void)
 	char			*values[] = {"echo", "$HOME"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(15, "Environment variable unquoted", "echo $HOME",
+	return (run_lexer_test((t_test_info){15, "Environment variable unquoted", "echo $HOME"},
 		types, values, token_count));
 }
 
@@ -251,7 +251,7 @@ static int	test_exit_status_variable(void)
 	char			*values[] = {"echo", "$?"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(16, "Exit status variable", "echo $?",
+	return (run_lexer_test((t_test_info){16, "Exit status variable", "echo $?"},
 		types, values, token_count));
 }
 
@@ -266,7 +266,7 @@ static int	test_mixed_quotes(void)
 	char			*values[] = {"echo", "'hello'", "\"world\""};
 	int				token_count = 3;
 	
-	return (run_lexer_test(17, "Mixed quotes", "echo 'hello' \"world\"",
+	return (run_lexer_test((t_test_info){17, "Mixed quotes", "echo 'hello' \"world\""},
 		types, values, token_count));
 }
 
@@ -281,7 +281,7 @@ static int	test_heredoc_quoted_delimiter(void)
 	char			*values[] = {"cat", "<<", "'EOF'"};
 	int				token_count = 3;
 	
-	return (run_lexer_test(18, "Heredoc with quoted delimiter", "cat << 'EOF'",
+	return (run_lexer_test((t_test_info){18, "Heredoc with quoted delimiter", "cat << 'EOF'"},
 		types, values, token_count));
 }
 
@@ -298,7 +298,7 @@ static int	test_complex_pipe_redirections(void)
 	char			*values[] = {"cat", "<", "in.txt", "|", "grep", "test", ">", "out.txt"};
 	int				token_count = 8;
 	
-	return (run_lexer_test(19, "Complex pipe with redirections", "cat < in.txt | grep test > out.txt",
+	return (run_lexer_test((t_test_info){19, "Complex pipe with redirections", "cat < in.txt | grep test > out.txt"},
 		types, values, token_count));
 }
 
@@ -314,7 +314,7 @@ static int	test_quotes_in_middle_of_word(void)
 	char			*values[] = {"helloworld"};
 	int				token_count = 1;
 	
-	return (run_lexer_test(20, "Quotes in middle of word", "he\"l\"lo'world'",
+	return (run_lexer_test((t_test_info){20, "Quotes in middle of word", "he\"l\"lo'world'"},
 		types, values, token_count));
 }
 
@@ -329,7 +329,7 @@ static int	test_variable_with_underscore_and_numbers(void)
 	char			*values[] = {"echo", "$USER_NAME_123"};
 	int				token_count = 2;
 	
-	return (run_lexer_test(21, "Variable with underscore and numbers", "echo $USER_NAME_123",
+	return (run_lexer_test((t_test_info){21, "Variable with underscore and numbers", "echo $USER_NAME_123"},
 		types, values, token_count));
 }
 
@@ -345,7 +345,7 @@ static int	test_consecutive_append(void)
 	char			*values[] = {"cat", ">>", "file1", ">>", "file2"};
 	int				token_count = 5;
 	
-	return (run_lexer_test(22, "Consecutive append redirections", "cat >> file1 >> file2",
+	return (run_lexer_test((t_test_info){22, "Consecutive append redirections", "cat >> file1 >> file2"},
 		types, values, token_count));
 }
 
@@ -360,7 +360,7 @@ static int	test_pipe_after_quoted_string(void)
 	char			*values[] = {"echo", "\"hello\"", "|", "cat"};
 	int				token_count = 4;
 	
-	return (run_lexer_test(23, "Pipe after quoted string", "echo \"hello\" | cat",
+	return (run_lexer_test((t_test_info){23, "Pipe after quoted string", "echo \"hello\" | cat"},
 		types, values, token_count));
 }
 
@@ -375,7 +375,7 @@ static int	test_multiple_variables_in_quotes(void)
 	char			*values[] = {"echo", "\"$HOME/$USER\""};
 	int				token_count = 2;
 	
-	return (run_lexer_test(24, "Multiple variables in double quotes", "echo \"$HOME/$USER\"",
+	return (run_lexer_test((t_test_info){24, "Multiple variables in double quotes", "echo \"$HOME/$USER\""},
 		types, values, token_count));
 }
 
@@ -390,7 +390,7 @@ static int	test_redirection_no_spaces(void)
 	char			*values[] = {"cat", "<", "input.txt"};
 	int				token_count = 3;
 	
-	return (run_lexer_test(25, "Redirection with no spaces", "cat<input.txt",
+	return (run_lexer_test((t_test_info){25, "Redirection with no spaces", "cat<input.txt"},
 		types, values, token_count));
 }
 
@@ -405,7 +405,7 @@ static int	test_redirection_no_spaces_alt(void)
 	char			*values[] = {"cat", "<", "input.txt", "|", "cat", ">>", "output.txt"};
 	int				token_count = 7;
 	
-	return (run_lexer_test(26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt",
+	return (run_lexer_test((t_test_info){26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt"},
 		types, values, token_count));
 }
 

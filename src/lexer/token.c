@@ -42,12 +42,14 @@ void	add_token_to_list(t_token **head, t_token **tail, t_token *token)
 	*tail = token;
 }
 
-void	free_tokens(t_token *head)
+void	free_tokens(t_token **head)
 {
 	t_token	*current;
 	t_token	*next;
 
-	current = head;
+	if (!head)
+		return ;
+	current = *head;
 	while (current)
 	{
 		next = current->next;
@@ -56,6 +58,7 @@ void	free_tokens(t_token *head)
 		free(current);
 		current = next;
 	}
+	*head = NULL;
 }
 
 int	is_token_operator(t_token *token)

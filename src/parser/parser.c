@@ -35,7 +35,7 @@ t_list	*parser(t_token *head)
 	
 	while (current_token)
 	{
-		cmd = get_next_cmd(&current_token);
+		cmd = get_next_cmd(current_token);
 		if (!cmd)
 			break;
 		cmd_node = ft_lstnew(cmd);
@@ -45,7 +45,9 @@ t_list	*parser(t_token *head)
 			break;
 		}
 		ft_lstadd_back(&cmd_list, cmd_node);
-		while (current_token && current_token->type != T_WORD)
+		while (current_token && current_token->type != T_PIPE)
+			current_token = current_token->next;
+		if (current_token && current_token->type == T_PIPE)
 			current_token = current_token->next;
 	}
 	return (cmd_list);

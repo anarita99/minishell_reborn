@@ -12,10 +12,10 @@
 
 #include "tester.h"
 
-void	print_test_info(int n, char *name, char *input)
+void	print_test_info(t_test_info info)
 {
-	printf("Test %i: %s\n", n, name);
-	printf("- Input: \"%s\"\n", input);
+	printf("Test %i: %s\n", info.num, info.name);
+	printf("- Input: \"%s\"\n", info.input);
 }
 
 static void	print_passed()

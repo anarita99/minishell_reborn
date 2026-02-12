@@ -68,7 +68,7 @@ void		reset_buffer(t_buffer *buffer);
 
 t_token	*create_token(t_token_type type, char *value);
 void	add_token_to_list(t_token **head, t_token **tail, t_token *token);
-void	free_tokens(t_token *head);
+void	free_tokens(t_token **head);
 int		is_token_operator(t_token *token);
 
 // Types
