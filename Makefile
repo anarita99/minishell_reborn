@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/02/12 17:39:49 by adores           ###   ########.fr        #
+#    Updated: 2026/02/18 16:32:45 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ MAIN 		= 	main print data
 LEXER 		= 	lexer/lexer lexer/token lexer/types lexer/buffer lexer/states
 PARSER 		= 	parser/parser parser/arguments parser/redirects parser/command
 EXECUTE 	= 	execute/utils \
-				execute/execute \
+				execute/builtins/builtin \
 				execute/builtins/cd\
 				execute/builtins/echo\
 				execute/builtins/env_functions\
@@ -36,7 +36,11 @@ EXECUTE 	= 	execute/utils \
 				execute/builtins/pwd\
 				execute/builtins/unset\
 				execute/builtins/export\
-				execute/ext_execute
+				execute/ext_execute\
+				execute/ext_utils \
+				execute/executor \
+				execute/redir \
+				execute/heredoc
 
 FILES 		= $(MAIN) $(LEXER) $(PARSER) $(EXECUTE)
 SRCS 		= $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
@@ -45,7 +49,7 @@ OBJS 		= $(SRCS:.c=.o)
 # Compiler and flags
 CC = cc
 INCLUDES = -I$(INCS_DIR) -I$(LIBFT_INCS_DIR)
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
+CFLAGS = -g -Wall -Wextra -Werror $(INCLUDES)
 RLFLAGS = -lreadline
 RM = rm -f
 

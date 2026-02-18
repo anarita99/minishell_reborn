@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:45:32 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/18 16:32:03 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ int		exe_builtin(char **args, t_shell *shell);*/
 
 int		echo_builtin(char **args);
 int 	cd_builtin (char **args);
-int		pwd_builtin();
+int		pwd_builtin(void);
 int		exit_builtin(char **args);
-int		env_builtin();
+int		env_builtin(void);
 int		unset_builtin(char **args);
 int		export_builtin(char **args);
 int		is_builtin(char **args);
+void	exe_builtin(t_cmd *cmd);
+int		run_builtin(char **args);
 
 //src/execute/utils.c
 void	print_err(char *context, char *detail, bool err);
@@ -72,6 +74,9 @@ void	free_node(t_env *node);
 void	free_env_list(t_env *head);
 void	free_arr(char **str);
 
-
+void	executor(void);
+int		setup_fds(t_cmd *input, int *og_fd, bool save);
+void	overwrite_std(int *fd);
+void	exe_heredocs(t_cmd *cmd);
 
 #endif

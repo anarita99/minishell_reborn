@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:54:12 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/18 17:44:56 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,87 +15,102 @@
 /*criar um ficheiro */
 //open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
-bool parse_redirects(t_cmd *cmd, char **infile, char **outfile);
-
-int	setup_fds(t_cmd *input, int *og_fd, bool save);
-/* {
-	int	new_fd[2];
-	int	err;
-
-	err = 0;
-	if (save)
-		save_og_fds(og_fd);
-	if (input->infiles->filename)
-	{
-		parse_infiles(input, &err, &new_fd[0]);
-		if (err)
-			return (err);
-		dup2(new_fd[0], STDIN_FILENO);
-		close(new_fd[0]);
-	}
-	if (input->outfiles->filename)
-	{
-		parse_outfiles(input, &new_fd[1], &err);
-		if (err)
-			return (err);
-		dup2(new_fd[1], STDOUT_FILENO);
-		close(new_fd[1]);
-	}
-	return (err);
-} */
-
-char	*create_temp_file(void)
+static void	create_tmp_file(char **filename, int *filenum)
 {
-	char	*name;
-	int		i;
-	char	*numstr;
+	char	*fileno;
 
-	i = 0;
-	while(1)
+	*filenum = 0;
+	while (true)
 	{
-		numstr = ft_itoa(i);
-		if(!numstr)
-			return (NULL); //malloc error
-		name = ft_strjoin("minishell-heredoc-", numstr);
-		free(numstr);
-		if(!name)
-			return (NULL);
-		if(access(name, F_OK) == 0)
+		fileno = ft_itoa(*filenum);
+		*filename = ft_strjoin("minishell-heredoc-", fileno);
+		free(fileno);
+		if (!*filename)
+			error_exit("malloc", "Allocation Error", 1, false);
+		if (access(*filename, F_OK) == -1)
 		{
-			free(name);
-			i++;
+			*filenum = open(*filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (*filenum == -1)
+			{
+				free(*filename);
+				error_exit("heredoc", "open", 1, true);
+			}
+			break ;
 		}
 		else
-			break;
+			*filenum += 1;
+		free(*filename);
 	}
-	return(name);
 }
 
-void heredoc_func(t_redir *heredoc)
+void	print_hd_error(char *filename)
 {
-	char	*filename;
-	char	*line;
-	int		fd;
+	ft_putstr_fd("minishell: warning: here-document delimited by ", 2);
+	ft_putstr_fd("end-of-file (wanted `", 2);
+	ft_putstr_fd(filename, 2);
+	ft_putendl_fd("')", 2);
+}
 
-	filename = create_temp_file();
-	if(!filename)
-		return ; //malloc error
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	while(1)
+static void	write_heredoc(t_redir *heredoc, int filefd)
+{
+	char	*line;
+	//char	*expanded;
+
+	while (true)
 	{
 		line = readline(">");
-		if(!line || (ft_strcmp(heredoc->filename, line) == 0))
+		/* if (msh()->hdoc_stop)
+			return ; */
+		if (!line)
+			return (print_hd_error(heredoc->filename));
+		if (ft_strcmp(line, heredoc->filename) == 0)
+			return (free(line));
+		/* if (!heredoc->quoted)
 		{
-			free(line);
-			break;
-		}
-		//chamar funçao de expansao
-		ft_putendl_fd(line, fd);
+			//expanded = hdoc_expand_arg(line);
+			ft_putendl_fd(expanded, filefd);
+			free(expanded);
+		} */
+		//else
+		ft_putendl_fd(line, filefd);
 		free(line);
 	}
+}
+
+static void	heredoc_func(t_redir *heredoc)
+{
+	char *filename;
+	int	filenum;
+
+	create_tmp_file(&filename, &filenum);
+	write_heredoc(heredoc, filenum);
+	close(filenum);
 	free(heredoc->filename);
 	heredoc->filename = filename;
-	close(fd);
+	
+}
+
+void	exe_heredocs(t_cmd *cmd)
+{
+	t_token_type	type;
+	int				i;
+	//int				stdin_backup;
+
+	i = 0;
+	//stdin_backup = dup(STDIN_FILENO);
+	while (cmd->redirs[i].filename)
+	{
+		type = cmd->redirs[i].type;
+		if (type == T_HEREDOC)
+			heredoc_func(&cmd->redirs[i]);
+		/* if (msh()->hdoc_stop)
+		{
+			dup2(stdin_backup, STDIN_FILENO);
+			break ;
+		} */
+		i++;
+	}
+	//close(stdin_backup);
 }
 /*
 int main(void)

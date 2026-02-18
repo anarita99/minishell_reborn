@@ -6,15 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:51:50 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/18 17:07:36 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
-
-void	exitclean(unsigned char exit_code);
-
-
 
 static int	is_numeric(const char *s)
 {
@@ -65,18 +61,13 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 	return (true);
 }
 
-
-
 int	exit_builtin(char **args)
 {
 	long long	exit_code;
 
 	ft_putstr_fd("exit\n", 2);
-	if(!args[1])
-	{
-		free_arr(args);
+	if(!args || !args[1])
 		exitclean((unsigned char)sh_s()->exit_status);
-	}	
 	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
 	{
 		ft_putstr_fd("minishell: exit: ", 2);

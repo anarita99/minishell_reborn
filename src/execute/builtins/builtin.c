@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:45 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:47:10 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/18 16:57:45 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	is_builtin(char **args)
 {
@@ -33,7 +33,7 @@ int	is_builtin(char **args)
 	return (0);
 }
 
-int	exe_builtin(char **args, t_shell *shell)
+int	run_builtin(char **args)
 {
 	if(!args || !args[0])
 		return(1);
@@ -46,10 +46,17 @@ int	exe_builtin(char **args, t_shell *shell)
 	if (ft_strcmp(args[0], "exit") == 0)
 		return(exit_builtin(args));
 	else if(ft_strcmp(args[0], "env") == 0)
-		return(env_builtin(shell));
+		return(env_builtin());
 	else if(ft_strcmp(args[0], "unset") == 0)
 		return(unset_builtin(args));
 	else if(ft_strcmp(args[0], "export") == 0)
 		return(export_builtin(args));
 	return(1);
+}
+
+void	exe_builtin(t_cmd *cmd)
+{
+	setup_fds(cmd, sh_s()->original_fds, true);
+	sh_s()->exit_status = run_builtin(cmd->argv);
+	overwrite_std(sh_s()->original_fds);
 }

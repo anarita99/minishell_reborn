@@ -6,13 +6,13 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:01 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:52:35 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/16 14:51:41 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/minishell.h"
 
-int	pwd_builtin()
+int	pwd_builtin(void)
 {
 	char	*cwd;
 

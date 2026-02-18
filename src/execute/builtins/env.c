@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:51:42 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/16 14:51:09 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_env	*init_env(void)
 	return (sh_s()->env_list);
 }
 
-int	env_builtin()
+int	env_builtin(void)
 {
 	t_env	*current;
 

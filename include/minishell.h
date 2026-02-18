@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:05:42 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/12 16:41:45 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/17 12:07:15 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_shell
 	t_env	*env_list;
 	t_list	*input_list;
 	char	*cmd_line;
+	int		original_fds[2];
 }	t_shell;
 
 // Print Functions (Debug purposes)
