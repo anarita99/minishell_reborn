@@ -66,3 +66,46 @@ int	is_token_operator(t_token *token)
 	return (token->type == T_REDIR_IN || token->type == T_REDIR_OUT ||
 			token->type == T_HEREDOC || token->type == T_APPEND);
 }
+
+int	validate_tokens(t_token *head)
+{
+	int	i;
+	t_token *current;
+
+	current = head;
+	i = 0;
+	while (current)
+	{
+		// Error: Can't start or end with PIPE
+		if ((i == 0 || !current->next) && current->type == T_PIPE)
+		{
+			print_syntax_error(current->value);
+			return (0);
+		}
+
+		// Error: Token after OPERATOR needs to be WORD
+		if (is_token_operator(current))
+		{
+			if (!current->next)
+			{
+				print_syntax_error(NULL);
+				return (0);
+			}
+			else if (current->next->type != T_WORD)
+			{
+				print_syntax_error(current->next->value);
+				return (0);
+			}
+		}
+
+		// Error: Token after PIPE needs to not be PIPE
+		if (current->type == T_PIPE && current->next && current->next->type == T_PIPE)
+		{
+			print_syntax_error(current->value);
+			return (0);
+		}
+		current = current->next;
+		i++;
+	}
+	return (1);
+}

@@ -37,6 +37,12 @@ int	main(void)
 		// print_tokens(token_head);
 		// printf("\n");
 
+		if (!validate_tokens(token_head))
+		{
+			free_tokens(&token_head);
+			continue ;
+		}
+
 		// 3 - Parser
 		cmd_list = parser(token_head);
 		free_tokens(&token_head);
@@ -49,7 +55,6 @@ int	main(void)
 		// TO BE IMPLEMENTED
 		ft_lstclear(&cmd_list, del_cmd);
 	}
-	
 
 	return (0);
 }

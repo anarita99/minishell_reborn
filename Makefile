@@ -22,7 +22,7 @@ LIBFT_INCS_DIR = $(LIBFT_DIR)/include
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # Files
-FILES = main print \
+FILES = main print error \
 		lexer/lexer lexer/token lexer/types lexer/buffer lexer/states \
 		parser/parser parser/arguments parser/redirects parser/command
 SRCS = $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
@@ -59,7 +59,7 @@ fclean: clean
 re: fclean all
 
 valgrind: ${NAME}
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
+	valgrind --suppressions=rlbad.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
 
 # Phony targets
 .PHONY: all bonus clean fclean re valgrind
