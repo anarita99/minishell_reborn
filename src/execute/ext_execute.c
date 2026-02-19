@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/02/16 17:01:36 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 15:31:01 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	execute_ext(t_cmd	*cmd)
 	char	*full_path;
 
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 		return (sh_s()->exit_status = 1, print_err("fork", NULL, true));
-	if(pid == 0)
+	if (pid == 0)
 	{
-		setup_fds(cmd, sh_s()->original_fds, false);
+		if (setup_fds(cmd, sh_s()->original_fds, false) == 1)
+			exitclean(1);
 		full_path = path_to_execute(cmd->argv[0]);
 		envp = envlist_to_char(sh_s()->env_list);
 		if (!envp)
