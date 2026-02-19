@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:45 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 16:57:45 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 14:54:49 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char **args)
 {
 	if (!args || !args[0])
-		return (0);
+		return (1);
 	if (ft_strcmp(args[0], "echo") == 0)
 		return (1);
 	if (ft_strcmp(args[0], "cd") == 0)
@@ -36,7 +36,7 @@ int	is_builtin(char **args)
 int	run_builtin(char **args)
 {
 	if(!args || !args[0])
-		return(1);
+		return(0);
 	if(ft_strcmp(args[0], "echo") == 0)
 		return(echo_builtin(args));
 	else if (ft_strcmp(args[0], "cd") == 0)
@@ -56,7 +56,7 @@ int	run_builtin(char **args)
 
 void	exe_builtin(t_cmd *cmd)
 {
-	setup_fds(cmd, sh_s()->original_fds, true);
-	sh_s()->exit_status = run_builtin(cmd->argv);
+	if (setup_fds(cmd, sh_s()->original_fds, true) == 0)
+		sh_s()->exit_status = run_builtin(cmd->argv);
 	overwrite_std(sh_s()->original_fds);
 }

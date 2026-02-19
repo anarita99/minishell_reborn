@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 17:37:54 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 15:00:23 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	setup_fds(t_cmd *input, int *og_fd, bool save)
 		return(0);
 	if (parse_redirects(input, new_fd) == false)
 	{
+		sh_s()->exit_status = 1;
 		if(new_fd[0] > 0)
 			close(new_fd[0]);
 		if(new_fd[1] > 0)

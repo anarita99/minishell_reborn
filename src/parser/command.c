@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/18 18:11:41 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 14:21:45 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	del_cmd(void *cmd_ptr)
 		i = 0;
 		while (cmd->redirs[i].type != T_NONE)
 		{
-			if (cmd->redirs[i].type == T_HEREDOC && ft_strncmp(cmd->redirs[i].filename, "minishell-heredoc-", 18) == 0)
+			if (cmd->redirs[i].type == T_HEREDOC && \
+ft_strncmp(cmd->redirs[i].filename, "minishell-heredoc-", 18) == 0)
 				unlink(cmd->redirs[i].filename);
 			if (cmd->redirs[i].filename)
 				free(cmd->redirs[i].filename);

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 14:35:06 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 16:33:56 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 14:49:52 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	executor(void)
 
 	tmp = (t_cmd *)sh_s()->input_list->content;
 	exe_heredocs(tmp);
-	//heredoc
 	if (is_builtin(tmp->argv))
 		exe_builtin(tmp);
 	else
