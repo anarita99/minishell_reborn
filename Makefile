@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/02/18 16:32:45 by adores           ###   ########.fr        #
+#    Updated: 2026/02/19 16:04:46 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ EXECUTE 	= 	execute/utils \
 				execute/ext_utils \
 				execute/executor \
 				execute/redir \
-				execute/heredoc
+				execute/heredoc \
+				execute/pipeline
 
 FILES 		= $(MAIN) $(LEXER) $(PARSER) $(EXECUTE)
 SRCS 		= $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 16:32:03 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/19 17:45:55 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	**envlist_to_char(t_env *env_list);
 
 char	*path_to_execute(char *cmd);
 void	execute_ext(t_cmd	*cmd);
+void	free_execve(char **envp, char *full_path, char *cmd);
 /*
 
 ** srcs/exec/exec.c
