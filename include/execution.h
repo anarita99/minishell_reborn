@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/19 17:45:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 14:22:53 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ void	executor(void);
 int		setup_fds(t_cmd *input, int *og_fd, bool save);
 void	overwrite_std(int *fd);
 void	exe_heredocs(t_cmd *cmd);
+void	exe_pipeline(int input_size);
 
 #endif

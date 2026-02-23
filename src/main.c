@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/17 11:55:19 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:41:39 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int	main(void)
 
 	sh_s()->env_list = init_env();
 	sh_s()->exit_status = 0;
+	sh_s()->is_child = false;
+	sh_s()->pids = NULL;
+	sh_s()->prev_read = -1;
 	while (1)
 	{
 		// 1 - Prompt
@@ -42,6 +45,7 @@ int	main(void)
 		// 4 - Expander
 		// TO BE IMPLEMENTED
 		ft_lstclear(&sh_s()->input_list, del_cmd);
+		sh_s()->prev_read = -1;
 	}
 	return (0);
 }

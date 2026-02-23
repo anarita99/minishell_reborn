@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 17:03:10 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:02:50 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exitclean(unsigned char exit_code)
 	free_env_list(sh_s()->env_list);  //vai ter de limpar mais coisas
 	overwrite_std(sh_s()->original_fds);
 	ft_lstclear(&sh_s()->input_list, del_cmd);
+	free(sh_s()->pids);
 	exit(exit_code);
 }
 

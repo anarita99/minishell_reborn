@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 17:44:56 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 11:12:08 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,3 @@ void	exe_heredocs(t_cmd *cmd)
 	}
 	//close(stdin_backup);
 }
-/*
-int main(void)
-{
-	t_input input;
-	input.infiles = malloc(sizeof(t_file) * 3);
-	
-	input.infiles[0].filename = "file.txt";
-	input.infiles[1].filename = "file2.txt";
-	input.infiles[2].filename = NULL;
-	char *function = parse_infiles(&input);
-	if (function != NULL)
-		printf("%s\n",parse_infiles(&input));
-	else
-		printf("null\n");
-	return(0);
-}*/

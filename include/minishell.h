@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:05:42 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/19 17:21:33 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 11:40:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 typedef struct s_shell
 {
 	int		exit_status;
+	bool	is_child;
+	int		prev_read;
 	t_env	*env_list;
 	t_list	*input_list;
 	char	*cmd_line;
