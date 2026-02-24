@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 17:07:36 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/24 12:25:16 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	exit_builtin(char **args)
 {
 	long long	exit_code;
 
-	ft_putstr_fd("exit\n", 2);
+	exit_code = 0;
+	if (sh_s()->pids == NULL)
+		ft_putstr_fd("exit\n", 2);
 	if(!args || !args[1])
 		exitclean((unsigned char)sh_s()->exit_status);
 	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
@@ -82,7 +84,6 @@ int	exit_builtin(char **args)
 		sh_s()->exit_status = 1;
 		return (1);
 	}
-	free_arr(args);
 	exitclean((unsigned char)exit_code);
 	return (0);
 }
