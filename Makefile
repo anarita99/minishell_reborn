@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/02/20 14:26:14 by leramos-         ###   ########.fr        #
+#    Updated: 2026/02/27 20:36:11 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ LIBFT_LIB 		= 	$(LIBFT_DIR)/libft.a
 MAIN 			= 	main print error data
 LEXER 			= 	lexer token types buffer states
 PARSER 			= 	parser arguments redirects command
+EXPANDER		=	expander utils counter expand
 EXECUTE 		= 	utils \
 					builtins/builtin \
 					builtins/cd \
@@ -45,6 +46,7 @@ EXECUTE 		= 	utils \
 FILES 			= 	$(MAIN) \
 					$(addprefix lexer/, $(LEXER)) \
 					$(addprefix parser/, $(PARSER)) \
+					$(addprefix expander/, $(EXPANDER)) \
 					$(addprefix execute/, $(EXECUTE))
 SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS 			= 	$(SRCS:.c=.o)

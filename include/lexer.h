@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/12 16:36:49 by adores           ###   ########.fr       */
+/*   Updated: 2026/02/23 17:34:32 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef enum e_lexer_state
+typedef enum e_str_state
 {
 	STATE_NORMAL,
 	STATE_IN_SQUOTE,
 	STATE_IN_DQUOTE,
 	STATE_IN_OP
-}	t_lexer_state;
+}	t_str_state;
 
 typedef enum e_char_type
 {
