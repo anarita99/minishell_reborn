@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/02/23 14:22:16 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	clean_failed_pipeline(int prev_read)
 	int	w_status;
 
 	i = 0;
-	print_err(NULL, "pipe", true);
+	report_err(NULL, "pipe", true);
 	while (sh_s()->pids[i] > 0)
 	{
 		waitpid(sh_s()->pids[i], &w_status, 0);

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/23 14:22:53 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	exe_builtin(t_cmd *cmd);
 int		run_builtin(char **args);
 
 //src/execute/utils.c
-void	print_err(char *context, char *detail, bool err);
+void	report_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
 void	error_exit(char *context, char *detail, int exit_code, bool err);
 void	free_node(t_env *node);

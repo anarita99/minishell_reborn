@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/02/19 15:00:23 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool parse_redirects(t_cmd *cmd, int *fds)
 		name = cmd->redirs[i].filename;
 		open_file(cmd->redirs[i], fds);
 		if(fds[0] == -1 || fds[1] == -1)
-			return (print_err(NULL, name, true), false);
+			return (report_err(NULL, name, true), false);
 		if (cmd->redirs[i + 1].filename != NULL)
 		{
 			n_type = cmd->redirs[i + 1].type;

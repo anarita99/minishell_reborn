@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   ext_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:53:11 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_cmd_path(char *paths, char *cmd)
 		i++;
 	}
 	free_arr(splitpath);
-	return (print_err(cmd, "command not found", false), NULL);
+	return (report_err(cmd, "command not found", false), NULL);
 }
 
 char	*path_to_execute(char *cmd)

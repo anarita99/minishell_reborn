@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:49:47 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int cd_builtin (char **args)
 	if (set_cd_path(args, &path) == 1)
 		return (1);
 	if (chdir(path) == -1)
-		return (print_err("cd", path, true), 1);
+		return (report_err("cd", path, true), 1);
 	new_pwd = getcwd(NULL, 0);
 	if(!new_pwd)
 	{

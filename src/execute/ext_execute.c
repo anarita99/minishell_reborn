@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/02/19 15:31:01 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execute_ext(t_cmd	*cmd)
 
 	pid = fork();
 	if (pid == -1)
-		return (sh_s()->exit_status = 1, print_err("fork", NULL, true));
+		return (sh_s()->exit_status = 1, report_err("fork", NULL, true));
 	if (pid == 0)
 	{
 		if (setup_fds(cmd, sh_s()->original_fds, false) == 1)
