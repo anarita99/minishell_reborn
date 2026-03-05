@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/15 15:22:05 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:54:18 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 ** Test 1: Simple command
-** Input: "echo hello"
-** Expected: [T_WORD:"echo"] [T_WORD:"hello"]
+** Input: echo hello
+** Expected: [WORD : echo] [WORD : hello]
 */
 static int	test_simple_command(void)
 {
@@ -29,8 +29,8 @@ static int	test_simple_command(void)
 
 /*
 ** Test 2: Command with pipe
-** Input: "ls | grep test"
-** Expected: [T_WORD:"ls"] [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"]
+** Input: ls | grep test
+** Expected: [WORD : ls] [PIPE : |] [WORD : grep] [WORD : test]
 */
 static int	test_pipe(void)
 {
@@ -44,8 +44,8 @@ static int	test_pipe(void)
 
 /*
 ** Test 3: Input redirection
-** Input: "cat < input.txt"
-** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
+** Input: cat < input.txt
+** Expected: [WORD : cat] [REDIR_IN : <] [WORD : input.txt]
 */
 static int	test_input_redirection(void)
 {
@@ -59,8 +59,8 @@ static int	test_input_redirection(void)
 
 /*
 ** Test 4: Output redirection
-** Input: "echo hello > output.txt"
-** Expected: [T_WORD:"echo"] [T_WORD:"hello"] [T_REDIR_OUT:">"] [T_WORD:"output.txt"]
+** Input: echo hello > output.txt
+** Expected: [WORD : echo] [WORD : hello] [REDIR_OUT : >] [WORD : output.txt]
 */
 static int	test_output_redirection(void)
 {
@@ -74,8 +74,8 @@ static int	test_output_redirection(void)
 
 /*
 ** Test 5: Heredoc
-** Input: "cat << EOF"
-** Expected: [T_WORD:"cat"] [T_HEREDOC:"<<"] [T_WORD:"EOF"]
+** Input: cat << EOF
+** Expected: [WORD : cat] [HEREDOC : <<] [WORD : EOF]
 */
 static int	test_heredoc(void)
 {
@@ -89,8 +89,8 @@ static int	test_heredoc(void)
 
 /*
 ** Test 6: Append redirection
-** Input: "echo hello >> output.txt"
-** Expected: [T_WORD:"echo"] [T_WORD:"hello"] [T_APPEND:">>"] [T_WORD:"output.txt"]
+** Input: echo hello >> output.txt
+** Expected: [WORD : echo] [WORD : hello] [APPEND : >>] [WORD : output.txt]
 */
 static int	test_append(void)
 {
@@ -104,8 +104,8 @@ static int	test_append(void)
 
 /*
 ** Test 7: Quoted strings
-** Input: "echo \"hello world\""
-** Expected: [T_WORD:"echo"] [T_WORD:""hello world""]
+** Input: echo "hello world"
+** Expected: [WORD : echo] [WORD : "hello world"]
 */
 static int	test_quoted_strings(void)
 {
@@ -119,9 +119,8 @@ static int	test_quoted_strings(void)
 
 /*
 ** Test 8: Multiple pipes
-** Input: "ls | grep test | wc -l"
-** Expected: [T_WORD:"ls"] [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"] 
-**           [T_PIPE:"|"] [T_WORD:"wc"] [T_WORD:"-l"]
+** Input: ls | grep test | wc -l
+** Expected: [WORD : ls] [PIPE : |] [WORD : grep] [WORD : test] [PIPE : |] [WORD : wc] [WORD : -l]
 */
 static int	test_multiple_pipes(void)
 {
@@ -135,9 +134,8 @@ static int	test_multiple_pipes(void)
 
 /*
 ** Test 9: Multiple redirections
-** Input: "cat < input.txt > output.txt"
-** Expected: 	[T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
-** 				[T_REDIR_OUT:">"] [T_WORD:"output.txt"]
+** Input: cat < input.txt > output.txt
+** Expected: [WORD : cat] [REDIR_IN : <] [WORD : input.txt] [REDIR_OUT : >] [WORD : output.txt]
 */
 static int	test_multiple_redirections(void)
 {
@@ -151,7 +149,7 @@ static int	test_multiple_redirections(void)
 
 /*
 ** Test 10: Empty input
-** Input: ""
+** Input: 
 ** Expected: NULL or empty token array
 */
 static int	test_empty_input(void)
@@ -161,9 +159,8 @@ static int	test_empty_input(void)
 
 /*
 ** Test 11: Single quotes with special characters
-** Input: "echo 'hello|world'"
-** Expected: [T_WORD:"echo"] [T_WORD:"'hello|world'"]
-** Single quotes should prevent pipe interpretation
+** Input: echo 'hello|world'
+** Expected: [WORD : echo] [WORD : 'hello|world']
 */
 static int	test_single_quotes_special_chars(void)
 {
@@ -177,9 +174,8 @@ static int	test_single_quotes_special_chars(void)
 
 /*
 ** Test 12: Single quotes with redirections
-** Input: "cat 'file<>name.txt'"
-** Expected: [T_WORD:"cat"] [T_WORD:"'file<>name.txt'"]
-** Single quotes should prevent redirection operators interpretation
+** Input: cat 'file<>name.txt'
+** Expected: [WORD : cat] [WORD : 'file<>name.txt']
 */
 static int	test_single_quotes_with_operators(void)
 {
@@ -193,9 +189,8 @@ static int	test_single_quotes_with_operators(void)
 
 /*
 ** Test 13: Double quotes with environment variable
-** Input: "echo \"$HOME\""
-** Expected: [T_WORD:"echo"] [T_WORD:""$HOME""]
-** Dollar sign should be preserved in double quotes for expansion
+** Input: echo "$HOME\"
+** Expected: [WORD : echo] [WORD : "$HOME"]
 */
 static int	test_double_quotes_with_variable(void)
 {
@@ -208,26 +203,24 @@ static int	test_double_quotes_with_variable(void)
 }
 
 /*
-** Test 14: Single quotes should NOT expand variables
-** Input: "echo '$HOME'"
-** Expected: [T_WORD:"echo"] [T_WORD:"'$HOME'"]
-** Dollar sign should NOT be expanded in single quotes
+** Test 14: Single quotes with environment variable
+** Input: echo '$HOME'
+** Expected: [WORD : echo] [WORD : '$HOME']
 */
-static int	test_single_quotes_no_expansion(void)
+static int	test_single_quotes_with_variable(void)
 {
 	t_token_type	types[] = {T_WORD, T_WORD};
 	char			*values[] = {"echo", "'$HOME'"};
 	int				token_count = 2;
 	
-	return (run_lexer_test((t_test_info){14, "Single quotes no expansion", "echo '$HOME'"},
+	return (run_lexer_test((t_test_info){14, "Single quotes with variable", "echo '$HOME'"},
 		types, values, token_count));
 }
 
 /*
 ** Test 15: Environment variable outside quotes
-** Input: "echo $HOME"
-** Expected: [T_WORD:"echo"] [T_WORD:"$HOME"]
-** Lexer should preserve $VAR for later expansion
+** Input: echo $HOME
+** Expected: [WORD : echo] [WORD : $HOME]
 */
 static int	test_env_variable_unquoted(void)
 {
@@ -241,9 +234,8 @@ static int	test_env_variable_unquoted(void)
 
 /*
 ** Test 16: Exit status variable
-** Input: "echo $?"
-** Expected: [T_WORD:"echo"] [T_WORD:"$?"]
-** Should preserve $? for expansion
+** Input: echo $?
+** Expected: [WORD : echo] [WORD : $?]
 */
 static int	test_exit_status_variable(void)
 {
@@ -257,8 +249,8 @@ static int	test_exit_status_variable(void)
 
 /*
 ** Test 17: Mixed quotes
-** Input: "echo 'hello' \"world\""
-** Expected: [T_WORD:"echo"] [T_WORD:"'hello'"] [T_WORD:""world""]
+** Input: echo 'hello' "world"
+** Expected: [WORD : echo] [WORD : 'hello'] [WORD : "world"]
 */
 static int	test_mixed_quotes(void)
 {
@@ -272,8 +264,8 @@ static int	test_mixed_quotes(void)
 
 /*
 ** Test 18: Heredoc with word
-** Input: "cat << 'EOF'"
-** Expected: [T_WORD:"cat"] [T_HEREDOC:"<<"] [T_WORD:"'EOF'"]
+** Input: cat << 'EOF'
+** Expected: [WORD : cat] [HEREDOC : <<] [WORD : 'EOF']
 */
 static int	test_heredoc_quoted_delimiter(void)
 {
@@ -287,10 +279,10 @@ static int	test_heredoc_quoted_delimiter(void)
 
 /*
 ** Test 19: Complex pipe with redirections
-** Input: "cat < in.txt | grep test > out.txt"
-** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"in.txt"]
-**           [T_PIPE:"|"] [T_WORD:"grep"] [T_WORD:"test"]
-**           [T_REDIR_OUT:">"] [T_WORD:"out.txt"]
+** Input: cat < in.txt | grep test > out.txt
+** Expected: [WORD : cat] [REDIR_IN : <] [WORD : in.txt]
+**           [PIPE : |] [WORD : grep] [WORD : test]
+**           [REDIR_OUT : >] [WORD : out.txt]
 */
 static int	test_complex_pipe_redirections(void)
 {
@@ -304,14 +296,13 @@ static int	test_complex_pipe_redirections(void)
 
 /*
 ** Test 20: Quotes in the middle of word
-** Input: "he"l"lo'world'"
-** Expected: [T_WORD:"helloworld"]
-** Quotes should merge with surrounding text
+** Input: he"l"lo'world'
+** Expected: [WORD : he"l"lo'world']
 */
 static int	test_quotes_in_middle_of_word(void)
 {
 	t_token_type	types[] = {T_WORD};
-	char			*values[] = {"helloworld"};
+	char			*values[] = {"he\"l\"lo'world'"};
 	int				token_count = 1;
 	
 	return (run_lexer_test((t_test_info){20, "Quotes in middle of word", "he\"l\"lo'world'"},
@@ -320,8 +311,8 @@ static int	test_quotes_in_middle_of_word(void)
 
 /*
 ** Test 21: Variable with underscore and numbers
-** Input: "echo $USER_NAME_123"
-** Expected: [T_WORD:"echo"] [T_WORD:"$USER_NAME_123"]
+** Input: echo $USER_NAME_123
+** Expected: [WORD : echo] [WORD : $USER_NAME_123]
 */
 static int	test_variable_with_underscore_and_numbers(void)
 {
@@ -335,9 +326,8 @@ static int	test_variable_with_underscore_and_numbers(void)
 
 /*
 ** Test 22: Consecutive redirections
-** Input: "cat >> file1 >> file2"
-** Expected: [T_WORD:"cat"] [T_APPEND:">>"] [T_WORD:"file1"]
-**           [T_APPEND:">>"] [T_WORD:"file2"]
+** Input: cat >> file1 >> file2
+** Expected: [WORD : cat] [APPEND : >>] [WORD : file1] [APPEND : >>] [WORD : file2]
 */
 static int	test_consecutive_append(void)
 {
@@ -351,8 +341,8 @@ static int	test_consecutive_append(void)
 
 /*
 ** Test 23: Pipe after quoted string
-** Input: "echo \"hello\" | cat"
-** Expected: [T_WORD:"echo"] [T_WORD:""hello""] [T_PIPE:"|"] [T_WORD:"cat"]
+** Input: echo "hello" | cat
+** Expected: [WORD : echo] [WORD : "hello"] [PIPE : |] [WORD : cat]
 */
 static int	test_pipe_after_quoted_string(void)
 {
@@ -366,8 +356,8 @@ static int	test_pipe_after_quoted_string(void)
 
 /*
 ** Test 24: Multiple variables in double quotes
-** Input: "echo \"$HOME/$USER\""
-** Expected: [T_WORD:"echo"] [T_WORD:""$HOME/$USER""]
+** Input: echo "$HOME/$USER"
+** Expected: [WORD : echo] [WORD : "$HOME/$USER"]
 */
 static int	test_multiple_variables_in_quotes(void)
 {
@@ -381,8 +371,8 @@ static int	test_multiple_variables_in_quotes(void)
 
 /*
 ** Test 25: Redirection with no spaces
-** Input: "cat<input.txt"
-** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"]
+** Input: cat<input.txt
+** Expected: [WORD : cat] [REDIR_IN : <] [WORD : input.txt]
 */
 static int	test_redirection_no_spaces(void)
 {
@@ -396,8 +386,8 @@ static int	test_redirection_no_spaces(void)
 
 /*
 ** Test 26: Redirection with no spaces (Alt)
-** Input: "cat<input.txt|cat>>output.txt"
-** Expected: [T_WORD:"cat"] [T_REDIR_IN:"<"] [T_WORD:"input.txt"] [T_PIPE:"|"] [T_WORD:"cat"] [T_APPEND:">>"] [T_WORD:"output.txt"]
+** Input: cat<input.txt|cat>>output.txt
+** Expected: [WORD : cat] [REDIR_IN : <] [WORD : input.txt] [PIPE : |] [WORD : cat] [APPEND : >>] [WORD : output.txt]
 */
 static int	test_redirection_no_spaces_alt(void)
 {
@@ -406,6 +396,36 @@ static int	test_redirection_no_spaces_alt(void)
 	int				token_count = 7;
 	
 	return (run_lexer_test((t_test_info){26, "Redirection with no spaces (Alt)", "cat<input.txt|cat>>output.txt"},
+		types, values, token_count));
+}
+
+/*
+** Test 27: A lot of quotes
+** Input: echo "he"l"lo'world'"
+** Expected: [WORD : echo] [WORD : "he"l"lo'world'"]
+*/
+static int	test_lot_of_quotes(void)
+{
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "\"he\"l\"lo'world'\""};
+	int				token_count = 2;
+	
+	return (run_lexer_test((t_test_info){27, "A lot of quotes", "echo \"he\"l\"lo'world'\""},
+		types, values, token_count));
+}
+
+/*
+** Test 28: Random double quotes
+** Input: echo hello"w"orld
+** Expected: [WORD : echo] [WORD : hello"w"orld]
+*/
+static int	test_random_dquotes(void)
+{
+	t_token_type	types[] = {T_WORD, T_WORD};
+	char			*values[] = {"echo", "hello\"w\"orld"};
+	int				token_count = 2;
+	
+	return (run_lexer_test((t_test_info){28, "Random double quotes", "echo hello\"w\"orld"},
 		types, values, token_count));
 }
 
@@ -425,7 +445,7 @@ int	(**get_lexer_tests(void))(void)
 		test_single_quotes_special_chars,
 		test_single_quotes_with_operators,
 		test_double_quotes_with_variable,
-		test_single_quotes_no_expansion,
+		test_single_quotes_with_variable,
 		test_env_variable_unquoted,
 		test_exit_status_variable,
 		test_mixed_quotes,
@@ -438,6 +458,8 @@ int	(**get_lexer_tests(void))(void)
 		test_multiple_variables_in_quotes,
 		test_redirection_no_spaces,
 		test_redirection_no_spaces_alt,
+		test_lot_of_quotes,
+		test_random_dquotes,
 		NULL
 	};
 	return (tests);
