@@ -18,6 +18,6 @@ void	print_syntax_error(char *token_value)
 	if (token_value)
 		write(2, token_value, ft_strlen(token_value));
 	else
-		write(2, "newline", 7); // For when a command ends with '>'
+		write(2, "newline", 7);
 	write(2, "'\n", 2);
 }

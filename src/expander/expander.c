@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/28 18:56:02 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:46:36 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // "alas$wow"           = alaswow
 // alas$ crazy          = alas crazy
 // abc$a$ '$c"razy'		= abcabc $c"razy
+// 'hello "w"orld'		= hello "w"orld
 void	expander(t_list **commands, t_env *env_list)
 {
 	t_list  *current_node;

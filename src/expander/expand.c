@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:58:47 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/28 18:58:58 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:53:37 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ char	*expand(t_env *env_list, char *str, int size)
 	while (str[i])
 	{
 		c = str[i];
-		if (state == STATE_IN_SQUOTE && c == '\'')
-			state = STATE_NORMAL;
-		else if (state == STATE_NORMAL && c == '\'')
+		if (state == STATE_NORMAL && c == '\'')
 			state = STATE_IN_SQUOTE;
 		else if (state == STATE_NORMAL && c == '\"')
 			state = STATE_IN_DQUOTE;
+		else if (state == STATE_IN_SQUOTE && c == '\'')
+			state = STATE_NORMAL;
 		else if (state == STATE_IN_DQUOTE && c == '\"')
 			state = STATE_NORMAL;
 		else if (c == '$')

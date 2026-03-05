@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/23 17:34:32 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:22:20 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int		validate_tokens(t_token *head);
 
 // Types
 
-int	get_c_type(char c);
-int	is_quote(char c);
+int		is_word(char c);
+int		is_operator(char c);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
 
 // States
-int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char c_next);
-int	state_quote(int *state, char c, int c_type, t_buffer *buffer);
+int	state_normal(int *state, char c, t_buffer *buffer, int *consumed, char c_next);
+int	state_quote(int *state, char c, t_buffer *buffer);
 
 t_token	*lexer(char *input);
 

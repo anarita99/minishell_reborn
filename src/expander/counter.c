@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:57:51 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/28 18:49:24 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:53:50 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int counter(t_env *env_list, char *str)
 	while (str[i])
 	{
 		c = str[i];
-		if (state == STATE_IN_SQUOTE && c == '\'')
-			state = STATE_NORMAL;
-		else if (state == STATE_NORMAL && c == '\'')
+		if (state == STATE_NORMAL && c == '\'')
 			state = STATE_IN_SQUOTE;
 		else if (state == STATE_NORMAL && c == '\"')
 			state = STATE_IN_DQUOTE;
+		else if (state == STATE_IN_SQUOTE && c == '\'')
+			state = STATE_NORMAL;
 		else if (state == STATE_IN_DQUOTE && c == '\"')
 			state = STATE_NORMAL;
 		else if (c == '$')

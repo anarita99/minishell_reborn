@@ -6,24 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/04 00:00:00 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/03 15:05:31 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-// static int		get_argc(t_token *current_token)
-// {
-// 	int	argc;
-
-// 	argc = 0;
-// 	while (current_token && current_token->type == T_WORD)
-// 	{
-// 		argc++;
-// 		current_token = current_token->next;
-// 	}
-// 	return (argc);
-// }
 
 static int		get_argc(t_token *current_token)
 {
