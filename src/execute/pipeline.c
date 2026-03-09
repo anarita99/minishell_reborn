@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:41:24 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ static void	setup_child(int i, int input_size)
 	//signal(SIGINT, SIG_DFL);
 	//signal(SIGQUIT, SIG_DFL);
 	sh_s()->is_child = true;
-	if (sh_s()->prev_read != -1)
-	{
-		dup2(sh_s()->prev_read, STDIN_FILENO);
-		close(sh_s()->prev_read);
-	}
 	if (i < input_size - 1)
 	{
 		close(sh_s()->pipe_fds[0]);
 		dup2(sh_s()->pipe_fds[1], STDOUT_FILENO);
 		close(sh_s()->pipe_fds[1]);
+	}
+	if (sh_s()->prev_read != -1)
+	{
+		dup2(sh_s()->prev_read, STDIN_FILENO);
+		close(sh_s()->prev_read);
 	}
 }
 
