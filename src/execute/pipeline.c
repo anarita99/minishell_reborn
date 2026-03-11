@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/09 11:41:24 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/11 10:42:33 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	exe_commands(t_cmd *input)
 	}
 }
 
-static void	setup_child(int i, int input_size)
+static void	child_proc(int i, int input_size)
 {
 	//signal(SIGINT, SIG_DFL);
 	//signal(SIGQUIT, SIG_DFL);
@@ -50,11 +50,11 @@ static void	setup_child(int i, int input_size)
 	}
 }
 
-static void	execute_and_reset(t_list *current, int i, int input_size)
+static void	pipeline_proc(t_list *current, int i, int input_size)
 {
 	if (sh_s()->pids[i] == 0)
 	{
-		setup_child(i, input_size);
+		child_proc(i, input_size);
 		exe_commands((t_cmd *)current->content);
 	}
 	if (sh_s()->prev_read != -1)
@@ -66,7 +66,7 @@ static void	execute_and_reset(t_list *current, int i, int input_size)
 	}
 }
 
-bool	execute_all_hds(t_list *input)
+bool	exe_all_heredocs(t_list *input)
 {
 	t_list	*current;
 
@@ -85,7 +85,7 @@ bool	execute_all_hds(t_list *input)
 	return (true);
 }
 
-void	clean_failed_pipeline(int prev_read)
+void	clean_pipeline(int prev_read)
 {
 	int	i;
 	int	w_status;
@@ -113,15 +113,15 @@ void	exe_pipeline(int input_size)
 	curr = sh_s()->input_list;
 	if(!sh_s()->pids)
 		error_exit("malloc", "allocation error", 1, false);
-	if (!execute_all_hds(curr))
+	if (!exe_all_heredocs(curr))
 		return ;
 	i = 0;
 	while(curr)
 	{
 		if ((i < input_size - 1) && (pipe(sh_s()->pipe_fds) == -1))
-			return (clean_failed_pipeline(sh_s()->prev_read));
+			return (clean_pipeline(sh_s()->prev_read));
 		sh_s()->pids[i] = fork();
-		execute_and_reset(curr, i, input_size);
+		pipeline_proc(curr, i, input_size);
 		curr = curr->next;
 		i++;
 	}
