@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:31 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/28 18:51:24 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/11 15:02:30 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@
 # include "execution.h"
 
 // Utils
-char	*get_env_key(char *str, int *i);
-void	remove_empty_str(char **array);
+int     update_quote_state(t_str_state *state, char c);
+int	    get_key_size(char *str, int i);
+char    *get_value(t_env *env_list, int exit_status, char *key);
+bool	has_quotes(char *str);
+void	remove_from_array(char **array, int index);
 
 // Counter
-int counter(t_env *env_list, char *str);
+int counter(t_env *env_list, int exit_status, char *str);
 
 // Expand
-char	*expand(t_env *env_list, char *str, int size);
+char	*expand(t_env *env_list, int exit_status, char *str, int size);
 
 // Main expander function
-void	expander(t_list **commands, t_env *env_list);
+void	expander(t_list **commands, t_env *env_list, int exit_status);
 
 #endif

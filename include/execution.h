@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/02/18 16:32:03 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/11 15:05:33 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
-#  define EXECUTION_H
+# define EXECUTION_H
 
 # include "shared.h"
 # include "parser.h"
@@ -23,14 +23,14 @@ typedef struct s_env
 	struct s_env	*next;
 } t_env;
 
-// srcs/execute/builtins/env.c
+// src/execution/builtins/env.c
 void	set_env_var(char *key, char *value);
 int		add_env_var(t_env **head, char *env);
 t_env	*init_env(void);
 int		env_builtin();
 
 
-// src/execute/builtins/env_functions.c
+// src/execution/builtins/env_functions.c
 
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);
@@ -44,7 +44,7 @@ char	*path_to_execute(char *cmd);
 void	execute_ext(t_cmd	*cmd);
 /*
 
-** srcs/exec/exec.c
+** src/execution/exec.c
 
 int		execute_pipeline(t_cmd *cmds, t_shell *shell);
 void	execute_child(t_cmd *cmd, t_shell *shell, int input_fd, int pipe_fds[2]);
@@ -53,7 +53,7 @@ int		execute_single_builtin(t_cmd *cmd, t_shell *shell);
 int		exe_builtin(char **args, t_shell *shell);*/
 
 
-// src/execute/builtins/.c
+// src/execution/builtins/.c
 
 int		echo_builtin(char **args);
 int 	cd_builtin (char **args);
@@ -66,7 +66,7 @@ int		is_builtin(char **args);
 void	exe_builtin(t_cmd *cmd);
 int		run_builtin(char **args);
 
-//src/execute/utils.c
+//src/execution/utils.c
 void	print_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
 void	error_exit(char *context, char *detail, int exit_code, bool err);

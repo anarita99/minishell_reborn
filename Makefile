@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/02/27 20:36:11 by leramos-         ###   ########.fr        #
+#    Updated: 2026/03/11 15:02:57 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ MAIN 			= 	main print error data
 LEXER 			= 	lexer token types buffer states
 PARSER 			= 	parser arguments redirects command
 EXPANDER		=	expander utils counter expand
-EXECUTE 		= 	utils \
+EXECUTOR 		= 	utils \
 					builtins/builtin \
 					builtins/cd \
 					builtins/echo \
@@ -47,7 +47,7 @@ FILES 			= 	$(MAIN) \
 					$(addprefix lexer/, $(LEXER)) \
 					$(addprefix parser/, $(PARSER)) \
 					$(addprefix expander/, $(EXPANDER)) \
-					$(addprefix execute/, $(EXECUTE))
+					$(addprefix execution/, $(EXECUTOR))
 SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS 			= 	$(SRCS:.c=.o)
 

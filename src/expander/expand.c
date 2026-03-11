@@ -6,122 +6,64 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:58:47 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/02 16:53:37 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/06 17:59:21 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static void append_var(t_env *env_list, char *str, int *i, char *expanded_str, int *j)
+static int	append_str(char *dst, char *src, int dst_index)
 {
-    char    *key;
-    char    *value;
-    int     k;
+	int	i;
 
-    key = get_env_key(str, i);
-    if (!key)
-        return ;
-    value = get_env_value(env_list, key);
-    printf("Env Var = [%s : %s]\n", key, value);
-    free(key);
-    k = 0;
-    while (value && value[k])
-    {
-        expanded_str[*j] = value[k];
-        (*j)++;
-        k++;
-    }
+	if (!src || !src[0])
+		return (0);
+	i = 0;
+	while (src[i])
+		dst[dst_index++] = src[i++];
+	return (i);
 }
 
-char	*expand(t_env *env_list, char *str, int size)
+// echo $HOME $? $ $alas '$HOME $' "$h"
+// caralho > "$HOME/out.txt"
+char	*expand(t_env *env_list, int exit_status, char *str, int size)
 {
+	char		*out;
 	t_str_state state;
 	int         i;
 	int			j;
-	char        c;
-	char		*expanded_str;
+	char    	*value;
+	char		*key;
+	int			key_size;
 
-	expanded_str = malloc(sizeof(char) * (size + 1));
+	out = malloc(sizeof(char) * (size + 1));
+	if (!out)
+		return (NULL);
 	state = STATE_NORMAL;
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		c = str[i];
-		if (state == STATE_NORMAL && c == '\'')
-			state = STATE_IN_SQUOTE;
-		else if (state == STATE_NORMAL && c == '\"')
-			state = STATE_IN_DQUOTE;
-		else if (state == STATE_IN_SQUOTE && c == '\'')
-			state = STATE_NORMAL;
-		else if (state == STATE_IN_DQUOTE && c == '\"')
-			state = STATE_NORMAL;
-		else if (c == '$')
-			append_var(env_list, str, &i, expanded_str, &j);
+		if (update_quote_state(&state, str[i]))
+		{
+			i++;
+			continue ;
+		}
+		if (str[i] == '$' && state != STATE_IN_SQUOTE
+			&& str[i + 1] && str[i + 1] != ' ')
+		{
+			key_size = get_key_size(str, i);
+			key = ft_substr(str, i + 1, key_size);
+			i += key_size;
+			value = get_value(env_list, exit_status, key);
+			j += append_str(out, value, j);
+			free(key);
+			free(value);
+		}
 		else
-			expanded_str[j++] = c;
+			out[j++] = str[i];
 		i++;
 	}
-	expanded_str[j] = '\0';
-	return (expanded_str);
+	out[j] = '\0';
+	return (out);
 }
-
-
-// old
-// char	*expand(t_env *env_list, char *str, int size)
-// {
-// 	t_str_state state;
-// 	int         i;
-// 	int			j;
-// 	char        c;
-// 	char		*expanded_str;
-
-// 	expanded_str = malloc(sizeof(char) * (size + 1));
-// 	state = STATE_NORMAL;
-// 	i = 0;
-// 	j = 0;
-// 	while (str[i])
-// 	{
-// 		c = str[i];
-// 		if (state == STATE_NORMAL)
-// 		{
-// 			if (c == '\'')
-// 				state = STATE_IN_SQUOTE;
-// 			else if (c == '\"')
-// 				state = STATE_IN_DQUOTE;
-// 			else if (c == '$')
-// 				append_var(env_list, str, &i, expanded_str, &j);
-// 			else
-// 			{
-// 				expanded_str[j] = c;
-// 				j++;
-// 			}
-				
-// 		}
-// 		else if (state == STATE_IN_SQUOTE)
-// 		{
-// 			if (c == '\'')
-// 				state = STATE_NORMAL;
-// 			else
-// 			{
-// 				expanded_str[j] = c;
-// 				j++;
-// 			}
-// 		}
-// 		else if (state == STATE_IN_DQUOTE)
-// 		{
-// 			if (c == '\"')
-// 				state = STATE_NORMAL;
-// 			else if (c == '$')
-// 				append_var(env_list, str, &i, expanded_str, &j);
-// 			else
-// 			{
-// 				expanded_str[j] = c;
-// 				j++;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	expanded_str[j] = '\0';
-// 	return (expanded_str);
-// }
