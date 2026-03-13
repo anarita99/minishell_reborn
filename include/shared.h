@@ -6,17 +6,19 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:33:10 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 17:38:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/13 15:00:48 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHARED_H
 # define SHARED_H
 
+// Bool and NULL
 # include <stdbool.h>
 # include <linux/limits.h>
+
 // libft
-# include "../libft/libft.h"
+# include "libft.h"
 
 // malloc, exit, getenv
 # include <stdlib.h>
@@ -60,6 +62,5 @@
 // tcsetattr, tcgetattr, tgetent, tgetflag, tgetnum
 // tgetstr, tgoto, tputs
 # include <termios.h>
-
 
 #endif

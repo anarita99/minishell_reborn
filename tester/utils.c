@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/12 15:24:28 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/05 14:18:07 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_test_info(t_test_info info)
 {
 	printf("Test %i: %s\n", info.num, info.name);
-	printf("- Input: \"%s\"\n", info.input);
+	printf("- Input: %s\n", info.input);
 }
 
 static void	print_passed()

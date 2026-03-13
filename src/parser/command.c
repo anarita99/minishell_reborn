@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/19 14:21:45 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/03 14:21:14 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
 t_cmd	*get_next_cmd(t_token *current_token)
 {
@@ -22,6 +22,21 @@ t_cmd	*get_next_cmd(t_token *current_token)
 	cmd->argv = get_argv(current_token);
 	cmd->redirs = get_redirs(current_token);
 	return (cmd);
+}
+
+static void	free_arr(char **str)
+{
+	int i;
+
+	i = 0;
+	if (str == NULL)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
 void	del_cmd(void *cmd_ptr)

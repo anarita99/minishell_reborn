@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:05:42 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/23 11:40:11 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/13 14:29:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 # include "shared.h"
 # include "lexer.h"
 # include "parser.h"
+# include "expander.h"
 # include "execution.h"
 
-//shell struct
+// Shell Structure
 typedef struct s_shell
 {
 	int		exit_status;
@@ -38,6 +39,7 @@ typedef struct s_shell
 void	print_tokens(t_token *head);
 void	print_cmdlst(t_list *cmd_lst);
 
+// Shell Singleton
 t_shell	*sh_s(void);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/08 00:00:00 by leramos-          #+#    #+#              #
-#    Updated: 2026/01/12 16:01:20 by leramos-         ###   ########.fr        #
+#    Updated: 2026/03/02 17:56:28 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,9 @@ MINISHELL_SRCS_DIR	= $(MINISHELL_DIR)/src
 MINISHELL_INCS_DIR	= $(MINISHELL_DIR)/include
 
 # Files
-MINISHELL_SRCS		= $(wildcard $(MINISHELL_SRCS_DIR)/lexer/*.c) \
-                      $(wildcard $(MINISHELL_SRCS_DIR)/parser/*.c)
+MINISHELL_SRCS		= $(MINISHELL_SRCS_DIR)/error.c \
+					  $(wildcard $(MINISHELL_SRCS_DIR)/lexer/*.c) \
+					  $(wildcard $(MINISHELL_SRCS_DIR)/parser/*.c)
 
 SRCS				= tester.c \
 					  utils.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/12 17:28:14 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/03 16:15:16 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_token	*lexer(char *input)
 	int		i;
 	int		state;
 	char	c;
-	int		c_type;
 	t_token	*head;
 	t_token	*tail;
 	t_token	*new_token;
@@ -42,24 +41,17 @@ t_token	*lexer(char *input)
 	while (input[i])
 	{
 		c = input[i];
-		c_type = get_c_type(c);
-		
-		if (c_type == -1)
-		{
-			i++;
-			continue;
-		}
 
 		consumed = 1;  // By default, we consume the character
 		token_type = T_NONE;
 
 		// State machine
 		if (state == STATE_NORMAL)
-			token_type = state_normal(&state, c, c_type, buffer, &consumed, input[i + 1]);
+			token_type = state_normal(&state, c, buffer, &consumed, input[i + 1]);
 		else if (state == STATE_IN_SQUOTE)
-			token_type = state_quote(&state, c, c_type, buffer);
+			token_type = state_quote(&state, c, buffer);
 		else if (state == STATE_IN_DQUOTE)
-			token_type = state_quote(&state, c, c_type, buffer);
+			token_type = state_quote(&state, c, buffer);
 
 		// Create token if ready
 		if (token_type != T_NONE)

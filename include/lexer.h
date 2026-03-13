@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/12 16:36:49 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/03 16:22:20 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-typedef enum e_lexer_state
+typedef enum e_str_state
 {
 	STATE_NORMAL,
 	STATE_IN_SQUOTE,
 	STATE_IN_DQUOTE,
 	STATE_IN_OP
-}	t_lexer_state;
+}	t_str_state;
 
 typedef enum e_char_type
 {
@@ -70,17 +70,19 @@ t_token	*create_token(t_token_type type, char *value);
 void	add_token_to_list(t_token **head, t_token **tail, t_token *token);
 void	free_tokens(t_token **head);
 int		is_token_operator(t_token *token);
+void 	print_syntax_error(char *token_value);
+int		validate_tokens(t_token *head);
 
 // Types
 
-int	get_c_type(char c);
-int	is_quote(char c);
+int		is_word(char c);
+int		is_operator(char c);
 t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
 
 // States
-int	state_normal(int *state, char c, int c_type, t_buffer *buffer, int *consumed, char c_next);
-int	state_quote(int *state, char c, int c_type, t_buffer *buffer);
+int	state_normal(int *state, char c, t_buffer *buffer, int *consumed, char c_next);
+int	state_quote(int *state, char c, t_buffer *buffer);
 
 t_token	*lexer(char *input);
 
