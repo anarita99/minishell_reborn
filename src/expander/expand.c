@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:58:47 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/06 17:59:21 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/14 15:04:27 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,17 @@ char	*expand(t_env *env_list, int exit_status, char *str, int size)
 			&& str[i + 1] && str[i + 1] != ' ')
 		{
 			key_size = get_key_size(str, i);
-			key = ft_substr(str, i + 1, key_size);
-			i += key_size;
-			value = get_value(env_list, exit_status, key);
-			j += append_str(out, value, j);
-			free(key);
-			free(value);
+			if (key_size == 0)
+				out[j++] = str[i];
+			else
+			{
+				key = ft_substr(str, i + 1, key_size);
+				i += key_size;
+				value = get_value(env_list, exit_status, key);
+				j += append_str(out, value, j);
+				free(key);
+				free(value);
+			}
 		}
 		else
 			out[j++] = str[i];
