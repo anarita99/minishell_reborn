@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/13 15:09:51 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/16 16:28:31 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	set_env_var(char *key, char *value)
 	current_node->key = ft_strdup(key);
 	//if (value)
 	current_node->value = ft_strdup(value);
-	if (!current_node->key || !current_node->value)
+	if (!current_node->key || (!current_node->value && value != NULL))
 		return (free_node(current_node));
 	env_add_back(&sh_s()->env_list, current_node);
 }

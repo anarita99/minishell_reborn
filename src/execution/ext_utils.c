@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/16 16:22:30 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_cmd_path(char *paths, char *cmd)
 		i++;
 	}
 	free_arr(splitpath);
-	return (report_err(cmd, "command not found", false), NULL);
+	return (NULL);
 }
 
 char	*path_to_execute(char *cmd)
@@ -62,6 +62,6 @@ char	*path_to_execute(char *cmd)
 		error_exit(cmd, "No such file or directory", 127, false);
 	return_path = get_cmd_path(path, cmd);
 	if(return_path == NULL)
-		error_exit(cmd, "No such file or directory", 127, false);
+		error_exit(cmd, "command not found", 127, false);
 	return (return_path);
 }

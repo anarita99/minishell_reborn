@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:51:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/16 16:13:42 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,12 @@ void	print_sorted_env()
 	while (node_array[i])
 	{
 		if (ft_strncmp(node_array[i]->key, "_", 2) != 0)
-			printf("declare -x %s=\"%s\"\n", node_array[i]->key, node_array[i]->value);
+		{
+			printf("declare -x %s", node_array[i]->key);
+			if(node_array[i]->value != NULL)
+				printf("=\"%s\"", node_array[i]->value);
+			printf("\n");
+		}
 		i++;
 	}
 	free(node_array);
@@ -148,7 +153,7 @@ int	export_builtin(char **args)
 	exit_code = 0;
 	if (!args[1])
 		return (print_sorted_env(), exit_code);
-	i = 0;
+	i = 1;
 	while(args[i])
 	{
 		equal = ft_strchr(args[i], '=');
