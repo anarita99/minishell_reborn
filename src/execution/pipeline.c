@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/11 10:42:33 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:50:58 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static void	exe_commands(t_cmd *input)
 
 static void	child_proc(int i, int input_size)
 {
-	//signal(SIGINT, SIG_DFL);
-	//signal(SIGQUIT, SIG_DFL);
+	child_signals();
 	sh_s()->is_child = true;
 	if (i < input_size - 1)
 	{

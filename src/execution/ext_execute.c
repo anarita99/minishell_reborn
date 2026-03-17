@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:32:41 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	free_execve(char **envp, char *full_path, char *cmd)
 {
@@ -19,34 +19,19 @@ void	free_execve(char **envp, char *full_path, char *cmd)
 	error_exit(NULL, cmd, 1, true);
 }
 
-static void	wait_child(void)
-{
-	int	w_status;
-	//int	sig;
-
-	wait(&w_status);
-	if (WIFEXITED(w_status))
-		sh_s()->exit_status = WEXITSTATUS(w_status);
-	else if (WIFSIGNALED(w_status))
-	{
-		//sig = WTERMSIG(w_status);
-		//if (sig == SIGQUIT)
-		//   ft_putendl_fd("Quit (core dumped)", STDOUT_FILENO);
-		sh_s()->exit_status = 128;
-	}
-}
-
 void	execute_ext(t_cmd	*cmd)
 {
 	pid_t	pid;
 	char	**envp;
 	char	*full_path;
+	int		w_status;
 
 	pid = fork();
 	if (pid == -1)
 		return (sh_s()->exit_status = 1, report_err("fork", NULL, true));
 	if (pid == 0)
 	{
+		child_signals();
 		if (setup_fds(cmd, sh_s()->original_fds, false) == 1)
 			exitclean(1);
 		full_path = path_to_execute(cmd->argv[0]);
@@ -56,6 +41,7 @@ void	execute_ext(t_cmd	*cmd)
 		if(execve(full_path, cmd->argv, envp))
 			free_execve(envp, full_path, cmd->argv[0]);
 	}
-	wait_child();
+	wait(&w_status);
+	handle_wait_status(w_status);
 }
 
