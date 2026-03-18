@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/17 14:17:22 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:28:47 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		run_builtin(char **args);
 
 void	report_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
-void	error_exit(char *context, char *detail, int exit_code, bool err);
+void	err_and_exit(char *scope, char *msg, int exit_code, bool err);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);
 void	free_arr(char **str);

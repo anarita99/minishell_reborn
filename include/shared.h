@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 16:33:10 by adores            #+#    #+#             */
-/*   Updated: 2026/03/13 15:00:48 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:36:54 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <linux/limits.h>
 
 // libft
-# include "libft.h"
+# include "../libft/include/libft.h"
 
 // malloc, exit, getenv
 # include <stdlib.h>

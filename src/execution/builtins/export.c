@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/03/16 16:13:42 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static void	export_append(char *equal, char *plus, char *arg)
 		{
 			value = ft_strjoin(node->value, equal + 1);
 			if(!value)
-				error_exit("malloc", "allocation error", 1, false);
+				err_and_exit("malloc", "allocation error", 1, false);
 			free(node->value);
 			node->value = value;
 		}

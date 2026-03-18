@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/03/17 14:32:41 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_execve(char **envp, char *full_path, char *cmd)
 {
 	free_arr(envp);
 	free(full_path);
-	error_exit(NULL, cmd, 1, true);
+	err_and_exit(NULL, cmd, 1, true);
 }
 
 void	execute_ext(t_cmd	*cmd)
@@ -37,7 +37,7 @@ void	execute_ext(t_cmd	*cmd)
 		full_path = path_to_execute(cmd->argv[0]);
 		envp = envlist_to_char(sh_s()->env_list);
 		if (!envp)
-			return(free(full_path), error_exit("malloc", "allocation error", 1, false));
+			return(free(full_path), err_and_exit("malloc", "allocation error", 1, false));
 		if(execve(full_path, cmd->argv, envp))
 			free_execve(envp, full_path, cmd->argv[0]);
 	}

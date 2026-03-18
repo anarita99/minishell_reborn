@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/17 13:40:05 by adores           ###   ########.fr        #
+#    Updated: 2026/03/18 11:41:25 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_INCS_DIR 	= 	$(LIBFT_DIR)/include
 LIBFT_LIB 		= 	$(LIBFT_DIR)/libft.a
 
 # Files
-MAIN 			= 	main print error data signals
+MAIN 			= 	main print error data sig
 LEXER 			= 	lexer token types buffer states
 PARSER 			= 	parser arguments redirects command
 EXPANDER		=	expander utils counter expand

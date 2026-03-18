@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/17 14:50:58 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	exe_commands(t_cmd *input)
 		path = path_to_execute(input->argv[0]);
 		env = envlist_to_char(sh_s()->env_list);
 		if (!env)
-			return(free(path), error_exit("malloc", "allocation error", 1, false));
+			return(free(path), err_and_exit("malloc", "allocation error", 1, false));
 		if (execve(path, input->argv, env))
 			free_execve(env, path, input->argv[0]);
 	}
@@ -111,7 +111,7 @@ void	exe_pipeline(int input_size)
 	sh_s()->pids = malloc(sizeof(pid_t) * input_size);
 	curr = sh_s()->input_list;
 	if(!sh_s()->pids)
-		error_exit("malloc", "allocation error", 1, false);
+		err_and_exit("malloc", "allocation error", 1, false);
 	if (!exe_all_heredocs(curr))
 		return ;
 	i = 0;

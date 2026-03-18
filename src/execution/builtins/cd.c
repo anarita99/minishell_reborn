@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int cd_builtin (char **args)
 	{
 		new_pwd = ft_strjoin(old_pwd, "/..");
 		if(!new_pwd)
-			error_exit("malloc", "allocation error", 1, false);
+			err_and_exit("malloc", "allocation error", 1, false);
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
 	}
 	set_env_var("OLDPWD", old_pwd);

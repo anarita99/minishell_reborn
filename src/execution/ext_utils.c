@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/16 16:22:30 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ char	*path_to_execute(char *cmd)
 	if(strchr(cmd, '/') != NULL)
 	{
 		if (stat(cmd, &filedata) == -1)
-			error_exit(cmd, "No such file or directory", 127, false);
+			err_and_exit(cmd, "No such file or directory", 127, false);
 		if (S_ISDIR(filedata.st_mode))
-			error_exit(cmd, "Is a directory", 126, false);
+			err_and_exit(cmd, "Is a directory", 126, false);
 		if(access(cmd, X_OK))
-			error_exit(cmd, "Permission denied", 126, false);
+			err_and_exit(cmd, "Permission denied", 126, false);
 		return_path = ft_strdup(cmd);
 		return (return_path);
 	}
 	path = get_env_value(sh_s()->env_list, "PATH");
 	if(!path)
-		error_exit(cmd, "No such file or directory", 127, false);
+		err_and_exit(cmd, "No such file or directory", 127, false);
 	return_path = get_cmd_path(path, cmd);
 	if(return_path == NULL)
-		error_exit(cmd, "command not found", 127, false);
+		err_and_exit(cmd, "command not found", 127, false);
 	return (return_path);
 }

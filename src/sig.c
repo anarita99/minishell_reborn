@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 10:22:15 by adores            #+#    #+#             */
-/*   Updated: 2026/03/17 15:33:03 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/18 14:18:51 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_wait_status(int w_status)
 	if (WIFSIGNALED(w_status))
 	{
 		if(sig == SIGQUIT)
-			ft_putendl_fd("quit (core dumped)", 1);
+			ft_putendl_fd("Quit (core dumped)", 1);
 		else if(sig == SIGINT)
 			write(1, "\n", 1);
 		sh_s()->exit_status = sig + 128;
