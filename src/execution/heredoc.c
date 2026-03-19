@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 15:47:12 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/19 12:45:17 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static void	hd_file(char **name, int *num)
 	}
 }
 
-void	heredoc_eof_warning(char *delimiter)
+void	heredoc_eof_warning(char *del)
 {
-	ft_putstr_fd("minishell: warning: here-document delimited by ", 2);
-	ft_putstr_fd("end-of-file (wanted `", 2);
-	ft_putstr_fd(delimiter, 2);
+	ft_putstr_fd("minishell: warning: here-document delimited by \
+end-of-file (wanted `", 2);
+	ft_putstr_fd(del, 2);
 	ft_putendl_fd("')", 2);
 }
 
@@ -55,7 +55,7 @@ void	heredoc_handler(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	sh_s()->exit_status = 130;
+	sh_s()->exit_status = 700;
 	close(STDIN_FILENO);
 }
 
@@ -69,7 +69,7 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 		line = readline(">");
 		/* if (msh()->hdoc_stop)
 			return ; */
-		if(!line && sh_s()->exit_status == 130)
+		if(!line && sh_s()->exit_status == 700)
 			return ;
 		else if (!line)
 			return (heredoc_eof_warning(heredoc->filename));
@@ -99,7 +99,6 @@ static void	heredoc_func(t_redir *heredoc)
 	write_heredoc(heredoc, filenum);
 	dup2(backup_fd, STDIN_FILENO);
 	close(backup_fd);
-	
 	close(filenum);
 	free(heredoc->filename);
 	heredoc->filename = filename;
@@ -118,12 +117,11 @@ void	exe_heredocs(t_cmd *cmd)
 	{
 		type = cmd->redirs[i].type;
 		if (type == T_HEREDOC)
-			heredoc_func(&cmd->redirs[i]);
-		/* if (msh()->hdoc_stop)
 		{
-			dup2(stdin_backup, STDIN_FILENO);
-			break ;
-		} */
+			heredoc_func(&cmd->redirs[i]);
+			if (sh_s()->exit_status == 700)
+				break ;
+		}
 		i++;
 	}
 	//close(stdin_backup);

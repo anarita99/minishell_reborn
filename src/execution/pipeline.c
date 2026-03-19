@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:18:04 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	pipeline_proc(t_list *current, int i, int input_size)
 	}
 }
 
-bool	exe_all_heredocs(t_list *input)
+int	exe_all_heredocs(t_list *input)
 {
 	t_list	*current;
 
@@ -73,15 +73,13 @@ bool	exe_all_heredocs(t_list *input)
 	while (current)
 	{
 		exe_heredocs((t_cmd *)current->content);
-		/* if (msh()->hdoc_stop)
+		if (sh_s()->exit_status == 700)
 		{
-			free(msh()->pids);
-			msh()->pids = NULL;
-			return (false);
-		} */
+			return (0);
+		}
 		current = current->next;
 	}
-	return (true);
+	return (1);
 }
 
 void	clean_pipeline(int prev_read)
@@ -108,7 +106,7 @@ void	exe_pipeline(int input_size)
 	t_list	*curr;
 	int		i;
 
-	sh_s()->pids = malloc(sizeof(pid_t) * input_size);
+	sh_s()->pids = ft_calloc(input_size, sizeof(pid_t));
 	curr = sh_s()->input_list;
 	if(!sh_s()->pids)
 		err_and_exit("malloc", "allocation error", 1, false);

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 14:35:06 by adores            #+#    #+#             */
-/*   Updated: 2026/03/17 14:17:35 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/19 14:27:06 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static void	wait_children(int pid_size)
 		if (sh_s()->pids[i] > 0)
 			waitpid(sh_s()->pids[i], &w_status, 0);
 	}
-	handle_wait_status(w_status);
+	if (sh_s()->exit_status != 700)
+		handle_wait_status(w_status);
+	else
+		sh_s()->exit_status = 130;
 	free(sh_s()->pids);
 	sh_s()->pids = NULL;
 }
@@ -42,6 +45,11 @@ void	executor(void)
 	if (input_size == 1)
 	{
 		exe_heredocs(tmp);
+		if(sh_s()->exit_status == 700)
+		{
+			sh_s()->exit_status = 130;
+			return ;
+		}
 		if (is_builtin(tmp->argv))
 			exe_builtin(tmp);
 		else
