@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/23 16:13:11 by adores           ###   ########.fr        #
+#    Updated: 2026/03/23 16:16:33 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LEXER 			= 	lexer token types buffer states
 PARSER 			= 	parser arguments redirects command
 EXPANDER		=	expander utils counter expand
 EXECUTOR 		= 	utils \
-					free_things
+					free_things \
 					builtins/builtin \
 					builtins/cd \
 					builtins/echo \
