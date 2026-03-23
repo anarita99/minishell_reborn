@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:03:47 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	execute_ext(t_cmd	*cmd)
 		full_path = path_to_execute(cmd->argv[0]);
 		envp = envlist_to_char(sh_s()->env_list);
 		if (!envp)
-			return(free(full_path), err_and_exit("malloc", "allocation error", 1, false));
-		if(execve(full_path, cmd->argv, envp))
+			return (free(full_path), err_and_exit("malloc", \
+"allocation error", 1, false));
+		if (execve(full_path, cmd->argv, envp))
 			free_execve(envp, full_path, cmd->argv[0]);
 	}
 	wait(&w_status);
 	handle_wait_status(w_status);
 }
-

@@ -34,13 +34,13 @@ char	**envlist_to_char(t_env *env_list)
 	int		i;
 
 	array = malloc((envsize(env_list) + 1) * sizeof(char *));
-	if(!array)
+	if (!array)
 		return (NULL);
 	i = 0;
-	while(env_list)
+	while (env_list)
 	{
-		size = ft_strlen(env_list->key) + ft_strlen(env_list->value) + 2; //por causa do igual
-		array[i] = 	malloc(sizeof(char) * size);
+		size = ft_strlen(env_list->key) + ft_strlen(env_list->value) + 2;
+		array[i] = malloc(sizeof(char) * size);
 		if (!array[i])
 			return (free_arr(array), NULL);
 		ft_strlcpy(array[i], env_list->key, size);
@@ -53,5 +53,5 @@ char	**envlist_to_char(t_env *env_list)
 		i++;
 	}
 	array[i] = NULL;
-	return(array);
+	return (array);
 }

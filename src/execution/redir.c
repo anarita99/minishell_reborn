@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:05:38 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void	open_file(t_redir redir, int *fd)
 		fd[1] = open(redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
-bool parse_redirects(t_cmd *cmd, int *fds)
+bool	parse_redirects(t_cmd *cmd, int *fds)
 {
-	int		i;
-	char	*name;
+	int				i;
+	char			*name;
 	t_token_type	n_type;
 
 	i = -1;
-	while(cmd->redirs[++i].filename != NULL)
+	while (cmd->redirs[++i].filename != NULL)
 	{
 		name = cmd->redirs[i].filename;
 		open_file(cmd->redirs[i], fds);
-		if(fds[0] == -1 || fds[1] == -1)
+		if (fds[0] == -1 || fds[1] == -1)
 			return (report_err(NULL, name, true), false);
 		if (cmd->redirs[i + 1].filename != NULL)
 		{
@@ -68,13 +68,13 @@ int	setup_fds(t_cmd *input, int *og_fd, bool save)
 	if (save)
 		save_og_fds(og_fd);
 	if (input->redirs->filename == NULL)
-		return(0);
+		return (0);
 	if (parse_redirects(input, new_fd) == false)
 	{
 		sh_s()->exit_status = 1;
-		if(new_fd[0] > 0)
+		if (new_fd[0] > 0)
 			close(new_fd[0]);
-		if(new_fd[1] > 0)
+		if (new_fd[1] > 0)
 			close(new_fd[1]);
 		return (1);
 	}

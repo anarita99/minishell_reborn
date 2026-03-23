@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:10:20 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:59:59 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 	while (true)
 	{
 		line = readline(">");
-		if(!line && sh_s()->exit_status == 700)
+		if (!line && sh_s()->exit_status == 700)
 			return ;
 		else if (!line)
 			return (heredoc_eof_warning(heredoc->filename));
@@ -97,7 +97,6 @@ static void	heredoc_func(t_redir *heredoc)
 	close(filenum);
 	free(heredoc->filename);
 	heredoc->filename = filename;
-	
 }
 
 void	exe_heredocs(t_cmd *cmd)

@@ -61,9 +61,9 @@ t_env	*env_new_node(char *key, char *value)
 
 char	*get_env_value(t_env *env_list, char *key)
 {
-	char *value;
+	char	*value;
 
-	while(env_list)
+	while (env_list)
 	{
 		if (ft_strcmp(env_list->key, key) == 0)
 		{

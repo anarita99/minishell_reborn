@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:45 by adores            #+#    #+#             */
-/*   Updated: 2026/02/19 14:54:49 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:40:35 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ int	is_builtin(char **args)
 
 int	run_builtin(char **args)
 {
-	if(!args || !args[0])
-		return(0);
-	if(ft_strcmp(args[0], "echo") == 0)
-		return(echo_builtin(args));
+	if (!args || !args[0])
+		return (0);
+	if (ft_strcmp(args[0], "echo") == 0)
+		return (echo_builtin(args));
 	else if (ft_strcmp(args[0], "cd") == 0)
-		return(cd_builtin(args));
+		return (cd_builtin(args));
 	else if (ft_strcmp(args[0], "pwd") == 0)
-		return(pwd_builtin());
+		return (pwd_builtin());
 	if (ft_strcmp(args[0], "exit") == 0)
-		return(exit_builtin(args));
-	else if(ft_strcmp(args[0], "env") == 0)
-		return(env_builtin());
-	else if(ft_strcmp(args[0], "unset") == 0)
-		return(unset_builtin(args));
-	else if(ft_strcmp(args[0], "export") == 0)
-		return(export_builtin(args));
-	return(1);
+		return (exit_builtin(args));
+	else if (ft_strcmp(args[0], "env") == 0)
+		return (env_builtin());
+	else if (ft_strcmp(args[0], "unset") == 0)
+		return (unset_builtin(args));
+	else if (ft_strcmp(args[0], "export") == 0)
+		return (export_builtin(args));
+	return (1);
 }
 
 void	exe_builtin(t_cmd *cmd)

@@ -6,14 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 13:41:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:41:18 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../../include/minishell.h"
-
-//pwd, shell level quando env -i
 
 void	set_env_var(char *key, char *value)
 {
@@ -24,12 +21,12 @@ void	set_env_var(char *key, char *value)
 	{
 		free(current_node->value);
 		current_node->value = ft_strdup(value);
-		if(!current_node->value)
+		if (!current_node->value)
 			err_and_exit("malloc", "allocation error", 1, false);
 		return ;
 	}
 	current_node = env_new_node(NULL, NULL);
-	if(!current_node)
+	if (!current_node)
 		err_and_exit("malloc", "allocation error", 1, false);
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || (!current_node->value && value != NULL))
@@ -43,7 +40,7 @@ static void	shell_level(t_env **env_list)
 	int		num;
 
 	node = get_env_node(*env_list, "SHLVL");
-	if(node)
+	if (node)
 	{
 		num = ft_atoi(node->value);
 		free(node->value);
@@ -56,9 +53,9 @@ static void	shell_level(t_env **env_list)
 	set_env_var("SHLVL", "1");
 }
 
-int 	add_env_var(t_env **head, char *env)
+int	add_env_var(t_env **head, char *env)
 {
-	char 	*equal_sign;
+	char	*equal_sign;
 	char	*key;
 	char	*value;
 	t_env	*new_node;
@@ -66,23 +63,22 @@ int 	add_env_var(t_env **head, char *env)
 	equal_sign = ft_strchr(env, '=');
 	key = ft_substr(env, 0, equal_sign - env);
 	value = ft_strdup(equal_sign + 1);
-	if(!key || !value)
+	if (!key || !value)
 		return (free(key), free(value), 1);
 	new_node = env_new_node(key, value);
-	if(!new_node)
+	if (!new_node)
 		return (free(key), free(value), 1);
 	env_add_back(head, new_node);
-	return(0);
+	return (0);
 }
 
 t_env	*init_env(void)
 {
-	extern char **environ;
+	extern char	**environ;
 	int			i;
 	char		buf[PATH_MAX];
 
 	i = 0;
-	
 	while (environ[i])
 	{
 		if (add_env_var(&sh_s()->env_list, environ[i]) == 1)

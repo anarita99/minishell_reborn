@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 14:35:06 by adores            #+#    #+#             */
-/*   Updated: 2026/03/19 14:27:06 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:57:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	wait_children(int pid_size)
 void	executor(void)
 {
 	t_cmd	*tmp;
-	int	input_size;
+	int		input_size;
 
 	tmp = (t_cmd *)sh_s()->input_list->content;
 	input_size = ft_lstsize(sh_s()->input_list);
@@ -45,7 +45,7 @@ void	executor(void)
 	if (input_size == 1)
 	{
 		exe_heredocs(tmp);
-		if(sh_s()->exit_status == 700)
+		if (sh_s()->exit_status == 700)
 		{
 			sh_s()->exit_status = 130;
 			return ;

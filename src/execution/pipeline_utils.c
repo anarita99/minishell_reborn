@@ -1,51 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   pipeline_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 15:17:54 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:46:29 by adores           ###   ########.fr       */
+/*   Created: 2026/03/23 16:10:37 by adores            #+#    #+#             */
+/*   Updated: 2026/03/23 16:13:42 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	remove_env_var(char *key)
+int	exe_all_heredocs(t_list *input)
 {
-	t_env	*current;
-	t_env	*prev;
+	t_list	*current;
 
-	current = sh_s()->env_list;
-	prev = NULL;
+	current = input;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		exe_heredocs((t_cmd *)current->content);
+		if (sh_s()->exit_status == 700)
 		{
-			if (prev == NULL)
-				sh_s()->env_list = current->next;
-			else
-				prev->next = current->next;
-			free_node(current);
-			return ;
+			return (0);
 		}
-		prev = current;
 		current = current->next;
 	}
+	return (1);
 }
 
-int	unset_builtin(char **args)
+void	clean_pipeline(int prev_read)
 {
 	int	i;
+	int	w_status;
 
-	sh_s()->exit_status = 0;
-	i = 1;
-	while (args[i])
+	i = 0;
+	report_err(NULL, "pipe", true);
+	while (sh_s()->pids[i] > 0)
 	{
-		if (get_env_value(sh_s()->env_list, args[i]))
-			remove_env_var(args[i]);
+		waitpid(sh_s()->pids[i], &w_status, 0);
 		i++;
 	}
-	return (0);
+	if (prev_read != -1)
+		close(prev_read);
+	sh_s()->exit_status = 1;
+	free(sh_s()->pids);
+	sh_s()->pids = NULL;
 }

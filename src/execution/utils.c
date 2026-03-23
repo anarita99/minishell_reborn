@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:36:11 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:08:23 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,43 +55,9 @@ void	report_err(char *scope, char *msg, bool error)
 
 void	exitclean(unsigned char exit_code)
 {
-	free_env_list(sh_s()->env_list);  //vai ter de limpar mais coisas
+	free_env_list(sh_s()->env_list);
 	overwrite_std(sh_s()->original_fds);
 	ft_lstclear(&sh_s()->input_list, del_cmd);
 	free(sh_s()->pids);
 	exit(exit_code);
-}
-
-void	free_node(t_env *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node);
-}
-
-void free_env_list(t_env *head)
-{
-	t_env	*next;
-
-	while (head)
-	{
-		next = head->next;
-		free_node(head);
-		head = next;
-	}
-}
-
-void	free_arr(char **str)
-{
-	int i;
-
-	i = 0;
-	if (str == NULL)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
 }

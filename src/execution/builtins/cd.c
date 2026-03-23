@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:58 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:37:09 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	set_cd_path(char **args, char **path)
 	if (!args[1])
 	{
 		*path = get_env_value(sh_s()->env_list, "HOME");
-		if(*path == NULL)
+		if (*path == NULL)
 			return (ft_putendl_fd("minishell: cd: HOME not set", 2), 1);
 	}
 	else if (ft_strcmp(args[1], "-") == 0)
 	{
 		*path = get_env_value(sh_s()->env_list, "OLDPWD");
-		if(*path == NULL)
+		if (*path == NULL)
 			return (ft_putendl_fd("minishell: cd: OLDPWD not set", 2), 1);
 		printf("%s\n", *path);
 	}
@@ -32,7 +32,7 @@ int	set_cd_path(char **args, char **path)
 	return (0);
 }
 
-int cd_builtin (char **args)
+int	cd_builtin(char **args)
 {
 	char	*path;
 	char	*old_pwd;
@@ -46,12 +46,13 @@ int cd_builtin (char **args)
 	if (chdir(path) == -1)
 		return (report_err("cd", path, true), 1);
 	new_pwd = getcwd(NULL, 0);
-	if(!new_pwd)
+	if (!new_pwd)
 	{
 		new_pwd = ft_strjoin(old_pwd, "/..");
-		if(!new_pwd)
+		if (!new_pwd)
 			err_and_exit("malloc", "allocation error", 1, false);
-		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot \
+access parent directories: No such file or directory\n", 2);
 	}
 	set_env_var("OLDPWD", old_pwd);
 	set_env_var("PWD", new_pwd);

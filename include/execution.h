@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 13:44:37 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:12:22 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ char	**envlist_to_char(t_env *env_list);
 char	*path_to_execute(char *cmd);
 void	execute_ext(t_cmd	*cmd);
 void	free_execve(char **envp, char *full_path, char *cmd);
+
+int		exe_all_heredocs(t_list *input);
+void	clean_pipeline(int prev_read);
 /*
 
 ** src/execution/exec.c
@@ -66,6 +69,7 @@ int		export_builtin(char **args);
 int		is_builtin(char **args);
 void	exe_builtin(t_cmd *cmd);
 int		run_builtin(char **args);
+void	print_sorted_env(void);
 
 //src/execution/utils.c
 
