@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/03/13 15:19:05 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 14:00:58 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 	return (true);
 }
 
+static void	print_numeric_err(const char *arg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd((char *)arg, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+}
+
 int	exit_builtin(char **args)
 {
 	long long	exit_code;
@@ -72,9 +79,7 @@ int	exit_builtin(char **args)
 		exitclean((unsigned char)sh_s()->exit_status);
 	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		print_numeric_err(args[1]);
 		exitclean(2);
 	}
 	if(args[2])

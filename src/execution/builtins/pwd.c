@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:01 by adores            #+#    #+#             */
-/*   Updated: 2026/02/16 14:51:41 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 11:49:19 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	pwd_builtin(void)
 		cwd = get_env_value(sh_s()->env_list, "PWD");
 		if (cwd == NULL)
 		{
-			ft_putstr_fd("pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+			ft_putstr_fd("pwd: error retrieving current directory: getcwd: \
+cannot access parent directories: No such file or directory\n", 2);
 			sh_s()->exit_status = 1;
 			return (1);
 		}

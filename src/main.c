@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/17 13:39:26 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 14:59:20 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(void)
 		// 1 - Prompt
 		input = readline("Minishell> ");
 		if (!input || !input[0])
-			exit_builtin(NULL);
+			exitclean((unsigned char)sh_s()->exit_status);
 		add_history(input);
 		// 2 - Lexer
 		if (print_info)

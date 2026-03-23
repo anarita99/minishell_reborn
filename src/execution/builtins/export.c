@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:13 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 11:29:02 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_env	**list_to_array(t_env	*env_list)
 	return (node_array);
 }
 
-void	print_sorted_env()
+void	print_sorted_env(void)
 {
 	t_env	**node_array;
 	int		i;

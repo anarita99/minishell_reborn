@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/18 11:41:25 by adores           ###   ########.fr        #
+#    Updated: 2026/03/23 13:45:00 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ EXECUTOR 		= 	utils \
 					builtins/builtin \
 					builtins/cd \
 					builtins/echo \
-					builtins/env_functions \
-					builtins/env_functions2 \
+					builtins/env_utils \
+					builtins/env_utils2 \
 					builtins/env \
 					builtins/exit \
 					builtins/pwd \

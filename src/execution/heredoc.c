@@ -6,14 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/19 12:45:17 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:10:20 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*criar um ficheiro */
-//open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
 static void	hd_file(char **name, int *num)
 {
@@ -67,8 +64,6 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 	while (true)
 	{
 		line = readline(">");
-		/* if (msh()->hdoc_stop)
-			return ; */
 		if(!line && sh_s()->exit_status == 700)
 			return ;
 		else if (!line)

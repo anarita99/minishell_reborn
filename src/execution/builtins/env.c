@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/18 11:24:02 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 13:41:55 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ void	set_env_var(char *key, char *value)
 	}
 	current_node = env_new_node(NULL, NULL);
 	if(!current_node)
-		err_and_exit("malloc", "allocation error", 1, false);      //malloc exit
-	current_node->key = ft_strdup(key);
-	//if (value)
+		err_and_exit("malloc", "allocation error", 1, false);
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || (!current_node->value && value != NULL))
 		return (free_node(current_node));
 	env_add_back(&sh_s()->env_list, current_node);
 }
 
-static void	set_shell_level(t_env **env_list)
+static void	shell_level(t_env **env_list)
 {
 	t_env	*node;
 	int		num;
@@ -92,7 +90,7 @@ t_env	*init_env(void)
 		i++;
 	}
 	set_env_var("PWD", getcwd(buf, PATH_MAX));
-	set_shell_level(&sh_s()->env_list);
+	shell_level(&sh_s()->env_list);
 	return (sh_s()->env_list);
 }
 

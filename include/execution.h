@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/19 12:05:00 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 13:44:37 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env	*init_env(void);
 int		env_builtin();
 
 
-// src/execution/builtins/env_functions.c
+// src/execution/builtins/env_utils.c
 
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);

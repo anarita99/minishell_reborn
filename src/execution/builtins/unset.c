@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:54 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:52:20 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 11:49:46 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 static void	remove_env_var(char *key)
 {
