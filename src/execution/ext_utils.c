@@ -6,16 +6,28 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:59:03 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 15:13:04 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+static char	*path_join(char *dir, char *cmd)
+{
+	char	*slash;
+	char	*res;
+
+	slash = ft_strjoin(dir, "/");
+	if (!slash)
+		return (NULL);
+	res = ft_strjoin(slash, cmd);
+	free(slash);
+	return (res);
+}
+
 char	*get_cmd_path(char *paths, char *cmd)
 {
 	int		i;
-	char	*add_path;
 	char	*path;
 	char	**splitpath;
 
@@ -25,9 +37,9 @@ char	*get_cmd_path(char *paths, char *cmd)
 		return (NULL);
 	while (splitpath[i])
 	{
-		add_path = ft_strjoin(splitpath[i], "/");
-		path = ft_strjoin(add_path, cmd);
-		free(add_path);
+		path = path_join(splitpath[i], cmd);
+		if (!path)
+			return (free_arr(splitpath), NULL);
 		if (access(path, X_OK) == 0)
 		{
 			free_arr(splitpath);

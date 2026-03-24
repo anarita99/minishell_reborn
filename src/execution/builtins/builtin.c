@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:45 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:40:35 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 10:29:36 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	run_builtin(char **args)
 		return (cd_builtin(args));
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		return (pwd_builtin());
-	if (ft_strcmp(args[0], "exit") == 0)
+	else if (ft_strcmp(args[0], "exit") == 0)
 		return (exit_builtin(args));
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (env_builtin());

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:59:59 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 15:26:20 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	heredoc_handler(int sig)
 static void	write_heredoc(t_redir *heredoc, int filefd)
 {
 	char	*line;
-	//char	*expanded;
 
 	while (true)
 	{
@@ -70,13 +69,6 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 			return (heredoc_eof_warning(heredoc->filename));
 		if (ft_strcmp(line, heredoc->filename) == 0)
 			return (free(line));
-		/* if (!heredoc->quoted)
-		{
-			//expanded = hdoc_expand_arg(line);
-			ft_putendl_fd(expanded, filefd);
-			free(expanded);
-		} */
-		//else
 		ft_putendl_fd(line, filefd);
 		free(line);
 	}
@@ -92,6 +84,7 @@ static void	heredoc_func(t_redir *heredoc)
 	backup_fd = dup(STDIN_FILENO);
 	signal(SIGINT, heredoc_handler);
 	write_heredoc(heredoc, filenum);
+	signal(SIGINT, SIG_IGN);
 	dup2(backup_fd, STDIN_FILENO);
 	close(backup_fd);
 	close(filenum);
@@ -103,10 +96,8 @@ void	exe_heredocs(t_cmd *cmd)
 {
 	t_token_type	type;
 	int				i;
-	//int				stdin_backup;
 
 	i = 0;
-	//stdin_backup = dup(STDIN_FILENO);
 	while (cmd->redirs[i].filename)
 	{
 		type = cmd->redirs[i].type;
@@ -118,5 +109,4 @@ void	exe_heredocs(t_cmd *cmd)
 		}
 		i++;
 	}
-	//close(stdin_backup);
 }

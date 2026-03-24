@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:42:27 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 10:28:05 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,3 @@ int	exit_builtin(char **args)
 	exitclean((unsigned char)exit_code);
 	return (0);
 }
-
-//falta dar free
