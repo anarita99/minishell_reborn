@@ -6,11 +6,18 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/23 14:59:20 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 10:13:42 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	*sh_s(void)
+{
+	static t_shell	shell;
+
+	return (&shell);
+}
 
 int	main(void)
 {
