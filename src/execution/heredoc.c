@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/24 15:26:20 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/25 10:32:57 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	hd_file(char **name, int *num)
 	while (true)
 	{
 		fileno = ft_itoa(*num);
-		*name = ft_strjoin("minishell-heredoc-", fileno);
+		*name = ft_strjoin("/tmp/here_doc_minishell_-", fileno);
 		free(fileno);
 		if (!*name)
 			err_and_exit("malloc", "Allocation Error", 1, false);
