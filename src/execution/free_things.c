@@ -1,20 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data.c                                             :+:      :+:    :+:   */
+/*   free_things.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 15:58:38 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 17:40:13 by adores           ###   ########.fr       */
+/*   Created: 2026/03/23 16:08:04 by adores            #+#    #+#             */
+/*   Updated: 2026/03/23 16:08:26 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_shell	*sh_s(void)
+void	free_node(t_env *node)
 {
-	static t_shell	shell;
+	free(node->key);
+	free(node->value);
+	free(node);
+}
 
-	return (&shell);
+void	free_env_list(t_env *head)
+{
+	t_env	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free_node(head);
+		head = next;
+	}
+}
+
+void	free_arr(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }

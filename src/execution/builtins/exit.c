@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:18:21 by adores            #+#    #+#             */
-/*   Updated: 2026/03/13 15:19:05 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/24 10:28:05 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ static int	is_numeric(const char *s)
 	size_t	i;
 
 	if (!s || !s[0])
-		return(0);
+		return (0);
 	i = 0;
 	if (s[i] == '+' || s[i] == '-')
 		i++;
-	if(!s[i])
+	if (!s[i])
 		return (0);
-	while(s[i])
+	while (s[i])
 	{
-		if(!ft_isdigit(s[i]))
-			return(0);
+		if (!ft_isdigit(s[i]))
+			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
 
 static bool	ft_exitatoll(const char	*str, long long *exit_code)
@@ -61,6 +61,13 @@ static bool	ft_exitatoll(const char	*str, long long *exit_code)
 	return (true);
 }
 
+static void	print_numeric_err(const char *arg)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd((char *)arg, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
+}
+
 int	exit_builtin(char **args)
 {
 	long long	exit_code;
@@ -68,16 +75,14 @@ int	exit_builtin(char **args)
 	exit_code = 0;
 	if (sh_s()->pids == NULL)
 		ft_putstr_fd("exit\n", 2);
-	if(!args || !args[1])
+	if (!args || !args[1])
 		exitclean((unsigned char)sh_s()->exit_status);
-	if(!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
+	if (!is_numeric(args[1]) || !ft_exitatoll(args[1], &exit_code))
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
+		print_numeric_err(args[1]);
 		exitclean(2);
 	}
-	if(args[2])
+	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		sh_s()->exit_status = 1;
@@ -86,5 +91,3 @@ int	exit_builtin(char **args)
 	exitclean((unsigned char)exit_code);
 	return (0);
 }
-
-//falta dar free

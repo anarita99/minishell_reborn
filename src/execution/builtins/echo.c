@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:37 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:51:23 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:39:13 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_n_option(char *arg)
 	if (arg[0] != '-' || arg[1] != 'n')
 		return (0);
 	i = 2;
-	while(arg[i] == 'n')
+	while (arg[i] == 'n')
 		i++;
 	if (arg[i] != '\0')
 		return (0);
@@ -38,14 +38,14 @@ int	echo_builtin(char **args)
 		newline = 0;
 		i++;
 	}
-	while(args[i])
+	while (args[i])
 	{
 		ft_putstr_fd(args[i], 1);
-		if(args[i + 1])
+		if (args[i + 1])
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
-	if(newline == 1)
+	if (newline == 1)
 		ft_putstr_fd("\n", 1);
 	sh_s()->exit_status = 0;
 	return (0);

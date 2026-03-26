@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/14 15:20:57 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/24 10:24:23 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_shell	*sh_s(void)
+{
+	static t_shell	shell;
+
+	return (&shell);
+}
 
 int	main(void)
 {
@@ -26,10 +33,18 @@ int	main(void)
 	sh_s()->prev_read = -1;
 	while (1)
 	{
+		setup_signals();
 		// 1 - Prompt
 		input = readline("Minishell> ");
+		if (!input)
+			exitclean((unsigned char)sh_s()->exit_status);
+		if (!input[0])
+		{
+			free(input);
+			continue;
+		}
 		if (!input || !input[0])
-			exit_builtin(NULL);
+			exitclean((unsigned char)sh_s()->exit_status);
 		add_history(input);
 		// 2 - Lexer
 		if (print_info)

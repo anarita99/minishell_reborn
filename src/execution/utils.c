@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 13:43:04 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:17:07 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 /// @brief For exiting and printing any kind of error.
 /// If context & detail are NULL & err is set to false, nothing is printed
-/// @param context what exactly failed, 
+/// @param scope what exactly failed, 
 /// IE, malloc or a command such as cd
-/// @param detail extra info as to what failed 
+/// @param msg extra info as to what failed 
 /// IE, a file that could not be opened
 /// @param exit_code exit status the process will exit with
 /// @param err flag used to print exact error message
 /// if function sets errno upon failure
-void	error_exit(char *context, char *detail, int exit_code, bool err)
+void	err_and_exit(char *scope, char *msg, int exit_code, bool err)
 {
-	report_err(context, detail, err);
+	report_err(scope, msg, err);
 	exitclean(exit_code);
 }
 
@@ -55,28 +55,10 @@ void	report_err(char *scope, char *msg, bool error)
 
 void	exitclean(unsigned char exit_code)
 {
-	free_env_list(sh_s()->env_list);  //vai ter de limpar mais coisas
+	free_env_list(sh_s()->env_list);
 	overwrite_std(sh_s()->original_fds);
 	ft_lstclear(&sh_s()->input_list, del_cmd);
 	free(sh_s()->pids);
 	exit(exit_code);
 }
 
-void	free_node(t_env *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node);
-}
-
-void free_env_list(t_env *head)
-{
-	t_env	*next;
-
-	while (head)
-	{
-		next = head->next;
-		free_node(head);
-		head = next;
-	}
-}

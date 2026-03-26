@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/23 15:15:59 by leramos-         ###   ########.fr        #
+#    Updated: 2026/03/26 14:10:38 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,27 +22,30 @@ LIBFT_INCS_DIR 	= 	$(LIBFT_DIR)/include
 LIBFT_LIB 		= 	$(LIBFT_DIR)/libft.a
 
 # Files
-MAIN 			= 	main print error data
+MAIN 			= 	main print error sig
 LEXER 			= 	lexer token types buffer states
 PARSER 			= 	parser arguments redirects command
 EXPANDER		=	expander utils buffer scan_word
 EXECUTOR 		= 	utils \
+					free_things \
 					builtins/builtin \
 					builtins/cd \
 					builtins/echo \
-					builtins/env_functions \
-					builtins/env_functions2 \
+					builtins/env_utils \
+					builtins/env_utils2 \
 					builtins/env \
 					builtins/exit \
 					builtins/pwd \
 					builtins/unset \
 					builtins/export \
+					builtins/export_utils \
 					ext_execute \
 					ext_utils \
 					executor \
 					redir \
 					heredoc \
-					pipeline
+					pipeline \
+					pipeline_utils
 
 FILES 			= 	$(MAIN) \
 					$(addprefix lexer/, $(LEXER)) \

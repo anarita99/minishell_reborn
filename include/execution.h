@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 13:43:08 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:08:26 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env	*init_env(void);
 int		env_builtin();
 
 
-// src/execution/builtins/env_functions.c
+// src/execution/builtins/env_utils.c
 
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);
@@ -43,6 +43,9 @@ char	**envlist_to_char(t_env *env_list);
 char	*path_to_execute(char *cmd);
 void	execute_ext(t_cmd	*cmd);
 void	free_execve(char **envp, char *full_path, char *cmd);
+
+int		exe_all_heredocs(t_list *input);
+void	clean_pipeline(int prev_read);
 /*
 
 ** src/execution/exec.c
@@ -66,12 +69,13 @@ int		export_builtin(char **args);
 int		is_builtin(char **args);
 void	exe_builtin(t_cmd *cmd);
 int		run_builtin(char **args);
+void	print_sorted_env(void);
 
 //src/execution/utils.c
 
 void	report_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
-void	error_exit(char *context, char *detail, int exit_code, bool err);
+void	err_and_exit(char *scope, char *msg, int exit_code, bool err);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);
 
@@ -80,5 +84,10 @@ int		setup_fds(t_cmd *input, int *og_fd, bool save);
 void	overwrite_std(int *fd);
 void	exe_heredocs(t_cmd *cmd);
 void	exe_pipeline(int input_size);
+
+void	setup_signals(void);
+void	executor_signals(void);
+void	handle_wait_status(int w_status);
+void	child_signals(void);
 
 #endif

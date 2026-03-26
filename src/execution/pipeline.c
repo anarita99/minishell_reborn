@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/11 10:42:33 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:30:36 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	exe_commands(t_cmd *input)
 		path = path_to_execute(input->argv[0]);
 		env = envlist_to_char(sh_s()->env_list);
 		if (!env)
-			return(free(path), error_exit("malloc", "allocation error", 1, false));
+			return (free(path), err_and_exit("malloc", \
+"allocation error", 1, false));
 		if (execve(path, input->argv, env))
 			free_execve(env, path, input->argv[0]);
 	}
@@ -34,8 +35,7 @@ static void	exe_commands(t_cmd *input)
 
 static void	child_proc(int i, int input_size)
 {
-	//signal(SIGINT, SIG_DFL);
-	//signal(SIGQUIT, SIG_DFL);
+	child_signals();
 	sh_s()->is_child = true;
 	if (i < input_size - 1)
 	{
@@ -66,57 +66,19 @@ static void	pipeline_proc(t_list *current, int i, int input_size)
 	}
 }
 
-bool	exe_all_heredocs(t_list *input)
-{
-	t_list	*current;
-
-	current = input;
-	while (current)
-	{
-		exe_heredocs((t_cmd *)current->content);
-		/* if (msh()->hdoc_stop)
-		{
-			free(msh()->pids);
-			msh()->pids = NULL;
-			return (false);
-		} */
-		current = current->next;
-	}
-	return (true);
-}
-
-void	clean_pipeline(int prev_read)
-{
-	int	i;
-	int	w_status;
-
-	i = 0;
-	report_err(NULL, "pipe", true);
-	while (sh_s()->pids[i] > 0)
-	{
-		waitpid(sh_s()->pids[i], &w_status, 0);
-		i++;
-	}
-	if (prev_read != -1)
-		close(prev_read);
-	sh_s()->exit_status = 1;
-	free(sh_s()->pids);
-	sh_s()->pids = NULL;
-}
-
 void	exe_pipeline(int input_size)
 {
 	t_list	*curr;
 	int		i;
 
-	sh_s()->pids = malloc(sizeof(pid_t) * input_size);
+	sh_s()->pids = ft_calloc(input_size, sizeof(pid_t));
 	curr = sh_s()->input_list;
-	if(!sh_s()->pids)
-		error_exit("malloc", "allocation error", 1, false);
+	if (!sh_s()->pids)
+		err_and_exit("malloc", "allocation error", 1, false);
 	if (!exe_all_heredocs(curr))
 		return ;
 	i = 0;
-	while(curr)
+	while (curr)
 	{
 		if ((i < input_size - 1) && (pipe(sh_s()->pipe_fds) == -1))
 			return (clean_pipeline(sh_s()->prev_read));
