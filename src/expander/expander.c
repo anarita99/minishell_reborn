@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/23 17:14:44 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 13:38:37 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	expander(t_list **commands, t_env *env_list, int exit_status)
 		// Argv part
 		old_argv = current_cmd->argv;
 		current_cmd->argv = expand_argv(old_argv, env_list, exit_status);
-		freearray(old_argv);
+		ft_freearray(old_argv);
 
 		// Redirs part
 		i = 0;

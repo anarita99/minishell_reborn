@@ -6,26 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:59:30 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/23 17:15:21 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 13:38:50 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-void	freearray(char **str)
-{
-	int i;
-
-	i = 0;
-	if (str == NULL)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
 
 char	**convert_lst_to_argv(t_list *lst)
 {

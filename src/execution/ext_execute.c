@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ext_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:28:43 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 13:43:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_execve(char **envp, char *full_path, char *cmd)
 {
-	free_arr(envp);
+	ft_freearray(envp);
 	free(full_path);
 	error_exit(NULL, cmd, 1, true);
 }

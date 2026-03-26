@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ext_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/16 16:22:30 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 13:42:58 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*get_cmd_path(char *paths, char *cmd)
 		free(add_path);
 		if (access(path, X_OK) == 0)
 		{
-			free_arr(splitpath);
+			ft_freearray(splitpath);
 			return (path);
 		}
 		free(path);
 		i++;
 	}
-	free_arr(splitpath);
+	ft_freearray(splitpath);
 	return (NULL);
 }
 

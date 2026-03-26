@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/04 11:34:46 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 13:43:04 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,4 @@ void free_env_list(t_env *head)
 		free_node(head);
 		head = next;
 	}
-}
-
-void	free_arr(char **str)
-{
-	int i;
-
-	i = 0;
-	if (str == NULL)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/23 17:14:50 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 13:38:44 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 		}
 		i++;
 	}
-	freearray(value_split);
+	ft_freearray(value_split);
 }
 
 void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status)

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:31 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/23 17:15:27 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 13:38:29 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int 	sbuf_push_char(t_sbuf *buf, char c);
 int 	sbuf_push_str(t_sbuf *buf, const char *str);
 
 // Utils
-void	freearray(char **str);
 char	**convert_lst_to_argv(t_list *lst);
 int     update_quote_state(t_str_state *state, char c);
 int	    get_key_size(char *str, int i);

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/03 14:21:14 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 13:39:19 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,6 @@ t_cmd	*get_next_cmd(t_token *current_token)
 	return (cmd);
 }
 
-static void	free_arr(char **str)
-{
-	int i;
-
-	i = 0;
-	if (str == NULL)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
 void	del_cmd(void *cmd_ptr)
 {
 	t_cmd	*cmd;
@@ -47,7 +32,7 @@ void	del_cmd(void *cmd_ptr)
 	cmd = (t_cmd *)cmd_ptr;
 	if (!cmd)
 		return ;
-	free_arr(cmd->argv);
+	ft_freearray(cmd->argv);
 	if (cmd->redirs)
 	{
 		i = 0;

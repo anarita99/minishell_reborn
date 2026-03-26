@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:01:50 by adores            #+#    #+#             */
-/*   Updated: 2026/02/12 16:51:33 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 13:42:48 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**envlist_to_char(t_env *env_list)
 		size = ft_strlen(env_list->key) + ft_strlen(env_list->value) + 2; //por causa do igual
 		array[i] = 	malloc(sizeof(char) * size);
 		if (!array[i])
-			return (free_arr(array), NULL);
+			return (ft_freearray(array), NULL);
 		ft_strlcpy(array[i], env_list->key, size);
 		if (env_list->value != NULL)
 		{

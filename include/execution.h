@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/13 14:28:38 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 13:43:08 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	exitclean(unsigned char exit_code);
 void	error_exit(char *context, char *detail, int exit_code, bool err);
 void	free_node(t_env *node);
 void	free_env_list(t_env *head);
-void	free_arr(char **str);
 
 void	executor(void);
 int		setup_fds(t_cmd *input, int *og_fd, bool save);
