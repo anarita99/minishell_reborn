@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/24 10:27:34 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 12:40:24 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	exe_pipeline(int input_size)
 	while (curr)
 	{
 		if ((i < input_size - 1) && (pipe(sh_s()->pipe_fds) == -1))
+		{
+			
+			
+			return ;
+		}
 			return (clean_pipeline(sh_s()->prev_read));
 		sh_s()->pids[i] = fork();
 		pipeline_proc(curr, i, input_size);
