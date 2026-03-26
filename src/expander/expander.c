@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 13:38:37 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:59:10 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	expander(t_list **commands, t_env *env_list, int exit_status)
 		while (current_cmd->redirs && current_cmd->redirs[i].filename != NULL)
 		{
 			old_filename = current_cmd->redirs[i].filename;
-			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status);
+			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status, update_quote_state);
 			free(old_filename);
 			i++;
 		}

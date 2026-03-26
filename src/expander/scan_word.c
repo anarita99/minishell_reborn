@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 13:38:44 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/26 15:00:03 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_
 	free_sbuf(buf);
 }
 
-char *expand_filename(char *input, t_env *env_list, int exit_status)
+char *expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c))
 {
 	char		*output;
 	t_sbuf		*buf;
@@ -116,7 +116,7 @@ char *expand_filename(char *input, t_env *env_list, int exit_status)
 	i = 0;
 	while (input[i])
 	{
-		if (update_quote_state(&state, input[i]))
+		if (update && update(&state, input[i]))
 		{
 			i++;
 			continue ;

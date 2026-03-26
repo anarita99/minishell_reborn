@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/25 14:29:09 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 16:20:06 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,24 @@ void	heredoc_handler(int sig)
 
 static void	write_heredoc(t_redir *heredoc, int filefd)
 {
-	char	*line;
+	char	*input;
+	char	*processed_input;
 
 	while (true)
 	{
-		line = readline(">");
-		if (!line && sh_s()->exit_status == 700)
+		input = readline(">");
+		if (!input && sh_s()->exit_status == 700)
 			return ;
-		else if (!line)
+		else if (!input)
 			return (heredoc_eof_warning(heredoc->filename));
-		if (ft_strcmp(line, heredoc->filename) == 0)
-			return (free(line));
-		ft_putendl_fd(line, filefd);
-		free(line);
+		if (ft_strcmp(input, heredoc->filename) == 0)
+			return (free(input));
+		if (!heredoc->quoted)
+			processed_input = expand_filename(input, sh_s()->env_list, sh_s()->exit_status, NULL);
+		else
+			processed_input = input;
+		ft_putendl_fd(processed_input, filefd);
+		free(processed_input);
 	}
 }
 
