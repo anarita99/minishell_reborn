@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 10:22:15 by adores            #+#    #+#             */
-/*   Updated: 2026/03/24 10:36:49 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/26 16:48:21 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	executor_signals(void)
 	signal(SIGINT, SIG_IGN);
 }
 
-void	handler_signals(int sig)
+static void	handler_signals(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
