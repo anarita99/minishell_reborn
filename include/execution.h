@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:08:26 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/27 14:50:54 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	free_execve(char **envp, char *full_path, char *cmd);
 
 int		exe_all_heredocs(t_list *input);
 void	clean_pipeline(int prev_read);
+void	child_pipes(int i, int input_size);
 /*
 
 ** src/execution/exec.c

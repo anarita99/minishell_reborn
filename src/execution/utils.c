@@ -6,34 +6,17 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:17:07 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/27 15:10:14 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/// @brief For exiting and printing any kind of error.
-/// If context & detail are NULL & err is set to false, nothing is printed
-/// @param scope what exactly failed, 
-/// IE, malloc or a command such as cd
-/// @param msg extra info as to what failed 
-/// IE, a file that could not be opened
-/// @param exit_code exit status the process will exit with
-/// @param err flag used to print exact error message
-/// if function sets errno upon failure
 void	err_and_exit(char *scope, char *msg, int exit_code, bool err)
 {
 	report_err(scope, msg, err);
 	exitclean(exit_code);
 }
-
-/// @brief For printing any kind of error. 
-///If context & detail are NULL & err is set to false, nothing is printed
-/// @param scope what exactly failed, IE, malloc or a command such as cd
-/// @param msg extra info as to what failed
-/// IE, a file that could not be opened
-/// @param error flag used to print exact error message
-/// if function sets errno upon failure
 
 void	report_err(char *scope, char *msg, bool error)
 {

@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:55:02 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:09:40 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/27 14:23:24 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_execve(char **envp, char *full_path, char *cmd)
 	err_and_exit(NULL, cmd, 1, true);
 }
 
-void	execute_ext(t_cmd	*cmd)
+void	execute_ext(t_cmd *cmd)
 {
 	pid_t	pid;
 	char	**envp;
