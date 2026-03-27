@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:30:36 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/27 11:42:29 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	exe_commands(t_cmd *input)
 	}
 }
 
-static void	child_proc(int i, int input_size)
+static void	child_pipes(int i, int input_size)
 {
 	child_signals();
 	sh_s()->is_child = true;
@@ -54,7 +54,7 @@ static void	pipeline_proc(t_list *current, int i, int input_size)
 {
 	if (sh_s()->pids[i] == 0)
 	{
-		child_proc(i, input_size);
+		child_pipes(i, input_size);
 		exe_commands((t_cmd *)current->content);
 	}
 	if (sh_s()->prev_read != -1)

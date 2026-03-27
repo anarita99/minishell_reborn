@@ -6,14 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 16:05:38 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/27 11:31:18 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*criar um ficheiro */
-//open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
 void	open_file(t_redir redir, int *fd)
 {
