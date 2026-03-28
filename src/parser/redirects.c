@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/04 00:00:00 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/28 14:50:17 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,19 @@ static int	get_redir_count(t_token *current_token)
 	return (count);
 }
 
-static bool is_str_quoted(char *str)
+static bool	is_str_quoted(char *str)
 {
-	int str_len;
+	int	i;
 
 	if (!str || !*str)
 		return (false);
-	str_len = ft_strlen(str);
-	if (str[0] == '"' && str[str_len - 1] == '"')
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
 			return (true);
-	if (str[0] == '\'' && str[str_len - 1] == '\'')
-			return (true);
+		i++;
+	}
 	return (false);
 }
 
