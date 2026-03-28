@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/03 16:15:16 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/28 17:20:21 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_token	*lexer(char *input)
 	t_token	*new_token;
 	int		token_type;
 	char	*token_value;
-	t_buffer	*buffer;
+	t_sbuf		*buf;
+	
 	int		consumed;
 
 	if (!input || !input[0])
@@ -34,10 +35,9 @@ t_token	*lexer(char *input)
 
 	head = NULL;
 	tail = NULL;
-	buffer = create_buffer(input);
+	buf = sbuf_init(1);
 	state = STATE_NORMAL;
 	i = 0;
-	
 	while (input[i])
 	{
 		c = input[i];
@@ -47,20 +47,20 @@ t_token	*lexer(char *input)
 
 		// State machine
 		if (state == STATE_NORMAL)
-			token_type = state_normal(&state, c, buffer, &consumed, input[i + 1]);
+			token_type = state_normal(&state, c, buf, &consumed, input[i + 1]);
 		else if (state == STATE_IN_SQUOTE)
-			token_type = state_quote(&state, c, buffer);
+			token_type = state_quote(&state, c, buf);
 		else if (state == STATE_IN_DQUOTE)
-			token_type = state_quote(&state, c, buffer);
+			token_type = state_quote(&state, c, buf);
 
 		// Create token if ready
 		if (token_type != T_NONE)
 		{
-			token_value = ft_strdup(buffer->data);
+			token_value = ft_strdup(buf->data);
 			new_token = create_token(token_type, token_value);
 			if (new_token)
 				add_token_to_list(&head, &tail, new_token);
-			reset_buffer(buffer);
+			sbuf_reset(buf);
 		}
 
 		// Advance only if character was consumed
@@ -69,14 +69,14 @@ t_token	*lexer(char *input)
 	}
 	
 	// Emit remaining buffer content as word
-	if (buffer->len > 0)
+	if (buf->len > 0)
 	{
-		token_value = ft_strdup(buffer->data);
+		token_value = ft_strdup(buf->data);
 		new_token = create_token(T_WORD, token_value);
 		if (new_token)
 			add_token_to_list(&head, &tail, new_token);
 	}
 
-	free_buffer(buffer);
+	sbuf_free(buf);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 15:00:03 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/28 16:33:15 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_
 	}
 	if (buf->len > 0 || keep_empty_word)
 		ft_lstadd_back(expanded_words, ft_lstnew(strdup(buf->data)));
-	free_sbuf(buf);
+	sbuf_free(buf);
 }
 
 char *expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c))
@@ -140,6 +140,6 @@ char *expand_filename(char *input, t_env *env_list, int exit_status, int (*updat
 		i++;
 	}
 	output = strdup(buf->data);
-	free_sbuf(buf);
+	sbuf_free(buf);
 	return (output);
 }

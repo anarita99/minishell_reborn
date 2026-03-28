@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:31 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 16:38:15 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/28 16:25:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,6 @@
 # include "parser.h"
 # include "lexer.h"
 # include "execution.h"
-
-typedef struct s_sbuf
-{
-	char   *data;
-	size_t	size;	// size allocated
-	size_t	len;	// current valid length
-}   t_sbuf;
-
-// Buffer
-t_sbuf *sbuf_init(size_t initial_cap);
-void	sbuf_reset(t_sbuf *buf);
-void	free_sbuf(t_sbuf *buf);
-int 	sbuf_push_char(t_sbuf *buf, char c);
-int 	sbuf_push_str(t_sbuf *buf, const char *str);
 
 // Utils
 char	**convert_lst_to_argv(t_list *lst);

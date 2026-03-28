@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/03 16:22:20 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/28 17:18:12 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,6 @@ typedef enum e_char_type
 	C_OPERATOR
 }	t_char_type;
 
-typedef struct s_buffer
-{
-	char	*data;
-	size_t	size;	// size allocated
-	size_t	len;	// current valid length
-} 			t_buffer;
-
-// Buffer
-t_buffer	*create_buffer(char *input);
-void		free_buffer(t_buffer *buffer);
-void 		add_char_to_buffer(t_buffer *buffer, char c);
-void		reset_buffer(t_buffer *buffer);
-
 // Token
 
 t_token	*create_token(t_token_type type, char *value);
@@ -81,8 +68,8 @@ t_token	*create_word(char *input, int start_idx, int end_idx);
 t_token	*create_operator(t_token_type type, char *str);
 
 // States
-int	state_normal(int *state, char c, t_buffer *buffer, int *consumed, char c_next);
-int	state_quote(int *state, char c, t_buffer *buffer);
+int	state_normal(int *state, char c, t_sbuf *buf, int *consumed, char c_next);
+int	state_quote(int *state, char c, t_sbuf *buf);
 
 t_token	*lexer(char *input);
 

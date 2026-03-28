@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/10 11:54:19 by leramos-          #+#    #+#              #
-#    Updated: 2026/03/26 13:45:50 by leramos-         ###   ########.fr        #
+#    Updated: 2026/03/28 16:33:46 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ FILES = ft_atoi ft_bzero ft_calloc ft_isalnum \
 		ft_lstadd_back ft_lstadd_front ft_lstclear \
 		ft_lstdelone ft_lstiter ft_lstlast \
 		ft_lstmap ft_lstnew ft_lstsize ft_strcmp \
-		ft_freearray
+		ft_freearray ft_sbuf
 
 FILES += get_next_line get_next_line_utils
 FILES += ft_printf ft_printf_utils ft_printf_specifiers ft_printf_output

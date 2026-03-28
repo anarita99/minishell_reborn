@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
+#    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/26 14:10:38 by adores           ###   ########.fr        #
+#    Updated: 2026/03/28 17:18:04 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ LIBFT_LIB 		= 	$(LIBFT_DIR)/libft.a
 
 # Files
 MAIN 			= 	main print error sig
-LEXER 			= 	lexer token types buffer states
+LEXER 			= 	lexer token types states
 PARSER 			= 	parser arguments redirects command
-EXPANDER		=	expander utils buffer scan_word
+EXPANDER		=	expander utils scan_word
 EXECUTOR 		= 	utils \
 					free_things \
 					builtins/builtin \
