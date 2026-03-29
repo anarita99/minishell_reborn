@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:59:30 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 13:38:50 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/29 15:28:58 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ char	**convert_lst_to_argv(t_list *lst)
 	}
 	argv[i] = NULL;
 	return (argv);
+}
+
+char	*convert_lst_to_str(t_list *lst)
+{
+	char	*str;
+	t_list	*current;
+	t_sbuf	*buf;
+
+	buf = sbuf_init(1);
+	current = lst;
+	while (current)
+	{
+		sbuf_push_str(buf, current->content);
+		current = current->next;
+	}
+	str = strdup(buf->data);
+	sbuf_free(buf);
+	return (str);
 }
 
 int	update_quote_state(t_str_state *state, char c)

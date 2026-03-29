@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/28 16:33:15 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/29 15:34:05 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 	ft_freearray(value_split);
 }
 
-void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status)
+void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
 {
 	t_sbuf		*buf;
 	int			i;
@@ -64,7 +64,7 @@ void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_
 	i = 0;
 	while (input[i])
 	{
-		if (update_quote_state(&state, input[i]))
+		if (update && update(&state, input[i]))
 		{
 			if (input[i] == '\'' || input[i] == '"')
 				keep_empty_word = true;
@@ -99,47 +99,69 @@ void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_
 	sbuf_free(buf);
 }
 
-char *expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c))
-{
-	char		*output;
-	t_sbuf		*buf;
-	int			i;
-	t_str_state	state;
-	int			key_size;
-	char		*key;
-	char		*value;
+// char	*expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
+// {
+// 	t_list	*words;
+// 	t_sbuf	*buf;
+// 	t_list	*cur;
+// 	char	*output;
 
-	buf = sbuf_init(1);
-	if (!buf)
-		return (NULL);
-	state = STATE_NORMAL;
-	i = 0;
-	while (input[i])
-	{
-		if (update && update(&state, input[i]))
-		{
-			i++;
-			continue ;
-		}
-		if (input[i] == '$' && state != STATE_IN_SQUOTE)
-		{
-			key_size = get_key_size(input, i);
-			if (key_size != 0)
-			{
-				key = ft_substr(input, i + 1, key_size);
-				value = get_value(env_list, exit_status, key);
-				if (value)
-					sbuf_push_str(buf, value);
-				i += key_size + 1;
-				free(key);
-				free(value);
-				continue;
-			}
-		}
-		sbuf_push_char(buf, input[i]);
-		i++;
-	}
-	output = strdup(buf->data);
-	sbuf_free(buf);
-	return (output);
-}
+// 	words = NULL;
+// 	expand_str(&words, input, env_list, exit_status, update);
+// 	buf = sbuf_init(1);
+// 	cur = words;
+// 	while (cur)
+// 	{
+// 		sbuf_push_str(buf, cur->content);
+// 		cur = cur->next;
+// 	}
+// 	output = strdup(buf->data);
+// 	ft_lstclear(&words, free);
+// 	sbuf_free(buf);
+// 	return (output);
+// }
+
+// char *expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c))
+// {
+// 	char		*output;
+// 	t_sbuf		*buf;
+// 	int			i;
+// 	t_str_state	state;
+// 	int			key_size;
+// 	char		*key;
+// 	char		*value;
+
+// 	buf = sbuf_init(1);
+// 	if (!buf)
+// 		return (NULL);
+// 	state = STATE_NORMAL;
+// 	i = 0;
+// 	while (input[i])
+// 	{
+// 		if (update && update(&state, input[i]))
+// 		{
+// 			i++;
+// 			continue ;
+// 		}
+// 		if (input[i] == '$' && state != STATE_IN_SQUOTE)
+// 		{
+// 			key_size = get_key_size(input, i);
+// 			if (key_size != 0)
+// 			{
+// 				key = ft_substr(input, i + 1, key_size);
+// 				value = get_value(env_list, exit_status, key);
+// 				if (value)
+// 					sbuf_push_str(buf, value);
+// 				i += key_size + 1;
+// 				free(key);
+// 				free(value);
+// 				continue;
+// 			}
+// 		}
+// 		sbuf_push_char(buf, input[i]);
+// 		i++;
+// 	}
+// 	output = strdup(buf->data);
+// 	sbuf_free(buf);
+// 	return (output);
+// }

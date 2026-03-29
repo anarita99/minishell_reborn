@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/26 14:59:10 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/29 15:41:10 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,31 @@
 static char	**expand_argv(char **old_argv, t_env *env_list, int exit_status)
 {
 	char	**new_argv;
-	t_list	*expanded_words;
+	t_list	*words;
 	int		i;
 
-	expanded_words = NULL;
+	words = NULL;
 	i = 0;
 	while (old_argv[i])
 	{
-		expand_str(&expanded_words, old_argv[i], env_list, exit_status);
+		expand_str(&words, old_argv[i], env_list, exit_status, update_quote_state);
 		i++;
 	}
-	new_argv = convert_lst_to_argv(expanded_words);
-	ft_lstclear(&expanded_words, free);
+	new_argv = convert_lst_to_argv(words);
+	ft_lstclear(&words, free);
 	return (new_argv);
+}
+
+char	*expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
+{
+	t_list	*words;
+	char	*output;
+
+	words = NULL;
+	expand_str(&words, input, env_list, exit_status, update);
+	output = convert_lst_to_str(words);
+	ft_lstclear(&words, free);
+	return (output);
 }
 
 void	expander(t_list **commands, t_env *env_list, int exit_status)
