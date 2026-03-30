@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/27 15:10:14 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/30 16:17:39 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ void	exitclean(unsigned char exit_code)
 	free(sh_s()->pids);
 	exit(exit_code);
 }
-

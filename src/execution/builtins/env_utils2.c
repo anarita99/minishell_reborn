@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "minishell.h"
 
 int	envsize(t_env *env_list)
 {
@@ -27,10 +27,29 @@ int	envsize(t_env *env_list)
 	return (count);
 }
 
+static char	*env_node_to_str(t_env *node)
+{
+	int		size;
+	char	*str;
+
+	size = ft_strlen(node->key) + 2;
+	if (node->value)
+		size += ft_strlen(node->value);
+	str = malloc(sizeof(char) * size);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, node->key, size);
+	if (node->value != NULL)
+	{
+		ft_strlcat(str, "=", size);
+		ft_strlcat(str, node->value, size);
+	}
+	return (str);
+}
+
 char	**envlist_to_char(t_env *env_list)
 {
 	char	**array;
-	int		size;
 	int		i;
 
 	array = malloc((envsize(env_list) + 1) * sizeof(char *));
@@ -39,16 +58,9 @@ char	**envlist_to_char(t_env *env_list)
 	i = 0;
 	while (env_list)
 	{
-		size = ft_strlen(env_list->key) + ft_strlen(env_list->value) + 2;
-		array[i] = malloc(sizeof(char) * size);
+		array[i] = env_node_to_str(env_list);
 		if (!array[i])
 			return (ft_freearray(array), NULL);
-		ft_strlcpy(array[i], env_list->key, size);
-		if (env_list->value != NULL)
-		{
-			ft_strlcat(array[i], "=", size);
-			ft_strlcat(array[i], env_list->value, size);
-		}
 		env_list = env_list -> next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 #    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/26 14:10:38 by adores           ###   ########.fr        #
+#    Updated: 2026/03/30 16:20:25 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ EXECUTOR 		= 	utils \
 					executor \
 					redir \
 					heredoc \
+					heredoc_utils \
 					pipeline \
 					pipeline_utils
 
