@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 11:35:47 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:39:25 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	expander(t_list **commands, t_env *env_list, int exit_status)
 		while (current_cmd->redirs && current_cmd->redirs[i].filename != NULL && current_cmd->redirs[i].type != T_HEREDOC)
 		{
 			old_filename = current_cmd->redirs[i].filename;
-			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status, update_quote_state);
+			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status, false);
 			free(old_filename);
 			i++;
 		}

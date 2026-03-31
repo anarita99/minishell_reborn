@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 11:35:23 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:39:49 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,6 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 		i++;
 	}
 	ft_freearray(value_split);
-}
-
-static int	baafd()
-{
-	key_size = get_key_size(input, i);
-	if (key_size == 0)
-		return (-1);
-
-	key = ft_substr(input, i + 1, key_size);
-	value = get_value(env_list, exit_status, key);
-	if (state == STATE_IN_DQUOTE)
-	{
-		keep_empty_word = true;
-		sbuf_push_str(buf, value);
-	}
-	else
-		handle_unquoted_expansion(expanded_words, buf, value);
-	i += key_size + 1;
-	free(key);
-	free(value);
-	return (0);
 }
 
 void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, bool is_heredoc)
