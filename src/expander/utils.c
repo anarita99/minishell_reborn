@@ -6,11 +6,22 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:59:30 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/29 15:28:58 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 14:59:16 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+char	*expand_heredoc(char *src, t_env *env_list, int status)
+{
+	char	*dst;
+	t_list	*words;
+
+	words = expand_input(src, env_list, status, true);
+	dst = convert_lst_to_str(words);
+	ft_lstclear(&words, free);
+	return (dst);
+}
 
 char	**convert_lst_to_argv(t_list *lst)
 {
@@ -55,24 +66,6 @@ char	*convert_lst_to_str(t_list *lst)
 	return (str);
 }
 
-int	update_quote_state(t_str_state *state, char c)
-{
-	if (c != '\'' && c != '\"')
-		return (0);
-	if (*state == STATE_NORMAL)
-	{
-		if (c == '\'')
-			*state = STATE_IN_SQUOTE;
-		else
-			*state = STATE_IN_DQUOTE;
-		return (1);
-	}
-	if ((*state == STATE_IN_SQUOTE && c == '\'')
-		|| (*state == STATE_IN_DQUOTE && c == '\"'))
-		return (*state = STATE_NORMAL, 1);
-	return (0);
-}
-
 int	get_key_size(char *str, int i)
 {
 	int		start;
@@ -90,7 +83,7 @@ int	get_key_size(char *str, int i)
 	return (i - start);
 }
 
-char *get_value(t_env *env_list, int exit_status, char *key)
+char	*get_value(t_env *env_list, int exit_status, char *key)
 {
 	char	*env_value;
 

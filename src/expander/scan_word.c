@@ -6,22 +6,39 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 11:39:49 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 15:52:13 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
+static void	handle_quotes(char c, t_str_state *state, bool *keep_empty_word)
+{
+	*keep_empty_word = true;
+	if (*state == STATE_NORMAL)
+	{
+		if (c == '\'')
+			*state = STATE_IN_SQUOTE;
+		else if ((c == '\"'))
+			*state = STATE_IN_DQUOTE;
+	}
+	else if ((*state == STATE_IN_SQUOTE && c == '\'')
+		|| (*state == STATE_IN_DQUOTE && c == '\"'))
+		*state = STATE_NORMAL;
+}
+
 // words_head = NULL
 // buf = pre
 // value = ls -l
 // result = prels, -l
-static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *value)
+static void	handle_unquoted_expansion(
+	t_list **words_head, t_sbuf *buf, char *value)
 {
 	char	**value_split;
 	int		i;
-	char	*tmp;
 
+	if (!value)
+		return ;
 	value_split = ft_split_ws(value);
 	if (!value_split)
 		return ;
@@ -37,130 +54,70 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 		if (!value_split[i + 1])
 			sbuf_push_str(buf, value_split[i]);
 		else
-		{
-			tmp = strdup(value_split[i]);
-			ft_lstadd_back(words_head, ft_lstnew(tmp));
-		}
+			ft_lstadd_back(words_head, ft_lstnew(strdup(value_split[i])));
 		i++;
 	}
 	ft_freearray(value_split);
 }
 
-void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, bool is_heredoc)
+static void	handle_dollar_expansion(
+	t_list **expanded_words, char *input, t_expander_ctx *ctx, int *i)
 {
-	t_sbuf		*buf;
-	int			i;
-	t_str_state	state;
-	int			key_size;
-	char		*key;
-	char		*value;
-	bool		keep_empty_word;
+	int		key_size;
+	char	*key;
+	char	*value;
 
-	buf = sbuf_init(1);
-	if (!buf)
+	key_size = get_key_size(input, *i);
+	if (key_size == 0)
 		return ;
-	keep_empty_word = false;
-	state = STATE_NORMAL;
+	key = ft_substr(input, *i + 1, key_size);
+	value = get_value(ctx->env_list, ctx->status, key);
+	if (ctx->state == STATE_IN_DQUOTE)
+	{
+		ctx->keep_empty_word = true;
+		if (value)
+			sbuf_push_str(ctx->buf, value);
+	}
+	else
+		handle_unquoted_expansion(expanded_words, ctx->buf, value);
+	*i += key_size;
+	free(key);
+	free(value);
+}
+
+t_expander_ctx	init_expander_ctx(t_env *env_list, int status)
+{
+	t_expander_ctx	ctx;
+
+	ctx.buf = sbuf_init(1);
+	ctx.env_list = env_list;
+	ctx.status = status;
+	ctx.keep_empty_word = false;
+	ctx.state = STATE_NORMAL;
+	return (ctx);
+}
+
+t_list	*expand_input(char *input, t_env *env_list, int status, bool is_heredoc)
+{
+	t_list			*words;
+	t_expander_ctx	ctx;
+	int				i;
+
+	words = NULL;
+	ctx = init_expander_ctx(env_list, status);
 	i = 0;
 	while (input[i])
 	{
-		if (!is_heredoc && update_quote_state(&state, input[i]))
-		{
-			keep_empty_word = true;
-			i++;
-			continue ;
-		}
-		if (input[i] == '$' && state != STATE_IN_SQUOTE)
-		{
-			key_size = get_key_size(input, i);
-			if (key_size != 0)
-			{
-				key = ft_substr(input, i + 1, key_size);
-				value = get_value(env_list, exit_status, key);
-				if (state == STATE_IN_DQUOTE)
-				{
-					keep_empty_word = true;
-					sbuf_push_str(buf, value);
-				}
-				else
-					handle_unquoted_expansion(expanded_words, buf, value);
-				i += key_size + 1;
-				free(key);
-				free(value);
-				continue;
-			}
-		}
-		sbuf_push_char(buf, input[i]);
+		if ((input[i] == '"' || input[i] == '\'') && !is_heredoc)
+			handle_quotes(input[i], &ctx.state, &ctx.keep_empty_word);
+		else if (input[i] == '$' && ctx.state != STATE_IN_SQUOTE)
+			handle_dollar_expansion(&words, input, &ctx, &i);
+		else
+			sbuf_push_char(ctx.buf, input[i]);
 		i++;
 	}
-	if (buf->len > 0 || keep_empty_word)
-		ft_lstadd_back(expanded_words, ft_lstnew(strdup(buf->data)));
-	sbuf_free(buf);
+	if (ctx.buf->len > 0 || ctx.keep_empty_word)
+		ft_lstadd_back(&words, ft_lstnew(strdup(ctx.buf->data)));
+	sbuf_free(ctx.buf);
+	return (words);
 }
-
-// char	*expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
-// {
-// 	t_list	*words;
-// 	t_sbuf	*buf;
-// 	t_list	*cur;
-// 	char	*output;
-
-// 	words = NULL;
-// 	expand_str(&words, input, env_list, exit_status, update);
-// 	buf = sbuf_init(1);
-// 	cur = words;
-// 	while (cur)
-// 	{
-// 		sbuf_push_str(buf, cur->content);
-// 		cur = cur->next;
-// 	}
-// 	output = strdup(buf->data);
-// 	ft_lstclear(&words, free);
-// 	sbuf_free(buf);
-// 	return (output);
-// }
-
-// char *expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c))
-// {
-// 	char		*output;
-// 	t_sbuf		*buf;
-// 	int			i;
-// 	t_str_state	state;
-// 	int			key_size;
-// 	char		*key;
-// 	char		*value;
-
-// 	buf = sbuf_init(1);
-// 	if (!buf)
-// 		return (NULL);
-// 	state = STATE_NORMAL;
-// 	i = 0;
-// 	while (input[i])
-// 	{
-// 		if (update && update(&state, input[i]))
-// 		{
-// 			i++;
-// 			continue ;
-// 		}
-// 		if (input[i] == '$' && state != STATE_IN_SQUOTE)
-// 		{
-// 			key_size = get_key_size(input, i);
-// 			if (key_size != 0)
-// 			{
-// 				key = ft_substr(input, i + 1, key_size);
-// 				value = get_value(env_list, exit_status, key);
-// 				if (value)
-// 					sbuf_push_str(buf, value);
-// 				i += key_size + 1;
-// 				free(key);
-// 				free(value);
-// 				continue;
-// 			}
-// 		}
-// 		sbuf_push_char(buf, input[i]);
-// 		i++;
-// 	}
-// 	output = strdup(buf->data);
-// 	sbuf_free(buf);
-// 	return (output);
-// }

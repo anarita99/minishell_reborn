@@ -6,68 +6,69 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 11:39:25 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 14:59:05 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static char	**expand_argv(char **old_argv, t_env *env_list, int exit_status)
+static void	expand_argv(char ***argv, t_env *env_list, int status)
 {
-	char	**new_argv;
+	char	**old_argv;
 	t_list	*words;
+	t_list	*tmp;
 	int		i;
 
+	if (!argv || !*argv)
+		return ;
+	old_argv = *argv;
 	words = NULL;
 	i = 0;
-	while (old_argv[i])
+	while ((*argv)[i])
 	{
-		expand_str(&words, old_argv[i], env_list, exit_status, false);
+		tmp = expand_input((*argv)[i], env_list, status, false);
+		ft_lstadd_back(&words, tmp);
 		i++;
 	}
-	new_argv = convert_lst_to_argv(words);
+	*argv = convert_lst_to_argv(words);
 	ft_lstclear(&words, free);
-	return (new_argv);
+	ft_freearray(old_argv);
 }
 
-char	*expand_filename(char *input, t_env *env_list, int exit_status, bool is_heredoc)
+static void	expand_redirs(t_redir *redirs, t_env *env_list, int status)
 {
-	t_list	*words;
-	char	*output;
-
-	words = NULL;
-	expand_str(&words, input, env_list, exit_status, is_heredoc);
-	output = convert_lst_to_str(words);
-	ft_lstclear(&words, free);
-	return (output);
-}
-
-void	expander(t_list **commands, t_env *env_list, int exit_status)
-{
-	t_list  *current_node;
-	t_cmd   *current_cmd;
-	char	**old_argv;
-	char	*old_filename;
 	int		i;
-	
+	char	*old_filename;
+	t_list	*words;
+
+	if (!redirs)
+		return ;
+	i = 0;
+	while (redirs[i].filename != NULL)
+	{
+		if (redirs[i].type != T_HEREDOC)
+		{
+			old_filename = redirs[i].filename;
+			words = expand_input(old_filename, env_list, status, false);
+			redirs[i].filename = convert_lst_to_str(words);
+			ft_lstclear(&words, free);
+			free(old_filename);
+		}
+		i++;
+	}
+}
+
+void	expander(t_list **commands, t_env *env_list, int status)
+{
+	t_list	*current_node;
+	t_cmd	*current_cmd;
+
 	current_node = *commands;
 	while (current_node)
 	{
 		current_cmd = (t_cmd *)current_node->content;
-		old_argv = current_cmd->argv;
-		current_cmd->argv = expand_argv(old_argv, env_list, exit_status);
-		ft_freearray(old_argv);
-
-		// Redirs part
-		i = 0;
-		while (current_cmd->redirs && current_cmd->redirs[i].filename != NULL && current_cmd->redirs[i].type != T_HEREDOC)
-		{
-			old_filename = current_cmd->redirs[i].filename;
-			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status, false);
-			free(old_filename);
-			i++;
-		}
-
+		expand_argv(&current_cmd->argv, env_list, status);
+		expand_redirs(current_cmd->redirs, env_list, status);
 		current_node = current_node->next;
 	}
 }
