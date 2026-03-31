@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/30 16:19:54 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 11:03:16 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_env
 
 // src/execution/builtins/env.c
 void	set_env_var(char *key, char *value);
-int		add_env_var(t_env **head, char *env);
 t_env	*init_env(void);
 int		env_builtin();
 

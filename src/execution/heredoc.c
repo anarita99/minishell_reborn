@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/31 10:47:10 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 15:40:17 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,17 @@ sh_s()->exit_status, NULL);
 static void	heredoc_func(t_redir *heredoc)
 {
 	char	*filename;
-	int		filenum;
+	int		filefd;
 	int		backup_fd;
 
-	hd_file(&filename, &filenum);
+	hd_file(&filename, &filefd);
 	backup_fd = dup(STDIN_FILENO);
 	signal(SIGINT, heredoc_handler);
-	write_heredoc(heredoc, filenum);
+	write_heredoc(heredoc, filefd);
 	signal(SIGINT, SIG_IGN);
 	dup2(backup_fd, STDIN_FILENO);
 	close(backup_fd);
-	close(filenum);
+	close(filefd);
 	free(heredoc->filename);
 	heredoc->filename = filename;
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	envsize(t_env *env_list)
+static int	envsize(t_env *env_list)
 {
 	int	count;
 
