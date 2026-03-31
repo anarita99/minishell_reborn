@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:04:18 by adores            #+#    #+#             */
-/*   Updated: 2026/03/27 15:03:38 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 10:46:11 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exe_pipeline(int input_size)
 	t_list	*curr;
 	int		i;
 
-	if(!init_pipeline(input_size))
+	if (!init_pipeline(input_size))
 		return ;
 	curr = sh_s()->input_list;
 	i = 0;

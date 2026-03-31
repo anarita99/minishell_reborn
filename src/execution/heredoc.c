@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/30 16:20:37 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 10:47:10 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	hd_file(char **name, int *num)
 		if (fd != -1)
 		{
 			*num = fd;
-			break;
+			break ;
 		}
 		if (errno != EEXIST)
 		{
@@ -56,7 +56,8 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 		if (ft_strcmp(input, heredoc->filename) == 0)
 			return (free(input));
 		if (!heredoc->quoted)
-			processed_input = expand_filename(input, sh_s()->env_list, sh_s()->exit_status, NULL);
+			processed_input = expand_filename(input, sh_s()->env_list, \
+sh_s()->exit_status, NULL);
 		else
 			processed_input = input;
 		ft_putendl_fd(processed_input, filefd);
