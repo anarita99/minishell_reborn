@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/29 15:34:05 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:35:23 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 	int		i;
 	char	*tmp;
 
-	value_split = ft_split(value, ' ');
+	value_split = ft_split_ws(value);
 	if (!value_split)
 		return ;
 	sbuf_push_str(buf, value_split[0]);
@@ -46,7 +46,28 @@ static void	handle_unquoted_expansion(t_list **words_head, t_sbuf *buf, char *va
 	ft_freearray(value_split);
 }
 
-void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
+static int	baafd()
+{
+	key_size = get_key_size(input, i);
+	if (key_size == 0)
+		return (-1);
+
+	key = ft_substr(input, i + 1, key_size);
+	value = get_value(env_list, exit_status, key);
+	if (state == STATE_IN_DQUOTE)
+	{
+		keep_empty_word = true;
+		sbuf_push_str(buf, value);
+	}
+	else
+		handle_unquoted_expansion(expanded_words, buf, value);
+	i += key_size + 1;
+	free(key);
+	free(value);
+	return (0);
+}
+
+void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, bool is_heredoc)
 {
 	t_sbuf		*buf;
 	int			i;
@@ -64,10 +85,9 @@ void expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_
 	i = 0;
 	while (input[i])
 	{
-		if (update && update(&state, input[i]))
+		if (!is_heredoc && update_quote_state(&state, input[i]))
 		{
-			if (input[i] == '\'' || input[i] == '"')
-				keep_empty_word = true;
+			keep_empty_word = true;
 			i++;
 			continue ;
 		}

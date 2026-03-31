@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/29 15:41:10 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:35:47 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	**expand_argv(char **old_argv, t_env *env_list, int exit_status)
 	i = 0;
 	while (old_argv[i])
 	{
-		expand_str(&words, old_argv[i], env_list, exit_status, update_quote_state);
+		expand_str(&words, old_argv[i], env_list, exit_status, false);
 		i++;
 	}
 	new_argv = convert_lst_to_argv(words);
@@ -30,13 +30,13 @@ static char	**expand_argv(char **old_argv, t_env *env_list, int exit_status)
 	return (new_argv);
 }
 
-char	*expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char))
+char	*expand_filename(char *input, t_env *env_list, int exit_status, bool is_heredoc)
 {
 	t_list	*words;
 	char	*output;
 
 	words = NULL;
-	expand_str(&words, input, env_list, exit_status, update);
+	expand_str(&words, input, env_list, exit_status, is_heredoc);
 	output = convert_lst_to_str(words);
 	ft_lstclear(&words, free);
 	return (output);
@@ -54,15 +54,13 @@ void	expander(t_list **commands, t_env *env_list, int exit_status)
 	while (current_node)
 	{
 		current_cmd = (t_cmd *)current_node->content;
-		
-		// Argv part
 		old_argv = current_cmd->argv;
 		current_cmd->argv = expand_argv(old_argv, env_list, exit_status);
 		ft_freearray(old_argv);
 
 		// Redirs part
 		i = 0;
-		while (current_cmd->redirs && current_cmd->redirs[i].filename != NULL)
+		while (current_cmd->redirs && current_cmd->redirs[i].filename != NULL && current_cmd->redirs[i].type != T_HEREDOC)
 		{
 			old_filename = current_cmd->redirs[i].filename;
 			current_cmd->redirs[i].filename = expand_filename(old_filename, env_list, exit_status, update_quote_state);

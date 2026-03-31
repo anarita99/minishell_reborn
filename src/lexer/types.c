@@ -6,16 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:54:04 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/03 16:22:26 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/29 16:36:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-int	is_whitespace(char c)
-{
-	return (c == ' ' || (c >= 9 && c <= 13));
-}
 
 int	is_operator(char c)
 {
@@ -24,7 +19,7 @@ int	is_operator(char c)
 
 int is_word(char c)
 {
-	return (c != '\0' && !is_whitespace(c) && !is_operator(c));
+	return (c != '\0' && !ft_iswhitespace(c) && !is_operator(c));
 }
 
 t_token	*create_word(char *input, int start_idx, int end_idx)

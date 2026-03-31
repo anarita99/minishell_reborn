@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 16:20:06 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:36:38 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 		if (ft_strcmp(input, heredoc->filename) == 0)
 			return (free(input));
 		if (!heredoc->quoted)
-			processed_input = expand_filename(input, sh_s()->env_list, sh_s()->exit_status, NULL);
+			processed_input = expand_filename(input, sh_s()->env_list, sh_s()->exit_status, true);
 		else
 			processed_input = input;
 		ft_putendl_fd(processed_input, filefd);

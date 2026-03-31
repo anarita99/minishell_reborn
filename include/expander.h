@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:31 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/29 15:44:35 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/31 11:36:56 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	    get_key_size(char *str, int i);
 char    *get_value(t_env *env_list, int exit_status, char *key);
 
 // Scan word
-char	*expand_filename(char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char));
-void 	expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, int (*update)(t_str_state *, char c));
+char	*expand_filename(char *input, t_env *env_list, int exit_status, bool is_heredoc);
+void 	expand_str(t_list **expanded_words, char *input, t_env *env_list, int exit_status, bool is_heredoc);
 
 // Main expander function
 void	expander(t_list **commands, t_env *env_list, int exit_status);

@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:26:13 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/28 16:24:58 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/30 13:35:52 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,15 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-void    ft_freearray(char **array);
 
 t_sbuf	*sbuf_init(size_t cap);
 void	sbuf_free(t_sbuf *b);
 void	sbuf_reset(t_sbuf *b);
 int		sbuf_push_char(t_sbuf *b, char c);
 int		sbuf_push_str(t_sbuf *b, const char *str);
+
+void    ft_freearray(char **array);
+int		ft_iswhitespace(char c);
+char	**ft_split_ws(char const *s);
 
 #endif

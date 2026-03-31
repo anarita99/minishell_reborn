@@ -6,16 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:08:31 by leramos-          #+#    #+#             */
-/*   Updated: 2025/04/21 15:48:21 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/03/29 16:39:59 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_iswhitespace(char c)
-{
-	return (c == ' ' || (c >= 9 && c <= 13));
-}
 
 static void	handle_whitespace(const char *nptr, size_t *i)
 {
