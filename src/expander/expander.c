@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 20:54:15 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 14:59:05 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:02:51 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	expand_argv(char ***argv, t_env *env_list, int status)
 	i = 0;
 	while ((*argv)[i])
 	{
-		tmp = expand_input((*argv)[i], env_list, status, false);
+		tmp = expand_input((*argv)[i], env_list, status, true, false);
 		ft_lstadd_back(&words, tmp);
 		i++;
 	}
@@ -49,7 +49,7 @@ static void	expand_redirs(t_redir *redirs, t_env *env_list, int status)
 		if (redirs[i].type != T_HEREDOC)
 		{
 			old_filename = redirs[i].filename;
-			words = expand_input(old_filename, env_list, status, false);
+			words = expand_input(old_filename, env_list, status, false, false);
 			redirs[i].filename = convert_lst_to_str(words);
 			ft_lstclear(&words, free);
 			free(old_filename);

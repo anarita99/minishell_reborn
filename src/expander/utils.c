@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:59:30 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 14:59:16 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:03:19 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*expand_heredoc(char *src, t_env *env_list, int status)
 	char	*dst;
 	t_list	*words;
 
-	words = expand_input(src, env_list, status, true);
+	words = expand_input(src, env_list, status, false, true);
 	dst = convert_lst_to_str(words);
 	ft_lstclear(&words, free);
 	return (dst);

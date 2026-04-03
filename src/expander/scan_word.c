@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/31 15:52:13 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:05:41 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	handle_unquoted_expansion(
 }
 
 static void	handle_dollar_expansion(
-	t_list **expanded_words, char *input, t_expander_ctx *ctx, int *i)
+	t_list **expanded_words, char *input, t_expander_ctx *ctx, int *i, bool is_argv)
 {
 	int		key_size;
 	char	*key;
@@ -72,7 +72,7 @@ static void	handle_dollar_expansion(
 		return ;
 	key = ft_substr(input, *i + 1, key_size);
 	value = get_value(ctx->env_list, ctx->status, key);
-	if (ctx->state == STATE_IN_DQUOTE)
+	if (ctx->state == STATE_IN_DQUOTE || !is_argv)
 	{
 		ctx->keep_empty_word = true;
 		if (value)
@@ -97,7 +97,7 @@ t_expander_ctx	init_expander_ctx(t_env *env_list, int status)
 	return (ctx);
 }
 
-t_list	*expand_input(char *input, t_env *env_list, int status, bool is_heredoc)
+t_list	*expand_input(char *input, t_env *env_list, int status, bool is_argv, bool is_heredoc)
 {
 	t_list			*words;
 	t_expander_ctx	ctx;
@@ -111,7 +111,7 @@ t_list	*expand_input(char *input, t_env *env_list, int status, bool is_heredoc)
 		if ((input[i] == '"' || input[i] == '\'') && !is_heredoc)
 			handle_quotes(input[i], &ctx.state, &ctx.keep_empty_word);
 		else if (input[i] == '$' && ctx.state != STATE_IN_SQUOTE)
-			handle_dollar_expansion(&words, input, &ctx, &i);
+			handle_dollar_expansion(&words, input, &ctx, &i, is_argv);
 		else
 			sbuf_push_char(ctx.buf, input[i]);
 		i++;
