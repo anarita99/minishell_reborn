@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/03/30 16:11:51 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/03 15:06:46 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ static bool	parse_redirects(t_cmd *cmd, int *fds)
 	while (cmd->redirs[++i].filename != NULL)
 	{
 		name = cmd->redirs[i].filename;
+		if (!cmd->redirs[i].quoted && ft_strchr(name, ' '))
+		{
+			report_err(name, "ambiguous redirect", false);
+			return (sh_s()->exit_status = 1, false);
+		}
 		open_file(cmd->redirs[i], fds);
 		if (fds[0] == -1 || fds[1] == -1)
 			return (report_err(NULL, name, true), false);
