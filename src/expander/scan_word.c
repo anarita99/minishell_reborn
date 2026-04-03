@@ -6,13 +6,13 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/03 14:05:41 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:12:49 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static void	handle_quotes(char c, t_str_state *state, bool *keep_empty_word)
+static void	handle_quotes(char c, t_str_state *state, t_sbuf *buf, bool *keep_empty_word)
 {
 	*keep_empty_word = true;
 	if (*state == STATE_NORMAL)
@@ -25,6 +25,8 @@ static void	handle_quotes(char c, t_str_state *state, bool *keep_empty_word)
 	else if ((*state == STATE_IN_SQUOTE && c == '\'')
 		|| (*state == STATE_IN_DQUOTE && c == '\"'))
 		*state = STATE_NORMAL;
+	else
+		sbuf_push_char(buf, c);
 }
 
 // words_head = NULL
@@ -109,7 +111,7 @@ t_list	*expand_input(char *input, t_env *env_list, int status, bool is_argv, boo
 	while (input[i])
 	{
 		if ((input[i] == '"' || input[i] == '\'') && !is_heredoc)
-			handle_quotes(input[i], &ctx.state, &ctx.keep_empty_word);
+			handle_quotes(input[i], &ctx.state, ctx.buf, &ctx.keep_empty_word);
 		else if (input[i] == '$' && ctx.state != STATE_IN_SQUOTE)
 			handle_dollar_expansion(&words, input, &ctx, &i, is_argv);
 		else
