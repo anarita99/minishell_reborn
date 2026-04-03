@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:08:26 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 11:03:16 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_env
 
 // src/execution/builtins/env.c
 void	set_env_var(char *key, char *value);
-int		add_env_var(t_env **head, char *env);
 t_env	*init_env(void);
 int		env_builtin();
 
@@ -46,6 +45,8 @@ void	free_execve(char **envp, char *full_path, char *cmd);
 
 int		exe_all_heredocs(t_list *input);
 void	clean_pipeline(int prev_read);
+void	child_pipes(int i, int input_size);
+void	heredoc_eof_warning(char *del);
 /*
 
 ** src/execution/exec.c
@@ -89,5 +90,6 @@ void	setup_signals(void);
 void	executor_signals(void);
 void	handle_wait_status(int w_status);
 void	child_signals(void);
+void	heredoc_handler(int sig);
 
 #endif

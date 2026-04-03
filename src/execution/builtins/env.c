@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:13:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:41:18 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 11:03:04 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	set_env_var(char *key, char *value)
 	current_node = env_new_node(NULL, NULL);
 	if (!current_node)
 		err_and_exit("malloc", "allocation error", 1, false);
+	current_node->key = ft_strdup(key);
 	current_node->value = ft_strdup(value);
 	if (!current_node->key || (!current_node->value && value != NULL))
 		return (free_node(current_node));
@@ -53,7 +54,7 @@ static void	shell_level(t_env **env_list)
 	set_env_var("SHLVL", "1");
 }
 
-int	add_env_var(t_env **head, char *env)
+static int	add_env_var(t_env **head, char *env)
 {
 	char	*equal_sign;
 	char	*key;

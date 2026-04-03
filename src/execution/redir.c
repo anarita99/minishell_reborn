@@ -6,16 +6,13 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 16:05:38 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/30 16:11:51 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*criar um ficheiro */
-//open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-
-void	open_file(t_redir redir, int *fd)
+static void	open_file(t_redir redir, int *fd)
 {
 	t_token_type	type;
 
@@ -28,7 +25,7 @@ void	open_file(t_redir redir, int *fd)
 		fd[1] = open(redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
-bool	parse_redirects(t_cmd *cmd, int *fds)
+static bool	parse_redirects(t_cmd *cmd, int *fds)
 {
 	int				i;
 	char			*name;
@@ -53,12 +50,6 @@ bool	parse_redirects(t_cmd *cmd, int *fds)
 	return (true);
 }
 
-static void	save_og_fds(int *og_fd)
-{
-	og_fd[0] = dup(STDIN_FILENO);
-	og_fd[1] = dup(STDOUT_FILENO);
-}
-
 int	setup_fds(t_cmd *input, int *og_fd, bool save)
 {
 	int	new_fd[2];
@@ -66,7 +57,10 @@ int	setup_fds(t_cmd *input, int *og_fd, bool save)
 	new_fd[0] = 0;
 	new_fd[1] = 0;
 	if (save)
-		save_og_fds(og_fd);
+	{
+		og_fd[0] = dup(STDIN_FILENO);
+		og_fd[1] = dup(STDOUT_FILENO);
+	}
 	if (input->redirs->filename == NULL)
 		return (0);
 	if (parse_redirects(input, new_fd) == false)

@@ -6,11 +6,11 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/26 14:15:22 by adores           ###   ########.fr       */
+/*   Updated: 2026/03/31 14:53:46 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static char	*path_join(char *dir, char *cmd)
 {
@@ -25,11 +25,25 @@ static char	*path_join(char *dir, char *cmd)
 	return (res);
 }
 
+static char	*try_path(char *dir, char *cmd, bool *err)
+{
+	char	*path;
+
+	path = path_join(dir, cmd);
+	if (!path)
+		return (*err = true, NULL);
+	if (access(path, X_OK) == 0)
+		return (path);
+	free(path);
+	return (NULL);
+}
+
 char	*get_cmd_path(char *paths, char *cmd)
 {
 	int		i;
 	char	*path;
 	char	**splitpath;
+	bool	err;
 
 	i = 0;
 	splitpath = ft_split(paths, ':');
@@ -37,15 +51,12 @@ char	*get_cmd_path(char *paths, char *cmd)
 		return (NULL);
 	while (splitpath[i])
 	{
-		path = path_join(splitpath[i], cmd);
-		if (!path)
+		err = false;
+		path = try_path(splitpath[i], cmd, &err);
+		if (err)
 			return (ft_freearray(splitpath), NULL);
-		if (access(path, X_OK) == 0)
-		{
-			ft_freearray(splitpath);
-			return (path);
-		}
-		free(path);
+		if (path)
+			return (ft_freearray(splitpath), path);
 		i++;
 	}
 	ft_freearray(splitpath);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: adores <adores@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/03/28 17:18:04 by leramos-         ###   ########.fr        #
+#    Updated: 2026/04/03 14:09:12 by adores           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ EXECUTOR 		= 	utils \
 					executor \
 					redir \
 					heredoc \
+					heredoc_utils \
 					pipeline \
 					pipeline_utils
 

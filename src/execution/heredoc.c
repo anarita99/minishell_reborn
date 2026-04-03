@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/03/31 14:59:40 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:08:52 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	hd_file(char **name, int *num)
 		if (fd != -1)
 		{
 			*num = fd;
-			break;
+			break ;
 		}
 		if (errno != EEXIST)
 		{
@@ -39,22 +39,6 @@ static void	hd_file(char **name, int *num)
 		}
 		free(*name);
 	}
-}
-
-void	heredoc_eof_warning(char *del)
-{
-	ft_putstr_fd("minishell: warning: here-document delimited by \
-end-of-file (wanted `", 2);
-	ft_putstr_fd(del, 2);
-	ft_putendl_fd("')", 2);
-}
-
-void	heredoc_handler(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	sh_s()->exit_status = 700;
-	close(STDIN_FILENO);
 }
 
 static void	write_heredoc(t_redir *heredoc, int filefd)
@@ -83,17 +67,17 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 static void	heredoc_func(t_redir *heredoc)
 {
 	char	*filename;
-	int		filenum;
+	int		filefd;
 	int		backup_fd;
 
-	hd_file(&filename, &filenum);
+	hd_file(&filename, &filefd);
 	backup_fd = dup(STDIN_FILENO);
 	signal(SIGINT, heredoc_handler);
-	write_heredoc(heredoc, filenum);
+	write_heredoc(heredoc, filefd);
 	signal(SIGINT, SIG_IGN);
 	dup2(backup_fd, STDIN_FILENO);
 	close(backup_fd);
-	close(filenum);
+	close(filefd);
 	free(heredoc->filename);
 	heredoc->filename = filename;
 }
