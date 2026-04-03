@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/03 14:12:49 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:19:19 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static void	handle_dollar_expansion(
 
 	key_size = get_key_size(input, *i);
 	if (key_size == 0)
+	{
+		sbuf_push_char(ctx->buf, input[*i]);
 		return ;
+	}
 	key = ft_substr(input, *i + 1, key_size);
 	value = get_value(ctx->env_list, ctx->status, key);
 	if (ctx->state == STATE_IN_DQUOTE || !is_argv)
