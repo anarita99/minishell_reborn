@@ -6,13 +6,14 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/03 14:19:19 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:25:09 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static void	handle_quotes(char c, t_str_state *state, t_sbuf *buf, bool *keep_empty_word)
+static void	handle_quotes(
+	char c, t_str_state *state, t_sbuf *buf, bool *keep_empty_word)
 {
 	*keep_empty_word = true;
 	if (*state == STATE_NORMAL)
@@ -63,7 +64,8 @@ static void	handle_unquoted_expansion(
 }
 
 static void	handle_dollar_expansion(
-	t_list **expanded_words, char *input, t_expander_ctx *ctx, int *i, bool is_argv)
+	t_list **expanded_words, char *input,
+	t_expander_ctx *ctx, int *i)
 {
 	int		key_size;
 	char	*key;
@@ -77,7 +79,7 @@ static void	handle_dollar_expansion(
 	}
 	key = ft_substr(input, *i + 1, key_size);
 	value = get_value(ctx->env_list, ctx->status, key);
-	if (ctx->state == STATE_IN_DQUOTE || !is_argv)
+	if (ctx->state == STATE_IN_DQUOTE || ctx->mode != EXPAND_ARGV)
 	{
 		ctx->keep_empty_word = true;
 		if (value)
@@ -90,7 +92,8 @@ static void	handle_dollar_expansion(
 	free(value);
 }
 
-t_expander_ctx	init_expander_ctx(t_env *env_list, int status)
+t_expander_ctx	init_expander_ctx(
+	t_env *env_list, int status, t_expander_mode mode)
 {
 	t_expander_ctx	ctx;
 
@@ -99,24 +102,26 @@ t_expander_ctx	init_expander_ctx(t_env *env_list, int status)
 	ctx.status = status;
 	ctx.keep_empty_word = false;
 	ctx.state = STATE_NORMAL;
+	ctx.mode = mode;
 	return (ctx);
 }
 
-t_list	*expand_input(char *input, t_env *env_list, int status, bool is_argv, bool is_heredoc)
+t_list	*expand_input(
+	char *input, t_env *env_list, int status, t_expander_mode mode)
 {
 	t_list			*words;
 	t_expander_ctx	ctx;
 	int				i;
 
 	words = NULL;
-	ctx = init_expander_ctx(env_list, status);
+	ctx = init_expander_ctx(env_list, status, mode);
 	i = 0;
 	while (input[i])
 	{
-		if ((input[i] == '"' || input[i] == '\'') && !is_heredoc)
+		if ((input[i] == '"' || input[i] == '\'') && ctx.mode != EXPAND_HEREDOC)
 			handle_quotes(input[i], &ctx.state, ctx.buf, &ctx.keep_empty_word);
 		else if (input[i] == '$' && ctx.state != STATE_IN_SQUOTE)
-			handle_dollar_expansion(&words, input, &ctx, &i, is_argv);
+			handle_dollar_expansion(&words, input, &ctx, &i);
 		else
 			sbuf_push_char(ctx.buf, input[i]);
 		i++;
