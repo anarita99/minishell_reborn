@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/04 15:25:09 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:29:02 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	handle_dollar_expansion(
 	free(value);
 }
 
-t_expander_ctx	init_expander_ctx(
+static t_expander_ctx	init_expander_ctx(
 	t_env *env_list, int status, t_expander_mode mode)
 {
 	t_expander_ctx	ctx;
