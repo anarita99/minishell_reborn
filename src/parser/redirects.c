@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/28 14:50:17 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/04 15:43:12 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static bool	is_str_quoted(char *str)
 	return (false);
 }
 
-static t_redir  create_redir(t_token *current_token)
+static t_redir	create_redir(t_token *current_token)
 {
-	t_redir redir;
+	t_redir	redir;
 
 	if (!current_token)
 	{
@@ -77,7 +77,6 @@ t_redir	*get_redirs(t_token *current_token)
 	i = 0;
 	while (i < redir_count)
 	{
-		// skip redirect (= token OP + token WORD)
 		if (is_token_operator(current_token))
 		{
 			redirs[i] = create_redir(current_token);
