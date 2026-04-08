@@ -6,15 +6,15 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 13:33:40 by codespace         #+#    #+#             */
-/*   Updated: 2026/03/26 13:36:21 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 20:48:35 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_freearray(char **array)
+void	ft_freearray(char **array)
 {
-	int i;
+	int	i;
 
 	if (!array)
 		return ;

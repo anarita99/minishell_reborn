@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:19:07 by codespace         #+#    #+#             */
-/*   Updated: 2026/03/28 16:35:39 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 20:49:19 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	sbuf_reset(t_sbuf *b)
 
 static int	sbuf_reserve(t_sbuf *b, size_t cap_needed)
 {
-	char    *new_data;
-	size_t  new_cap;
+	char	*new_data;
+	size_t	new_cap;
 
 	if (cap_needed <= b->cap)
 		return (1);

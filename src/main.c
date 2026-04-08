@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/08 17:37:28 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 21:03:11 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(void)
 		if (!input[0])
 		{
 			free(input);
-			continue;
+			continue ;
 		}
 		if (!input || !input[0])
 			exitclean((unsigned char)sh_s()->exit_status);

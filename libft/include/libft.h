@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 12:26:13 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/30 13:35:52 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 20:47:42 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef struct s_list
 
 typedef struct s_sbuf
 {
-	char   *data;
+	char	*data;
 	size_t	cap;
 	size_t	len;
-}   t_sbuf;
+}	t_sbuf;
 
 int		ft_atoi(const char *nptr);
 void	ft_bzero(void *s, size_t n);
@@ -75,14 +75,12 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-
 t_sbuf	*sbuf_init(size_t cap);
 void	sbuf_free(t_sbuf *b);
 void	sbuf_reset(t_sbuf *b);
 int		sbuf_push_char(t_sbuf *b, char c);
 int		sbuf_push_str(t_sbuf *b, const char *str);
-
-void    ft_freearray(char **array);
+void	ft_freearray(char **array);
 int		ft_iswhitespace(char c);
 char	**ft_split_ws(char const *s);
 
