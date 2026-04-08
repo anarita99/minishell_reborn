@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:27:03 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/16 14:43:25 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 17:37:08 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,18 @@ t_token	*create_token(t_token_type type, char *value)
 		return (NULL);
 	token->type = type;
 	token->value = value;
-	token->next = NULL;
-	token->prev = NULL;
 	return (token);
 }
 
-void	add_token_to_list(t_token **head, t_token **tail, t_token *token)
+void	del_token(void *token_ptr)
 {
+	t_token	*token;
+
+	token = (t_token *)token_ptr;
 	if (!token)
 		return ;
-
-	if (!*head)
-	{
-		*head = token;
-		*tail = token;
-		return ;
-	}
-	(*tail)->next = token;
-	token->prev = *tail;
-	*tail = token;
-}
-
-void	free_tokens(t_token **head)
-{
-	t_token	*current;
-	t_token	*next;
-
-	if (!head)
-		return ;
-	current = *head;
-	while (current)
-	{
-		next = current->next;
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-	*head = NULL;
+	free(token->value);
+	free(token);
 }
 
 int	is_token_operator(t_token *token)
@@ -67,44 +41,44 @@ int	is_token_operator(t_token *token)
 			token->type == T_HEREDOC || token->type == T_APPEND);
 }
 
-int	validate_tokens(t_token *head)
+static bool	is_valid(t_token *current, t_token *next)
 {
-	int	i;
-	t_token *current;
-
-	current = head;
-	i = 0;
-	while (current)
+	if ((i == 0 || i == (list_size - 1)) && current->type == T_PIPE)
 	{
-		// Error: Can't start or end with PIPE
-		if ((i == 0 || !current->next) && current->type == T_PIPE)
-		{
-			print_syntax_error(current->value);
-			return (0);
-		}
+		print_syntax_error(current->value);
+		return (false);
+	}
+	if (is_token_operator(current) && (!next || next->type != T_WORD))
+	{
+		print_syntax_error(next->value);
+		return (false);
+	}
+	if (current->type == T_PIPE && next && next->type == T_PIPE)
+	{
+		print_syntax_error(current->value);
+		return (false);
+	}
+	return (true);
+}
 
-		// Error: Token after OPERATOR needs to be WORD
-		if (is_token_operator(current))
-		{
-			if (!current->next)
-			{
-				print_syntax_error(NULL);
-				return (0);
-			}
-			else if (current->next->type != T_WORD)
-			{
-				print_syntax_error(current->next->value);
-				return (0);
-			}
-		}
+int	validate_tokens(t_list *token_list)
+{
+	int		i;
+	int		list_size;
+	t_token	*current;
+	t_token	*next;
 
-		// Error: Token after PIPE needs to not be PIPE
-		if (current->type == T_PIPE && current->next && current->next->type == T_PIPE)
-		{
-			print_syntax_error(current->value);
+	list_size = ft_lstsize(token_list);
+	i = 0;
+	while (i < list_size)
+	{
+		current = (t_token *)token_list->content;
+		next = NULL;
+		if (token_list->next)
+			next = (t_token *)token_list->next->content;
+		if (!is_valid(current, next))
 			return (0);
-		}
-		current = current->next;
+		token_list = token_list->next;
 		i++;
 	}
 	return (1);

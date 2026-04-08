@@ -6,30 +6,31 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/04 15:43:12 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 16:25:58 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static int	get_redir_count(t_token *current_token)
+static int	get_redir_count(t_list *current_node)
 {
-	int	count;
-	int	i;
+	int		count;
+	t_token	*current_token;
 
 	count = 0;
-	i = 0;
-	while (current_token && current_token->type != T_PIPE)
+	while (current_node)
 	{
+		current_token = (t_token *)current_node->content;
+		if (current_token->type == T_PIPE)
+			break ;
 		if (is_token_operator(current_token))
 			count++;
-		current_token = current_token->next;
-		i++;
+		current_node = current_node->next;
 	}
 	return (count);
 }
 
-static bool	is_str_quoted(char *str)
+static bool	is_str_quoted(const char *str)
 {
 	int	i;
 
@@ -45,11 +46,11 @@ static bool	is_str_quoted(char *str)
 	return (false);
 }
 
-static t_redir	create_redir(t_token *current_token)
+static t_redir	create_redir(t_token_type type, const char *filename)
 {
 	t_redir	redir;
 
-	if (!current_token)
+	if (type == T_NONE || !filename)
 	{
 		redir.type = T_NONE;
 		redir.filename = NULL;
@@ -57,33 +58,37 @@ static t_redir	create_redir(t_token *current_token)
 	}
 	else
 	{
-		redir.type = current_token->type;
-		redir.filename = ft_strdup(current_token->next->value);
-		redir.quoted = is_str_quoted(redir.filename);
+		redir.type = type;
+		redir.filename = ft_strdup(filename);
+		redir.quoted = is_str_quoted(filename);
 	}
 	return (redir);
 }
 
-t_redir	*get_redirs(t_token *current_token)
+t_redir	*get_redirs(t_list *current_node)
 {
+	t_token	*current_token;
+	t_token	*file_token;
 	t_redir	*redirs;
 	int		redir_count;
 	int		i;
 
-	redir_count = get_redir_count(current_token);
+	redir_count = get_redir_count(current_node);
 	redirs = malloc(sizeof(t_redir) * (redir_count + 1));
 	if (!redirs)
 		return (NULL);
 	i = 0;
 	while (i < redir_count)
 	{
+		current_token = (t_token *)current_node->content;
 		if (is_token_operator(current_token))
 		{
-			redirs[i] = create_redir(current_token);
+			file_token = (t_token *)(current_node->next)->content;
+			redirs[i] = create_redir(current_token->type, file_token->value);
 			i++;
 		}
-		current_token = current_token->next;
+		current_node = current_node->next;
 	}
-	redirs[i] = create_redir(NULL);
+	redirs[i] = create_redir(T_NONE, NULL);
 	return (redirs);
 }

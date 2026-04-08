@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:05:42 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/13 14:29:11 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/07 17:56:16 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_shell
 }	t_shell;
 
 // Print Functions (Debug purposes)
-void	print_tokens(t_token *head);
+void	print_tokenlst(t_list *token_list);
 void	print_cmdlst(t_list *cmd_lst);
 
 // Shell Singleton

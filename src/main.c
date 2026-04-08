@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/03/24 10:24:23 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/08 17:37:28 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_shell	*sh_s(void)
 int	main(void)
 {
 	char		*input;
-	t_token		*token_head;
+	t_list		*token_list;
 	bool		print_info;
 
 	print_info = false;
@@ -34,7 +34,8 @@ int	main(void)
 	while (1)
 	{
 		setup_signals();
-		// 1 - Prompt
+
+	// 1 - Prompt
 		input = readline("Minishell> ");
 		if (!input)
 			exitclean((unsigned char)sh_s()->exit_status);
@@ -46,29 +47,32 @@ int	main(void)
 		if (!input || !input[0])
 			exitclean((unsigned char)sh_s()->exit_status);
 		add_history(input);
-		// 2 - Lexer
+
+	// 2 - Lexer
 		if (print_info)
 			printf("\n=== 1. Tokens ===\n");
-		token_head = lexer(input);
+		token_list = lexer(input);
 		free(input);
-		if (!token_head)
+		if (!token_list)
 			continue ;
 		if (print_info)
 		{
-			print_tokens(token_head);
+			print_tokenlst(token_list);
 			printf("\n");
 		}
-		// 3 - Syntax Checker
-		if (!validate_tokens(token_head))
+
+	// 3 - Syntax Checker
+		if (!validate_tokens(token_list))
 		{
-			free_tokens(&token_head);
+			ft_lstclear(&token_list, del_token);
 			continue ;
 		}
-		// 4 - Parser
+
+	// 4 - Parser
 		if (print_info)
 			printf("\n=== 2. Parser CMDs ===\n");
-		sh_s()->input_list = parser(token_head);
-		free_tokens(&token_head);
+		sh_s()->input_list = parser(token_list);
+		ft_lstclear(&token_list, del_token);
 		if (!sh_s()->input_list)
 			continue ;
 		if (print_info)
@@ -76,7 +80,8 @@ int	main(void)
 			print_cmdlst(sh_s()->input_list);
 			printf("\n");
 		}
-		// 5 - Expander
+
+	// 5 - Expander
 		if (print_info)
 			printf("\n=== 3. Expander CMDs ===\n");
 		expander(&(sh_s()->input_list), sh_s()->env_list, sh_s()->exit_status);
@@ -85,7 +90,8 @@ int	main(void)
 			print_cmdlst(sh_s()->input_list);
 			printf("\n");
 		}
-		// 6 - Executor
+
+	// 6 - Executor
 		if (print_info)
 			printf("\n=== 4. Result ===\n");
 		executor();

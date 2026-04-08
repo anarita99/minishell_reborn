@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/02/21 21:20:59 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/07 18:14:07 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ typedef struct s_cmd
 }					t_cmd;
 
 // Arguments
-char	**get_argv(t_token *current_token);
+char	**get_argv(t_list *current_node);
 
 // Redirects
-t_redir	*get_redirs(t_token *current_token);
+t_redir	*get_redirs(t_list *current_node);
 
 // Commands
-t_cmd	*get_next_cmd(t_token *current_token);
+t_cmd	*get_next_cmd(t_list *current_node);
 void	del_cmd(void *cmd_ptr);
 
 // Main parser function
-t_list	*parser(t_token *head);
+t_list	*parser(t_list *token_list);
 
 #endif

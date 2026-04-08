@@ -6,38 +6,45 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:28:29 by leramos-          #+#    #+#             */
-/*   Updated: 2026/01/16 15:55:56 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/07 17:57:03 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens(t_token *head)
+static void	print_token(t_token *token, int n)
 {
-	int	i;
-	t_token *current;
+	printf("Token %i: ", n);
+	if (token->type == T_WORD)
+		printf("[WORD : ");
+	else if (token->type == T_PIPE)
+		printf("[PIPE : ");
+	else if (token->type == T_REDIR_IN)
+		printf("[REDIR_IN : ");
+	else if (token->type == T_REDIR_OUT)
+		printf("[REDIR_OUT : ");
+	else if (token->type == T_HEREDOC)
+		printf("[HEREDOC : ");
+	else if (token->type == T_APPEND)
+		printf("[APPEND : ");
+	printf("%s]", token->value);
+	printf("\n");
+}
 
-	current = head;
+void	print_tokenlst(t_list *token_list)
+{
+	int		i;
+	t_list	*current_node;
+	t_token	*current_token;
+
+	current_node = token_list;
 	i = 0;
-	while (current)
+	while (current_node)
 	{
-		printf("Token %i: ", i);
-		if (current->type == T_WORD)
-			printf("[WORD : ");
-		else if (current->type == T_PIPE)
-			printf("[PIPE : ");
-		else if (current->type == T_REDIR_IN)
-			printf("[REDIR_IN : ");
-		else if (current->type == T_REDIR_OUT)
-			printf("[REDIR_OUT : ");
-		else if (current->type == T_HEREDOC)
-			printf("[HEREDOC : ");
-		else if (current->type == T_APPEND)
-			printf("[APPEND : ");
-		printf("%s]", current->value);
-		printf("\n");
+		current_token = (t_token *)current_node->content;
+		print_token(current_token, i);
 		i++;
-		current = current->next;
+		current_node = current_node->next;
 	}
 }
 
