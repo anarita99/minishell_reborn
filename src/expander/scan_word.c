@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/04 15:29:02 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/08 20:04:25 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static void	handle_quotes(
 	if (*state == STATE_NORMAL)
 	{
 		if (c == '\'')
-			*state = STATE_IN_SQUOTE;
+			*state = STATE_SQUOTE;
 		else if ((c == '\"'))
-			*state = STATE_IN_DQUOTE;
+			*state = STATE_DQUOTE;
 	}
-	else if ((*state == STATE_IN_SQUOTE && c == '\'')
-		|| (*state == STATE_IN_DQUOTE && c == '\"'))
+	else if ((*state == STATE_SQUOTE && c == '\'')
+		|| (*state == STATE_DQUOTE && c == '\"'))
 		*state = STATE_NORMAL;
 	else
 		sbuf_push_char(buf, c);
@@ -79,7 +79,7 @@ static void	handle_dollar_expansion(
 	}
 	key = ft_substr(input, *i + 1, key_size);
 	value = get_value(ctx->env_list, ctx->status, key);
-	if (ctx->state == STATE_IN_DQUOTE || ctx->mode != EXPAND_ARGV)
+	if (ctx->state == STATE_DQUOTE || ctx->mode != EXPAND_ARGV)
 	{
 		ctx->keep_empty_word = true;
 		if (value)
@@ -120,7 +120,7 @@ t_list	*expand_input(
 	{
 		if ((input[i] == '"' || input[i] == '\'') && ctx.mode != EXPAND_HEREDOC)
 			handle_quotes(input[i], &ctx.state, ctx.buf, &ctx.keep_empty_word);
-		else if (input[i] == '$' && ctx.state != STATE_IN_SQUOTE)
+		else if (input[i] == '$' && ctx.state != STATE_SQUOTE)
 			handle_dollar_expansion(&words, input, &ctx, &i);
 		else
 			sbuf_push_char(ctx.buf, input[i]);

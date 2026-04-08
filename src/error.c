@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-void	print_syntax_error(char *token_value)
+void	print_syntax_error(const char *token_value)
 {
 	write(2, "minishell: syntax error near unexpected token `", 47);
 	if (token_value)
