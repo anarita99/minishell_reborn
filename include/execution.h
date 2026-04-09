@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/03/31 11:03:16 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:04:39 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
-} t_env;
+}	t_env;
 
 // src/execution/builtins/env.c
 void	set_env_var(char *key, char *value);
 t_env	*init_env(void);
-int		env_builtin();
-
-
+int		env_builtin(void);
 // src/execution/builtins/env_utils.c
-
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);
 t_env	*env_new_node(char *key, char *value);
@@ -56,12 +53,9 @@ void	execute_child(t_cmd *cmd, t_shell *shell, int input_fd, int pipe_fds[2]);
 void	execute_command(char **args, char *envp[]);
 int		execute_single_builtin(t_cmd *cmd, t_shell *shell);
 int		exe_builtin(char **args, t_shell *shell);*/
-
-
 // src/execution/builtins/.c
-
 int		echo_builtin(char **args);
-int 	cd_builtin (char **args);
+int		cd_builtin(char **args);
 int		pwd_builtin(void);
 int		exit_builtin(char **args);
 int		env_builtin(void);

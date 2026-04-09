@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:17:48 by adores            #+#    #+#             */
-/*   Updated: 2026/04/03 14:08:52 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:13:28 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	write_heredoc(t_redir *heredoc, int filefd)
 		if (ft_strcmp(input, heredoc->filename) == 0)
 			return (free(input));
 		if (!heredoc->quoted)
-			processed_input = expand_heredoc(input, sh_s()->env_list, sh_s()->exit_status);
+			processed_input = expand_heredoc(input, sh_s()->env_list, \
+sh_s()->exit_status);
 		else
 			processed_input = input;
 		ft_putendl_fd(processed_input, filefd);

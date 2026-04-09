@@ -6,26 +6,35 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 14:35:06 by adores            #+#    #+#             */
-/*   Updated: 2026/03/23 15:57:11 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:59:24 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	wait_children(int pid_size)
+static int	collect_children(int pid_size)
 {
 	int	i;
 	int	w_status;
 
+	i = 0;
 	w_status = 0;
-	i = -1;
-	if (!sh_s()->pids)
-		return ;
-	while (++i < pid_size)
+	while (i < pid_size)
 	{
 		if (sh_s()->pids[i] > 0)
 			waitpid(sh_s()->pids[i], &w_status, 0);
+		i++;
 	}
+	return (w_status);
+}
+
+static void	wait_children(int pid_size)
+{
+	int	w_status;
+
+	if (!sh_s()->pids)
+		return ;
+	w_status = collect_children(pid_size);
 	if (sh_s()->exit_status != 700)
 		handle_wait_status(w_status);
 	else

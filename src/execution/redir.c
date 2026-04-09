@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 15:12:40 by adores            #+#    #+#             */
-/*   Updated: 2026/04/03 15:06:46 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 12:12:47 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,40 @@ static void	open_file(t_redir redir, int *fd)
 		fd[1] = open(redir.filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
-static bool	parse_redirects(t_cmd *cmd, int *fds)
+static bool	handle_redirect(t_cmd *cmd, int *fds, int i)
 {
-	int				i;
 	char			*name;
 	t_token_type	n_type;
+
+	name = cmd->redirs[i].filename;
+	if (!cmd->redirs[i].quoted && ft_strchr(name, ' '))
+	{
+		report_err(name, "ambiguous redirect", false);
+		return (sh_s()->exit_status = 1, false);
+	}
+	open_file(cmd->redirs[i], fds);
+	if (fds[0] == -1 || fds[1] == -1)
+		return (report_err(NULL, name, true), false);
+	if (cmd->redirs[i + 1].filename != NULL)
+	{
+		n_type = cmd->redirs[i + 1].type;
+		if (fds[0] > 0 && (n_type == T_REDIR_IN || n_type == T_HEREDOC))
+			close(fds[0]);
+		if (fds[1] > 0 && (n_type == T_REDIR_OUT || n_type == T_APPEND))
+			close(fds[1]);
+	}
+	return (true);
+}
+
+static bool	parse_redirects(t_cmd *cmd, int *fds)
+{
+	int		i;
 
 	i = -1;
 	while (cmd->redirs[++i].filename != NULL)
 	{
-		name = cmd->redirs[i].filename;
-		if (!cmd->redirs[i].quoted && ft_strchr(name, ' '))
-		{
-			report_err(name, "ambiguous redirect", false);
-			return (sh_s()->exit_status = 1, false);
-		}
-		open_file(cmd->redirs[i], fds);
-		if (fds[0] == -1 || fds[1] == -1)
-			return (report_err(NULL, name, true), false);
-		if (cmd->redirs[i + 1].filename != NULL)
-		{
-			n_type = cmd->redirs[i + 1].type;
-			if (fds[0] > 0 && (n_type == T_REDIR_IN || n_type == T_HEREDOC))
-				close(fds[0]);
-			if (fds[1] > 0 && (n_type == T_REDIR_OUT || n_type == T_APPEND))
-				close(fds[1]);
-		}
+		if (!handle_redirect(cmd, fds, i))
+			return (false);
 	}
 	return (true);
 }
