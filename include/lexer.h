@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:06:58 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/08 20:13:40 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/09 15:00:33 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ typedef enum e_str_state
 // Token
 void			del_token(void *token_ptr);
 int				is_token_operator(t_token *token);
-void			print_syntax_error(const char *token_value);
 void			append_token_to_lst(t_list **lst, int token_type, t_sbuf *buf);
 
 // Utils
 bool			is_word(char c);
 bool			is_operator(char c);
 int				calc_consumed_chars(t_token_type token_type);
+void			print_syntax_error(const char *token_value);
 
 // States
 t_token_type	state_machine(int *state, t_sbuf *buf, char c, char c_next);

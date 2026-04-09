@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:57:32 by adores            #+#    #+#             */
-/*   Updated: 2026/04/09 12:04:39 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 20:57:50 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_env
 void	set_env_var(char *key, char *value);
 t_env	*init_env(void);
 int		env_builtin(void);
+
 // src/execution/builtins/env_utils.c
 int		env_lstsize(t_env *lst);
 void	env_add_back(t_env **lst, t_env *node);
@@ -44,15 +45,7 @@ int		exe_all_heredocs(t_list *input);
 void	clean_pipeline(int prev_read);
 void	child_pipes(int i, int input_size);
 void	heredoc_eof_warning(char *del);
-/*
 
-** src/execution/exec.c
-
-int		execute_pipeline(t_cmd *cmds, t_shell *shell);
-void	execute_child(t_cmd *cmd, t_shell *shell, int input_fd, int pipe_fds[2]);
-void	execute_command(char **args, char *envp[]);
-int		execute_single_builtin(t_cmd *cmd, t_shell *shell);
-int		exe_builtin(char **args, t_shell *shell);*/
 // src/execution/builtins/.c
 int		echo_builtin(char **args);
 int		cd_builtin(char **args);
@@ -68,6 +61,8 @@ void	print_sorted_env(void);
 
 //src/execution/utils.c
 
+int		get_exit_status(void);
+t_env	*get_env_list(void);
 void	report_err(char *context, char *detail, bool err);
 void	exitclean(unsigned char exit_code);
 void	err_and_exit(char *scope, char *msg, int exit_code, bool err);

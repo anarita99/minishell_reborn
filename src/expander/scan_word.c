@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/08 20:04:25 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/09 21:16:42 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ static void	handle_quotes(
 		sbuf_push_char(buf, c);
 }
 
-// words_head = NULL
-// buf = pre
-// value = ls -l
-// result = prels, -l
 static void	handle_unquoted_expansion(
 	t_list **words_head, t_sbuf *buf, char *value)
 {
@@ -78,7 +74,7 @@ static void	handle_dollar_expansion(
 		return ;
 	}
 	key = ft_substr(input, *i + 1, key_size);
-	value = get_value(ctx->env_list, ctx->status, key);
+	value = get_value(key);
 	if (ctx->state == STATE_DQUOTE || ctx->mode != EXPAND_ARGV)
 	{
 		ctx->keep_empty_word = true;
@@ -92,29 +88,25 @@ static void	handle_dollar_expansion(
 	free(value);
 }
 
-static t_expander_ctx	init_expander_ctx(
-	t_env *env_list, int status, t_expander_mode mode)
+static t_expander_ctx	init_expander_ctx(t_expander_mode mode)
 {
 	t_expander_ctx	ctx;
 
 	ctx.buf = sbuf_init(1);
-	ctx.env_list = env_list;
-	ctx.status = status;
 	ctx.keep_empty_word = false;
 	ctx.state = STATE_NORMAL;
 	ctx.mode = mode;
 	return (ctx);
 }
 
-t_list	*expand_input(
-	char *input, t_env *env_list, int status, t_expander_mode mode)
+t_list	*expand_input(char *input, t_expander_mode mode)
 {
 	t_list			*words;
 	t_expander_ctx	ctx;
 	int				i;
 
 	words = NULL;
-	ctx = init_expander_ctx(env_list, status, mode);
+	ctx = init_expander_ctx(mode);
 	i = 0;
 	while (input[i])
 	{

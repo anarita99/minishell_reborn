@@ -6,18 +6,18 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 19:59:30 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/04 15:23:09 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/09 20:58:38 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-char	*expand_heredoc(char *src, t_env *env_list, int status)
+char	*expand_heredoc(char *src)
 {
 	char	*dst;
 	t_list	*words;
 
-	words = expand_input(src, env_list, status, EXPAND_HEREDOC);
+	words = expand_input(src, EXPAND_HEREDOC);
 	dst = convert_lst_to_str(words);
 	ft_lstclear(&words, free);
 	return (dst);
@@ -83,15 +83,15 @@ int	get_key_size(char *str, int i)
 	return (i - start);
 }
 
-char	*get_value(t_env *env_list, int exit_status, char *key)
+char	*get_value(char *key)
 {
 	char	*env_value;
 
 	if (!key || !key[0])
 		return (NULL);
 	if (ft_strcmp(key, "?") == 0)
-		return (ft_itoa(exit_status));
-	env_value = get_env_value(env_list, key);
+		return (ft_itoa(get_exit_status()));
+	env_value = get_env_value(get_env_list(), key);
 	if (!env_value)
 		return (NULL);
 	return (strdup(env_value));

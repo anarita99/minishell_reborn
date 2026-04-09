@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 17:05:42 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/08 20:41:45 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/09 23:18:57 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ typedef struct s_shell
 	pid_t	*pids;
 }	t_shell;
 
-// Print Functions (Debug purposes)
-void	print_tokenlst(t_list *token_list);
-void	print_cmdlst(t_list *cmd_lst);
-
 // Shell Singleton
 t_shell	*sh_s(void);
-
 #endif

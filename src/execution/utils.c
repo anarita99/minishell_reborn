@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 12:02:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/30 16:17:39 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/09 20:57:24 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_exit_status(void)
+{
+	return (sh_s()->exit_status);
+}
+
+t_env	*get_env_list(void)
+{
+	return (sh_s()->env_list);
+}
 
 void	err_and_exit(char *scope, char *msg, int exit_code, bool err)
 {

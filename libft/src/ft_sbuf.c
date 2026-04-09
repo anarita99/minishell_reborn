@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:19:07 by codespace         #+#    #+#             */
-/*   Updated: 2026/04/08 20:49:19 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/09 22:44:02 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,24 @@ void	sbuf_reset(t_sbuf *b)
 	b->len = 0;
 }
 
-static int	sbuf_reserve(t_sbuf *b, size_t cap_needed)
+int	sbuf_push_char(t_sbuf *b, char c)
 {
 	char	*new_data;
 	size_t	new_cap;
 
-	if (cap_needed <= b->cap)
-		return (1);
-	new_cap = b->cap;
-	while (new_cap < cap_needed)
-		new_cap *= 2;
-	new_data = malloc(new_cap);
-	if (!new_data)
-		return (0);
-	ft_memcpy(new_data, b->data, b->len + 1);
-	free(b->data);
-	b->data = new_data;
-	b->cap = new_cap;
-	return (1);
-}
-
-int	sbuf_push_char(t_sbuf *b, char c)
-{
-	if (!sbuf_reserve(b, b->len + 2))
-		return (0);
+	if (b->len + 2 > b->cap)
+	{
+		new_cap = b->cap;
+		while (new_cap < b->len + 2)
+			new_cap *= 2;
+		new_data = malloc(new_cap);
+		if (!new_data)
+			return (0);
+		ft_memcpy(new_data, b->data, b->len + 1);
+		free(b->data);
+		b->data = new_data;
+		b->cap = new_cap;
+	}
 	b->data[b->len] = c;
 	b->len++;
 	b->data[b->len] = '\0';
@@ -73,12 +67,25 @@ int	sbuf_push_char(t_sbuf *b, char c)
 int	sbuf_push_str(t_sbuf *b, const char *str)
 {
 	size_t	str_len;
+	char	*new_data;
+	size_t	new_cap;
 
 	if (!str)
 		return (0);
 	str_len = ft_strlen(str);
-	if (!sbuf_reserve(b, b->len + str_len + 1))
-		return (0);
+	if (b->len + str_len + 1 > b->cap)
+	{
+		new_cap = b->cap;
+		while (new_cap < b->len + str_len + 1)
+			new_cap *= 2;
+		new_data = malloc(new_cap);
+		if (!new_data)
+			return (0);
+		ft_memcpy(new_data, b->data, b->len + 1);
+		free(b->data);
+		b->data = new_data;
+		b->cap = new_cap;
+	}
 	ft_memcpy(b->data + b->len, str, str_len + 1);
 	b->len += str_len;
 	return (1);
