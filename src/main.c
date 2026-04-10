@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/10 12:42:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/10 12:51:01 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*get_input(void)
 	char	*input;
 
 	input = readline("Minishell> ");
-	if (!input || !input[0])
+	if (!input)
 		exitclean((unsigned char)sh_s()->exit_status);
 	return (input);
 }
