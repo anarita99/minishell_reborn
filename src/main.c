@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/10 12:42:55 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/10 13:03:30 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static char	*get_input(void)
 	char	*input;
 
 	input = readline("Minishell> ");
-	if (!input || !input[0])
-		exitclean((unsigned char)sh_s()->exit_status);
 	return (input);
 }
 
@@ -48,8 +46,15 @@ int	main(void)
 	{
 		setup_signals();
 		input = get_input();
+		if (!input)
+			exitclean((unsigned char)sh_s()->exit_status);
+		if (!input[0])
+		{
+			free(input);
+			continue;
+		}
 		if (!input || !input[0])
-			continue ;
+			exitclean((unsigned char)sh_s()->exit_status);
 		add_history(input);
 		token_list = lexer(input);
 		free(input);
