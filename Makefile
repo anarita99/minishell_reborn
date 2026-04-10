@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/04/09 23:19:25 by leramos-         ###   ########.fr        #
+#    Updated: 2026/04/10 13:53:57 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,8 @@ FILES 			= 	$(MAIN) \
 SRCS 			= 	$(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(FILES)))
 OBJS 			= 	$(SRCS:.c=.o)
 
+SUPP_FILE		=	rlbad.supp
+
 # Compiler and flags
 CC 				= 	cc
 INCLUDES 		= 	-I$(INCS_DIR) -I$(LIBFT_INCS_DIR)
@@ -85,8 +87,11 @@ fclean: clean
 
 re: fclean all
 	
-valgrind: ${NAME}
-	valgrind --suppressions=rlbad.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
+$(SUPP_FILE):
+	@printf "{\n\tignore_libreadline_conditional_jump_errors\n\t\tMemcheck:Leak\n\t\t...\n\t\tobj:*/libreadline.so.*\n}\n" > $(SUPP_FILE)
+
+valgrind: ${NAME} $(SUPP_FILE)
+	valgrind --suppressions=$(SUPP_FILE) --leak-check=full --show-leak-kinds=all --track-origins=yes --quiet --tool=memcheck --keep-debuginfo=yes ./$(NAME)
 
 # Phony targets
 .PHONY: all clean fclean re valgrind
