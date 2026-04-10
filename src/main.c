@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/10 12:51:01 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:52:37 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(void)
 		setup_signals();
 		input = get_input();
 		if (!input || !input[0])
-			continue ;
+			exitclean((unsigned char)sh_s()->exit_status);
 		add_history(input);
 		token_list = lexer(input);
 		free(input);
