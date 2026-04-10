@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/09 23:18:53 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:42:55 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(void)
 	{
 		setup_signals();
 		input = get_input();
-		if (!input)
+		if (!input || !input[0])
 			continue ;
 		add_history(input);
 		token_list = lexer(input);

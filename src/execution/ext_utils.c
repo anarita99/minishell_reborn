@@ -6,7 +6,7 @@
 /*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/03/31 14:53:46 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/10 12:35:57 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ static char	*path_join(char *dir, char *cmd)
 
 static char	*try_path(char *dir, char *cmd, bool *err)
 {
-	char	*path;
+	char		*path;
+	struct stat	filedata;
 
 	path = path_join(dir, cmd);
 	if (!path)
 		return (*err = true, NULL);
-	if (access(path, X_OK) == 0)
+	if (stat(path, &filedata) == 0 && !S_ISDIR(filedata.st_mode) && access(path, X_OK) == 0)
 		return (path);
 	free(path);
 	return (NULL);
@@ -69,6 +70,8 @@ char	*path_to_execute(char *cmd)
 	char		*path;
 	char		*return_path;
 
+	if (!cmd || cmd[0] == '\0')
+		err_and_exit(cmd, "command not found", 127, false);
 	if (strchr(cmd, '/') != NULL)
 	{
 		if (stat(cmd, &filedata) == -1)

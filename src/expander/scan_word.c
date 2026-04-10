@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scan_word.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 15:01:32 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/09 21:16:42 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/10 12:29:08 by adores           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	handle_quotes(
 	{
 		if (c == '\'')
 			*state = STATE_SQUOTE;
-		else if ((c == '\"'))
+		else if (c == '\"')
 			*state = STATE_DQUOTE;
 	}
 	else if ((*state == STATE_SQUOTE && c == '\'')
