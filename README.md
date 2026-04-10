@@ -88,4 +88,4 @@ The main resources that contributed to our understanding of this project were di
 - [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
 - [Writing Your Own Shell](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
 
-AI tools were used to assist with the writing and structuring of this README file.
+AI tools were used to assist with the writing and structuring of this README file and to help debug some bugs.
