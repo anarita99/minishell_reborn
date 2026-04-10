@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ext_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adores <adores@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 14:06:29 by adores            #+#    #+#             */
-/*   Updated: 2026/04/10 12:35:57 by adores           ###   ########.fr       */
+/*   Updated: 2026/04/10 13:48:01 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static char	*try_path(char *dir, char *cmd, bool *err)
 	path = path_join(dir, cmd);
 	if (!path)
 		return (*err = true, NULL);
-	if (stat(path, &filedata) == 0 && !S_ISDIR(filedata.st_mode) && access(path, X_OK) == 0)
+	if (stat(path, &filedata) == 0 && !S_ISDIR(filedata.st_mode) \
+&& access(path, X_OK) == 0)
 		return (path);
 	free(path);
 	return (NULL);
