@@ -6,7 +6,7 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 00:00:00 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/07 18:14:12 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:14:08 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*get_next_cmd(t_list *current_node)
 
 static bool	is_file_heredoc(char *filename)
 {
-	return (ft_strncmp(filename, "/tmp/heredoc_minishell_", 23) == 0);
+	return (ft_strncmp(filename, "heredoc_minishell_", 18) == 0);
 }
 
 static void	free_redirs(t_redir *redirs)

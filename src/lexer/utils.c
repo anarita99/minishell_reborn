@@ -6,11 +6,12 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:54:04 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/09 14:59:58 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:15:43 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
+
 
 bool	is_operator(char c)
 {
@@ -35,6 +36,7 @@ int	calc_consumed_chars(t_token_type token_type)
 
 void	print_syntax_error(const char *token_value)
 {
+	sh_s()->exit_status = 2;
 	write(2, "minishell: syntax error near unexpected token `", 47);
 	if (token_value)
 		write(2, token_value, ft_strlen(token_value));
