@@ -6,7 +6,7 @@
 #    By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/15 15:15:31 by adores            #+#    #+#              #
-#    Updated: 2026/04/13 11:16:42 by leramos-         ###   ########.fr        #
+#    Updated: 2026/04/13 13:21:01 by leramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_INCS_DIR 	= 	$(LIBFT_DIR)/include
 LIBFT_LIB 		= 	$(LIBFT_DIR)/libft.a
 
 # Files
-MAIN 			= 	main sig print
+MAIN 			= 	main sig
 LEXER 			= 	lexer utils token states validation
 PARSER 			= 	parser arguments redirects command
 EXPANDER		=	expander utils scan_word

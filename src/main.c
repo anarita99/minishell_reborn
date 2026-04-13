@@ -6,14 +6,11 @@
 /*   By: leramos- <leramos-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:06:07 by leramos-          #+#    #+#             */
-/*   Updated: 2026/04/13 11:20:37 by leramos-         ###   ########.fr       */
+/*   Updated: 2026/04/13 13:20:49 by leramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_tokenlst(t_list *token_list);
-void	print_cmdlst(t_list *cmd_lst);
 
 t_shell	*sh_s(void)
 {
@@ -58,14 +55,11 @@ int	main(void)
 		free(input);
 		if (!token_list)
 			continue ;
-		print_tokenlst(token_list);
 		sh_s()->input_list = parser(token_list);
 		ft_lstclear(&token_list, del_token);
 		if (!sh_s()->input_list)
 			continue ;
 		expander(&(sh_s()->input_list));
-		printf("\n");
-		print_cmdlst(sh_s()->input_list);
 		executor();
 		ft_lstclear(&sh_s()->input_list, del_cmd);
 		sh_s()->prev_read = -1;
